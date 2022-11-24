@@ -24,7 +24,7 @@ app.get('/', async function (req, res) {
   const db = dbo.getDb()
 
   db
-    .collection('customers')
+    .collection('member')
     .find({}).limit(10)
     .toArray((err, result) => {
       if (err) res.status(400).send('Error fetching customers list')
