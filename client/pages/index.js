@@ -6,6 +6,7 @@ import axios from 'axios'
 
 export default function Home() {
   const [userId, setUserId] = useState(null)
+  const [stationId, setStationId] = useState(null)
 
   useEffect(() => {
     axios.get('http://localhost:9000')
@@ -14,7 +15,15 @@ export default function Home() {
         setUserId(res.data[0].ID)
       })
   }, [])
-
+  useEffect(() => {
+    axios.get('http://localhost:9000')
+      .then(res => {
+        // console.log(res.data[0].ID)
+        setStationId(res.data[0].Station1)
+        console.log(res.data[0].Station1)
+      })
+  }, [])
+  console.log(stationId)
   return (
     <div className={styles.container}>
       <Head>
@@ -25,6 +34,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <p>{userId || 'no user id'}</p>
+        <p>Station1 {stationId }</p>
       </main>
     </div>
   )
