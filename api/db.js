@@ -2,7 +2,9 @@ const { MongoClient } = require('mongodb')
 
 const host = 'localhost'
 const port = 27017
-const databaseUrl = `mongodb://${host}:${port}/mydb`
+const user = 'user2'
+const passwd = '1234'
+const databaseUrl = `mongodb+srv://${user}:${passwd}@testproject.w32eqa7.mongodb.net/test`
 
 const client = new MongoClient(databaseUrl)
 
@@ -15,7 +17,7 @@ module.exports = {
         return callback(err);
       }
 
-      dbConnection = db.db("mydb");
+      dbConnection = db.db("member");
       console.log("Successfully connected to MongoDB.");
 
       return callback();

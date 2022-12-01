@@ -7,7 +7,9 @@ var cors = require("cors");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
-const dbo = require('./db')
+const dbo = require('./db');
+const { parseArgs } = require('util');
+const db = require('./db');
 
 var app = express();
 app.use(cors());
@@ -24,7 +26,7 @@ app.get('/', async function (req, res) {
   const db = dbo.getDb()
 
   db
-    .collection('customers')
+    .collection('member')
     .find({}).limit(10)
     .toArray((err, result) => {
       if (err) res.status(400).send('Error fetching customers list')
@@ -58,6 +60,12 @@ app.get('/user/:id', function (req, res) {
   var id = parseInt(req.params.id)
 
   db.users.findOne({ id: id }, function (err, docs) {
+    res.json(docs)
+  })
+})
+app.get('/user/:Station1', function (req, res){
+  var Station1 = parseArgs(req.params.Station1)
+  db.user.findOne({Station1:Station1}, function(err,docs){
     res.json(docs)
   })
 })
