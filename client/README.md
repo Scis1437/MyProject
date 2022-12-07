@@ -2,6 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+```MONGODB
+connect to mongoDB compass with
+mongodb+srv://user2:1234@testproject.w32eqa7.mongodb.net/test
+```
+
 First, run the development server:
 
 ```bash
