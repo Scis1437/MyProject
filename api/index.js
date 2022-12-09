@@ -1,15 +1,19 @@
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
-// var mongojs = require('./db')
-// var db = mongojs.connect
+const express =  require("express");
+const cors = require('cors')
+const bodyParser = require('body-parser');
 
-// MongoClient.connect(url, function(err, db) {
-//   if (err) throw err;
-//   var dbo = db.db("mydb");
-//   let myObj ={id:"620610796",name:"Pryat Kaewthep"};
-//   dbo.collection("customers").insertOne(myObj, function(err, res) {
-//     if (err) throw err;
-//     console.log("1 document inserted");
-//     db.close();
-//   });
-// });
+const studentRouter = require('./routes/student.route');
+
+const app = express()
+
+// use middleware
+app.use(cors())
+app.use(bodyParser.json())
+
+// router
+app.use('/student', studentRouter)
+
+// start server
+app.listen(9000, () => {
+    console.log('Server started')
+})
