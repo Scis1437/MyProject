@@ -4,8 +4,19 @@ const getAllStudent = async (req, res) => {
     res.json(students)
 }
 
-const addStudent = (req, res) => {
-    res.json({err: 'need implemented'})
+const addStudent = async(req, res) => {
+    const addStudent = await prisma.student.create({
+        select: {
+            id: true,
+            name: true,
+        }, 
+        data: {
+            name: 'Prayat Kaewthep',
+            
+            
+        }
+    })
+    res.json(addStudent)
 }
 
 module.exports = {

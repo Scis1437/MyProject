@@ -5,6 +5,6 @@ const { getAllStudent, addStudent } = require('../controllers/student.controller
 const router = express.Router()
 
 router.get('/', getAllStudent)
-router.post('/:id', addStudent)
+router.post('/', addStudent)
 
 module.exports = router
