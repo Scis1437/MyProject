@@ -11,7 +11,7 @@ const addStudent = async(req, res) => {
             name: true,
         }, 
         data: {
-            name: 'Prayat Kaewthep',
+            name: 'yyyy',
             
             
         }

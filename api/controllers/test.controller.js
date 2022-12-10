@@ -1,15 +1,15 @@
 const {prisma} = require('../db')
 const getAllTest = async (req, res) => {
-    const tests = await prisma.station.tests.findMany({})
+    const tests = await prisma.test.findMany({})
     res.json(tests)
 }
 const addTest = async(req, res)=>{
     const addScore = await prisma.test.create({
         data: {
-            test_number:1,
-            score: 1,
-            station_Id: "clbgn4bvk0000v4kcxdozkmz2",
-            student_id: "clbgnbwnk0000v49gc4vzxi30",
+            test_number:2,
+            score: 5,
+            station_Id: "clbgnzizb0000v4ag550yepfe",
+            student_id: "clbhmthk20000v4s4f4yu874a",
         }
     })
     res.json(addScore)
