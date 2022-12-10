@@ -5,14 +5,14 @@ const getAllStation = async (req, res) => {
 }
 
 const addStation = async(req, res) => {
+    const data = req.body
+    console.log(data)
     const createStation = await prisma.station.create({
         select: {
             id: true,
             station_name: true,
         },  
-        data: {
-            station_name: 'station1'
-        }
+        data,
     })
     res.json(createStation)
 }
