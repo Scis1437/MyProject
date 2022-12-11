@@ -5,25 +5,33 @@ import axios from 'axios'
 
 
 export default function Home() {
-  const [userId, setUserId] = useState(null)
-  const [stationId, setStationId] = useState(null)
+  const [userId, setUserId] = useState([])
+  const [stationId, setStationId] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:9000')
+    axios.get('http://localhost:9000/student')
       .then(res => {
-        // console.log(res.data[0].ID)
-        setUserId(res.data[0].ID)
+        console.log(res.data[0].id)
+        setUserId(res.data[0].id)
       })
-  }, [])
-  useEffect(() => {
-    axios.get('http://localhost:9000')
-      .then(res => {
-        // console.log(res.data[0].ID)
-        setStationId(res.data[0].Station1)
-        console.log(res.data[0].Station1)
-      })
-  }, [])
-  console.log(stationId)
+    axios.get('http://localhost:9000/station')
+        .then(res => {
+          // console.log(res.data[0].ID)
+          // setStationId(res.data[0].id)
+          console.log(res.data)
+        })
+  }, [setUserId])
+// function showStudent(){
+//   const [studentId , getStudentId] = useState([]);
+//     useEffect(()=>{    
+//       axios.get('http://localhost:9000/student')
+//       .then(res => {
+//       console.log(res.data[0].id)
+//       setUserId(res.data[0].id)
+//     })
+
+//     })
+// }
   return (
     <div className={styles.container}>
       <Head>
@@ -33,8 +41,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <p>{userId || 'no user id'}</p>
-        <p>Station1 {stationId }</p>
+        {/* < button onclick ={userId}>{}</button> */}
+         <p> Student{userId || 'no use '}</p>
+        {/* <p>Station2 {stationId || 'no station id' }</p> */}
       </main>
     </div>
   )
