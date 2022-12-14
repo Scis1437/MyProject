@@ -37,8 +37,8 @@ model Test {
   station_Id String
   station Station @relation(fields: [station_Id], references: [id])
   
-  test_number Int
+  test_number Int 
   score Int
 
-  @@id([student_id, station_Id])
+  @@id([student_id, station_Id,test_number])
 }
