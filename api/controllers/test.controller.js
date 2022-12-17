@@ -6,13 +6,21 @@ const getAllTest = async (req, res) => {
 
 
 const addTest = async(req, res)=>{
+    const data = req.body
     const addScore = await prisma.test.create({
-        data: {
-            test_number:2,
-            score: 10,
-            station_Id: "clbgnzizb0000v4ag550yepfe",
-            student_id: "clbhmthk20000v4s4f4yu874a",
-        }
+        select:{
+            station_Id:true,
+            student_id:true,
+
+
+        },
+        data,
+        // data: {
+        //     test_number:2,
+        //     score: 10,
+        //     station_Id: "clbgnzizb0000v4ag550yepfe",
+        //     student_id: "clbhmthk20000v4s4f4yu874a",
+        // }
     })
     res.json(addScore)
 }

@@ -11,6 +11,7 @@ const addStation = async(req, res) => {
         select: {
             id: true,
             station_name: true,
+            
         },  
         data,
     })
