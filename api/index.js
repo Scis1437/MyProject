@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const studentRouter = require('./routes/student.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
-
+const verifyJWT = require('./middleware/verifyJWT');
 const app = express()
 
 // use middleware

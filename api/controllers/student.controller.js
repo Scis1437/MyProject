@@ -5,16 +5,13 @@ const getAllStudent = async (req, res) => {
 }
 
 const addStudent = async(req, res) => {
+    const data = req.body
     const addStudent = await prisma.student.create({
         select: {
             id: true,
             name: true,
         }, 
-        data: {
-            name: 'yyyy',
-            
-            
-        }
+        data,
     })
     res.json(addStudent)
 }
