@@ -2,18 +2,10 @@ import React, { useState } from "react";
 import Item from "../item/studentChecklistItem";
 import Image from "next/image";
 import medImg from "../img/logoMEDCMUen-1280x227.png";
+
 const subject = [
-
-  {
-
-    title : "OS" ,
-    status : "Complete"
-  } ,
-  {
-    title : "Algorithm" ,
-    status : "Incomplete"
-  } ,
-
+  { title: "OS", status: "Complete" },
+  { title: "Algorithm", status: "Incomplete" },
 ];
 
 const item = subject.map((items, index) => {
@@ -24,15 +16,63 @@ const item = subject.map((items, index) => {
   );
 });
 
-// console.log(item)z
+const Row = (props) => {
+  const { title, status } = props;
+  console.log(props);
+  return (
+    <tr className="bg-gray-100 border-b">
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        {title}
+      </td>
+      <td
+        colspan="2"
+        className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"
+      >
+        {status}
+      </td>
+    </tr>
+  );
+};
+
+const Table = (props) => {
+  const { data } = props;
+  console.log(data);
+
+  return (
+    <table className="w-full">
+      <thead className="bg-white ">
+        <tr>
+          <th
+            scope="col"
+            className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+          >
+            <p>Title</p>
+          </th>
+          <th className="text-sm font-medium text-gray-900 px-6 py-4 text-right">
+            <p>Status</p>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {data.map((row) => {
+          <Row title={row.title} 
+          status={row.status} />;
+        })}
+      </tbody>
+    </table>
+  );
+};
+
 function studentCheck() {
+  const [rows, setRows] = useState(subject);
   return (
     <div className="h-screen  bg-main-green flex justify-center items-center">
       <div className="container">
-        <div class="flex flex-col">
-          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-1 inline-block min-w-full sm:px-6 lg:px-8 ">
-              <div class="overflow-hidden">
+        <div className="flex flex-col">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-1 inline-block min-w-full sm:px-6 lg:px-8 ">
+              <div className="overflow-hidden">
                 <div className="grid grid-cols-1  w-full h-12 mb-5 md:grid-cols-2 px-5 ">
                   <div className="flex justify-center md:justify-start items-center mb-4 md:mb-0">
                     <Image
@@ -54,34 +94,8 @@ function studentCheck() {
                     </button>
                   </div>
                 </div>
-                <table className="w-full">
-                  <thead class="bg-white ">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                      >
-                        Title 
-                      </th>
-                      <th className="text-sm font-medium text-gray-900 px-6 py-4 text-right">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                    <tr class="bg-gray-100 border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    
-                      </td>
-                      <td
-                        colspan="2"
-                        class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"
-                      >
-                 
-                      </td>
-                 
-                    </tr>
-                  </tbody>
-                </table>
+
+                <Table data={rows} />
               </div>
             </div>
           </div>
