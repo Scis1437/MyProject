@@ -10,8 +10,8 @@ const registerRouter = require('./routes/register.route');
 const app = express()
 
 // use middleware
-// app.use(cors())
-// app.use(bodyParser.json())
+app.use(cors())
+app.use(bodyParser.json())
 
 // router
 app.use('/student', studentRouter)
