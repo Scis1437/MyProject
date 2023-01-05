@@ -12,7 +12,7 @@
        @apply w-5/6 p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center  overflow-auto
 }
 .select-button {
-        @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-64 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
+        @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
 }
 .btn {
        @apply bg-main-green rounded-lg px-2 font-semibold
