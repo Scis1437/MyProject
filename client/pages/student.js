@@ -18,16 +18,13 @@ const item = subject.map((items, index) => {
 
 const Row = (props) => {
   const { title, status } = props;
-  console.log(props);
+  console.log(title);
   return (
     <tr className="bg-gray-100 border-b">
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
         {title}
       </td>
-      <td
-        colspan="2"
-        className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center"
-      >
+      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
         {status}
       </td>
     </tr>
@@ -55,10 +52,27 @@ const Table = (props) => {
       </thead>
 
       <tbody>
-        {data.map((row) => {
-          <Row title={row.title} 
-          status={row.status} />;
-        })}
+        {data.map(
+          (items) => (
+            // console.log(items)
+            // console.log(`${items.title}` +"  " + `${items.status}` );
+
+            <tr className="bg-gray-100 border-b">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {`${items.title}`}
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+                {`${items.status}`}
+              </td>
+            </tr>
+          )
+
+        )}
+
+        {/* // {data.map(row => {
+        //   <Row title={row.title} 
+        //   status={row.status} />;
+        // })} */}
       </tbody>
     </table>
   );
