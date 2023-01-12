@@ -4,7 +4,25 @@ const getAllTest = async (req, res) => {
     res.json(tests)
 }
 
-
+const getStudenttest = async (req, res) => {
+    const studentCheck = await prisma.test.findMany({
+        where: {
+            
+            student_id:  req.params.student_id,
+            
+            
+        },
+        select:{
+            student_id:true,
+            station_Id:true,
+            test_number:true,
+            score:true
+        }
+ 
+        
+    })
+    res.json(studentCheck)
+}
 const addTest = async(req, res)=>{
     const data = req.body
     const addScore = await prisma.test.create({
@@ -33,4 +51,5 @@ const addTest = async(req, res)=>{
 module.exports = {
     getAllTest,
     addTest,
+    getStudenttest,
 }
