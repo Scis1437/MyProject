@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import medLogo from '../img/logo1.png' ;
-
+import todoList from "../item/todoList";
 function login () {
+  
     return(
         <div className="min-h-screen bg-main-green   flex justify-center items-center ">
         <div className=" w-10/12 h-10/12 rounded-md bg-white shadow-xl md:w-80 lg:w-96 grid place-items-center py-5 my-5">
@@ -16,7 +17,7 @@ function login () {
                 alt="med"
               />
             </Link>
-
+            <todoList/>
             <form
               action="/menu"
               className="gap-1 text-l uppercase text-bold py-4 flex flex-col "
@@ -44,7 +45,7 @@ function login () {
                   <button
                     className=" bg-hover-green hover:bg-light-green text-white font-bold py-2 px-5 rounded-full"
                   >
-                    Sign in
+                    Log in
                   </button>
                 </Link>
               </div>
