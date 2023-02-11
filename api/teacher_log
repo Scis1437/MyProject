@@ -8,3 +8,26 @@
 {"level":"info","message":"Hello distributed log files!","timestamp":"2023-02-11T10:34:04.457Z"}
 {"level":"info","message":"Hello again distributed logs","timestamp":"2023-02-11T10:34:04.457Z"}
 {"level":"info","message":"show success","timestamp":"2023-02-11T10:34:04.458Z"}
+{"level":"info","message":"Hello distributed log files!","timestamp":"2023-02-11T12:15:59.393Z"}
+{"level":"info","message":"Hello again distributed logs","timestamp":"2023-02-11T12:15:59.394Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T12:15:59.398Z"}
+{"level":"info","message":"Hello distributed log files!","timestamp":"2023-02-11T12:16:09.939Z"}
+{"level":"info","message":"Hello again distributed logs","timestamp":"2023-02-11T12:16:09.939Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T12:16:09.940Z"}
+{"level":"info","message":"test1","timestamp":"2023-02-11T12:19:18.393Z"}
+{"level":"info","message":"test1","timestamp":"2023-02-11T12:38:59.061Z"}
+{"level":"info","message":"test1","timestamp":"2023-02-11T12:42:48.438Z"}
+{"level":"info","message":"test1show success","timestamp":"2023-02-11T12:44:33.559Z"}
+{"level":"info","message":"req.user ' action = show '","timestamp":"2023-02-11T12:46:17.236Z"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11T12:47:21.067Z"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11T12:51:17.271Z"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11 19:55:48.909"}
+{"0":"test1","1":"undefined action = add score","level":"info","timestamp":"2023-02-11 19:59:39.063"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11 20:01:34.621"}
+{"0":"test1","2":"undefined action = add score","level":"info","timestamp":"2023-02-11 20:05:11.117"}
+{"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = add score","level":"info","timestamp":"2023-02-11 20:06:27.699"}
+{"level":"info","message":"undefined action = show ","timestamp":"2023-02-11 20:10:52.348"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11 20:11:04.291"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-02-11 20:13:48.585"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-02-11 20:13:57.921"}
+{"level":"info","message":" action = logout ","timestamp":"2023-02-11 20:17:04.570"}

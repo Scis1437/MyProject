@@ -4,7 +4,7 @@ const usersDB = {
     this.users = data;
   },
 };
-
+const logger = require('../controllers/logger.controller')
 const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
@@ -23,6 +23,7 @@ const handleLogin = async (req, res) => {
   // evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
+    logger.teacherLog.log('info',user +' action = login ')
     const roles = Object.values(foundUser.roles);
     // create JWTs
     const accessToken = jwt.sign(
@@ -31,7 +32,7 @@ const handleLogin = async (req, res) => {
       },
 
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "360000s" }
     );
     const refreshToken = jwt.sign(
       { username: foundUser.username },
@@ -53,6 +54,7 @@ const handleLogin = async (req, res) => {
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
     });
+    
     res.json({ accessToken });
   } else {
     res.sendStatus(401);
