@@ -1,0 +1,10 @@
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:30:18.057Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:30:40.315Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:32:06.469Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:33:48.448Z"}
+{"level":"info","message":"Hello distributed log files!","timestamp":"2023-02-11T10:33:58.297Z"}
+{"level":"info","message":"Hello again distributed logs","timestamp":"2023-02-11T10:33:58.297Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:33:58.298Z"}
+{"level":"info","message":"Hello distributed log files!","timestamp":"2023-02-11T10:34:04.457Z"}
+{"level":"info","message":"Hello again distributed logs","timestamp":"2023-02-11T10:34:04.457Z"}
+{"level":"info","message":"show success","timestamp":"2023-02-11T10:34:04.458Z"}

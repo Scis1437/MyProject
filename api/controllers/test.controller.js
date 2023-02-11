@@ -1,6 +1,8 @@
 const {prisma} = require('../db')
+const logger = require('../controllers/logger.controller')
 const getAllTest = async (req, res) => {
     const tests = await prisma.test.findMany({})
+    logger.teacherLog.log('info','show success')
     res.json(tests)
 }
 
@@ -17,11 +19,18 @@ const getStudenttest = async (req, res) => {
             station_Id:true,
             test_number:true,
             score:true
-        }
+        },
  
-        
+          
     })
-    res.json(studentCheck)
+    logger.teacherLog.log({
+        level: 'info',
+        message: 'Hello distributed log files!'
+      });
+      
+    logger.teacherLog.info('Hello again distributed logs');
+    res.json(studentCheck);
+    logger.teacherLog.log('info','show success')  
 }
 const addTest = async(req, res)=>{
     const data = req.body
@@ -41,6 +50,13 @@ const addTest = async(req, res)=>{
         // }
     })
     res.json(addScore)
+    logger.teacherLog.log({
+        level: 'info',
+        message: 'Hello distributed log files!'
+      });
+      
+    logger.teacherLog.info('Hello again distributed logs');
+    //logger.teacherLog.log('info','add score success')
 }
 
 // const addScore = (req, res) => {
