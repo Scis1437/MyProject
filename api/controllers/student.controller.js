@@ -1,6 +1,8 @@
 const {prisma} = require('../db')
+const logger = require('../controllers/logger.controller')
 const getAllStudent = async (req, res) => {
     const students = await prisma.student.findMany({})
+    logger.teacherLog.log('info',req.user +' action = show ')
     res.json(students)
 }
 
@@ -34,6 +36,7 @@ const addStudent = async(req, res) => {
         }, 
         data,
     })
+    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = add score'])
     res.json(addStudent)
 }
 
