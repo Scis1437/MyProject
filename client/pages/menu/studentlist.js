@@ -4,30 +4,24 @@ const station = [
   { "Peptic ulcer": [4, 5, 6] },
 ];
 const data = [
-  // {
-  //   studentCode: "6206xxx1",
-  //   station : [
-  //     { "History talking patient ": [1, 2, 3] },
-  //     { "Peptic ulcer": [4, 5, 6] },
-  //   ]
-  // },
+
   {
     studentCode: "6206xxx2",
-    station: "History talking patient "[" Active Listening"],
+    station: "History talking patient ",
+    substation : [{station}] ,
   },
 
   {
     studentCode: "6206xxx3",
-    station: "History talking patient "[" Active Listening"],
+    station: "History talking patient ",
   },
 
-  // station: "History talking patient "[" Active Listening"],
 ];
 
 const List = (props) => {
   const [dropdown, setDropdown] = useState(false);
   const list = props;
-  const stationTitle= list.station ; 
+  const stationTitle = list.station;
   console.log();
   // const stations = stationTitle.map((station) => {
   //   return (
@@ -47,11 +41,11 @@ const List = (props) => {
 
       {dropdown ? (
         <div className="">
-          <p>{list.station[1]}</p>
+          <label> {list.station}</label>
           <div>
             <form className="flex justify-between ">
               <label className="text-xs mx-3" for="activeListening">
-                {list.station}
+                <p>{list.substation}</p>
               </label>
               <select className="h-5">
                 <option value="1">1</option>

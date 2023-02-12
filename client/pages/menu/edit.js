@@ -7,27 +7,29 @@ import TodoList from "../../item/todoList";
 
 const subject = [
   {
-    title: "Histrory taking patient",
+    title: "Histrory taking patient" ,
   },
   {
     title: "peptuc ulcer",
   },
 ];
 
-const edit = (data) => {
+const edit = () => {
 
   
   const [ newOrderPostOpen, setNewOrderPostOpen ] = useState('close');
   const [ order, setOrder ] = useState([]);
+  const [data , setData] = useState(null)
 
-  function onNewOrderClick(x) {
+  function onNewOrderClick(x , data) {
+      setData(data)
       setNewOrderPostOpen(x)
   }
-
+  
   let newOrderPost = null
   switch(newOrderPostOpen) {
       case 'open':
-          newOrderPost = <EditExam visible={true}/>
+          newOrderPost = <EditExam data={data} visible={true}/>
           break;
       case 'closed':
           newOrderPost = null
@@ -74,26 +76,32 @@ const edit = (data) => {
 
           <tbody></tbody>
         </table>
-        
+
         {subject.map((items) => (
           <div className="flex w-full justify-between px-4 my-1">
             <p className="text-sm">{items.title}</p>
             
             <div className="flex gap-1">
-              <button className = "btn"onClick={()=>onNewOrderClick('open')} data="data">Edit</button>
+              <button className = "btn"onClick={()=>onNewOrderClick('open' , {items})} >Edit</button>
               <button className = " rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red" data="data">Delete</button>
             </div>
             
           </div>
         ))}
- 
+       
+        
           <button className="btn" onClick={()=>onNewOrderClick('open')}>Add new</button>
-         
-                   {newOrderPost}
+   
+           {/* {newOrderPost}
+     */}
+                    
+        
+            
           
+      <div className="absolute inset-0  bg-opacity-30 backdrop-blur-sm  h-full rounded-md justify-center"><EditExam data={data} visible={true}/></div>
 
-
-      </div>
+      </div> 
+  
       {/* <EditExam visible={true}/> */}
     </div>
   );
