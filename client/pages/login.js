@@ -31,7 +31,7 @@ function Login() {
       return <Redirect to="/menu" />;
     } else {
       console.log("false");
-      return <Redirect to="/" />;
+      
     }
   
   }
@@ -107,7 +107,7 @@ function Login() {
                   // ) 
                 }
               >
-                signIn
+                sign in
               </button>
        
           </div>

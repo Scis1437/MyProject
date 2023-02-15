@@ -38,7 +38,7 @@ class scanBarcode extends Component {
         </p>
         <p>student code : </p>
         <input></input>
-        <button href="/" className="btn">
+        <button href="/menu/gradding/selectStation" className="btn">
           confirm
         </button>
       </div>

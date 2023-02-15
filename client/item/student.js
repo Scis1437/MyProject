@@ -1,10 +1,7 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState } from "react";
 import Item from "../item/studentChecklistItem";
 import Image from "next/image";
 import medImg from "../img/logoMEDCMUen-1280x227.png";
-import { useRouter } from "next/router";
-
-
 
 const subject = [
   { title: "OS", status: "Complete" },
@@ -18,16 +15,6 @@ const item = subject.map((items, index) => {
     </div>
   );
 });
-function Redirect({ to }) {
-
-  const router = useRouter();
-  console.log("Redirect_work")
-  useEffect(() => {
-    router.push(to);
-  }, [to]);
-
-  return null;
-}
 
 const Row = (props) => {
   const { title, status } = props;
@@ -91,12 +78,8 @@ const Table = (props) => {
   );
 };
 
-function studentpage() {
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+function student() {
   const [rows, setRows] = useState(subject);
-  if(shouldRedirect){
-    return <Redirect to="/" />;
-  }
   return (
     <div className="h-screen  bg-main-green flex justify-center items-center">
       <div className="container">
@@ -106,7 +89,7 @@ function studentpage() {
               <div className="overflow-hidden">
                 <div className="grid grid-cols-1  w-full h-12 mb-5 md:grid-cols-2 px-5 ">
                   <div className="flex justify-center md:justify-start items-center mb-4 md:mb-0">
-                  <p onClick={() => {setShouldRedirect(true)} }>back</p>
+             
                     <Image
                       className="w-32 md:w-44  flex justify-start items-center "
                       src={medImg}
@@ -172,5 +155,3 @@ function studentpage() {
     </div>
   );
 }
-
-export default studentpage;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 const station = [
   { "History talking patient ": [1, 2, 3] },
   { "Peptic ulcer": [4, 5, 6] },
@@ -8,14 +9,17 @@ const data = [
   {
     studentCode: "6206xxx2",
     station: "History talking patient ",
-    substation : [{station}] ,
+    substation : {station} ,
   },
 
   {
     studentCode: "6206xxx3",
     station: "History talking patient ",
   },
-
+  {
+    studentCode: "6206xxx4",
+    station: "History talking patient ",
+  },
 ];
 
 const List = (props) => {
@@ -40,27 +44,28 @@ const List = (props) => {
       </div>
 
       {dropdown ? (
-        <div className="">
-          <label> {list.station}</label>
-          <div>
-            <form className="flex justify-between ">
-              <label className="text-xs mx-3" for="activeListening">
-                <p>{list.substation}</p>
-              </label>
-              <select className="h-5">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-            </form>
-          </div>
-        </div>
-      ) : null}
+    <div className="">
+      <label> {list.station}</label>
+      <div>
+        <form className="flex justify-between ">
+          <label className="text-xs mx-3" htmlFor="activeListening">
+            <p></p>
+          </label>
+          <select className="h-5">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </form>
+      </div>
     </div>
+  ) : null}
+</div>
   );
 };
 
 const student = data.map((list) => {
+  console.log(list.substation)
   return <List {...list} />;
 });
 function studentlist() {

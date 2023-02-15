@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import EditExam from "../popup/edit";
 const TodoList = () => {
   const [list, setList] = useState([]);
   const [input, setInput] = useState("");
@@ -40,19 +41,29 @@ const TodoList = () => {
           </li>
         ))}
       </ul>
-      <div className="flex gap-1">
+      <div className="flex gap-1 mb-4">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className=" input"
         />
+
+       
+        {/* <select className="h-5 mx-2">
+          <option value="1">pass/fail</option>
+          <option value="2">score</option>
+        </select> */}
+
         <button className="btn" onClick={() => addTodo(input)}>
           Add
         </button>
       </div>
-      <div className="flex items-center  m-auto">
-        <button className="btn">submit</button>
+      <div
+        className="flex flex-col w-full items-center "
+        onClick={<EditExam visible={false} />}
+      >
+        <button className="btn w-full ">submit</button>
       </div>
     </div>
   );

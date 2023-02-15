@@ -7,7 +7,7 @@ import TodoList from "../../item/todoList";
 
 const subject = [
   {
-    title: "Histrory taking patient" ,
+    title: "Histrory taking patient",
   },
   {
     title: "peptuc ulcer",
@@ -15,50 +15,33 @@ const subject = [
 ];
 
 const edit = () => {
+  const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
+  const [order, setOrder] = useState([]);
+  const [data, setData] = useState(null);
 
-  
-  const [ newOrderPostOpen, setNewOrderPostOpen ] = useState('close');
-  const [ order, setOrder ] = useState([]);
-  const [data , setData] = useState(null)
-
-  function onNewOrderClick(x , data) {
-      setData(data)
-      setNewOrderPostOpen(x)
+  function onNewOrderClick(x, data) {
+    setData(data);
+    setNewOrderPostOpen(x);
   }
-  
-  let newOrderPost = null
-  switch(newOrderPostOpen) {
-      case 'open':
-          newOrderPost = <EditExam data={data} visible={true}/>
-          break;
-      case 'closed':
-          newOrderPost = null
-          break;
+   console.log(newOrderPostOpen);
+  let newOrderPost = null;
+  switch (newOrderPostOpen) {
+ 
+    case "open":
+      newOrderPost = <EditExam data={data} visible={true} />;
+      break;
+    case "closed":
+      newOrderPost = null;
+      break;
   }
-
-  // const[dataPost, setdata] = useState('');
-
-  // function onAddnew(x) {
-  //   setdata(x);
-  // }
-
-  // let newData = null;
-
-  // switch (dataPost) {
-  //   case "open":
-  //     <editExam />;
-  //     break;
-  //   case "closed":
-  //     break;
-  // }
 
   return (
-    <div className="background   ">
-      <p className="text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl  ">
+    <div className={`background`} >
+      <p className="text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl   ">
         Edit Exam
       </p>
 
-      <div className="container">
+      <div className="container ">
         <table className="w-full ">
           <thead className="rounded-xl  bg-gray border-radius-table">
             <tr className="">
@@ -80,28 +63,37 @@ const edit = () => {
         {subject.map((items) => (
           <div className="flex w-full justify-between px-4 my-1">
             <p className="text-sm">{items.title}</p>
-            
+
             <div className="flex gap-1">
-              <button className = "btn"onClick={()=>onNewOrderClick('open' , {items})} >Edit</button>
-              <button className = " rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red" data="data">Delete</button>
+              <button
+                className="btn"
+                onClick={() => onNewOrderClick("open", { items })}
+              >
+                Edit
+              </button>
+              <button
+                className=" rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
+                data="data"
+              >
+                Delete
+              </button>
             </div>
-            
+      
           </div>
         ))}
-       
-        
-          <button className="btn" onClick={()=>onNewOrderClick('open')}>Add new</button>
-   
-           {/* {newOrderPost}
-     */}
-                    
-        
-            
-          
-      <div className="absolute inset-0  bg-opacity-30 backdrop-blur-sm  h-full rounded-md justify-center"><EditExam data={data} visible={true}/></div>
 
-      </div> 
-  
+        <button className="btn " onClick={() => onNewOrderClick("open")}>
+          Add new
+        </button>
+
+          <div className= {`${newOrderPostOpen === "open" ? "fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm" : ""}`}>
+              {newOrderPost}
+          </div>
+        
+   
+        {/* <div className="absolute inset-0  bg-opacity-30 backdrop-blur-sm  h-full rounded-md  "><EditExam data={data} visible={true}/></div> */}
+      </div>
+
       {/* <EditExam visible={true}/> */}
     </div>
   );
