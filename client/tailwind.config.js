@@ -62,7 +62,8 @@ module.exports = {
       'hover-green' : '#1c7f7f' ,
       'click-green' : '#166666' ,
       'input-green' : '#C9EAEA',
-      'light-green' : '#239fa0'
+      'light-green' : '#239fa0',
+      'btn-red' : '#d11a2a' ,
       
     }),
     columns: {
@@ -130,6 +131,7 @@ module.exports = {
       80: '20rem',
       96: '24rem',
       '15%' : '15%' ,
+      '10%' : '10%' ,
     },
     animation: {
       none: 'none',

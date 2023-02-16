@@ -8,16 +8,39 @@
 
   }
 
+.input{
+  @apply  rounded-md md:w-60 bg-input-green pl-3 ;
+}
 .container {
-       @apply w-5/6 p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center  overflow-auto
+       @apply w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center  overflow-auto
 }
 .select-button {
         @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
 }
 .btn {
-       @apply bg-main-green rounded-lg px-2 font-semibold
+       @apply bg-main-green rounded-2xl px-3 py-1 font-semibold text-white text-sm
 }
 
 .bg-css{
       @apply h-screen bg-main-green   flex flex-col justify-center items-center ;
+}
+
+.border-radius-table {
+      
+}
+
+.background {
+    @apply h-screen bg-main-green   flex flex-col justify-center items-center  ;
+}
+
+.text-header {
+    @apply text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl  ; 
+}
+
+.text-subheader {
+  @apply text-sm ;
+}
+
+.invalid_Login {
+  display: block;
 }

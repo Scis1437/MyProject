@@ -25,7 +25,7 @@ const menuName = [
     {
       title: "Student",
       url: faGraduationCap,
-      link: "student",
+      link: "menu/studentlist",
     },
 
     {

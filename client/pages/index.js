@@ -73,7 +73,7 @@ const menuName = [
 
       <div className="flex h-screen bg-main-green ">
         <div className="p-5 m-auto items-center justify-center md:w-auto">
-          <h1 className="mb-8 font-bold text-2xl text-center text-white ">CHOOSE YOUR CHOICE</h1>
+          {/* <h1 className="mb-8 font-bold text-2xl text-center text-white ">CHOOSE YOUR CHOICE</h1> */}
           <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-2">{menu}</div>
         </div>
       </div>
