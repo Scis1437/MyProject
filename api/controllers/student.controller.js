@@ -40,8 +40,38 @@ const addStudent = async(req, res) => {
     res.json(addStudent)
 }
 
+const deleteStudent = async(req, res) => {
+    const data = req.body
+    const deleteStudent = await prisma.student.deleteMany({
+        where: {
+            // OR :[{id:data.id},{name:data.name}]
+            id:data.id
+            
+        }, 
+        
+    })
+    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = deletestdname'])
+    res.json(deleteStudent)
+}
+
+const updateStudent = async(req, res) => {
+    const data = req.body
+    const updateStudent = await prisma.student.updateMany({
+        where: {
+            OR :[{id:data.id},{name:data.name}]
+            
+            
+        }, 
+        data,
+    })
+    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = update stdname'])
+    res.json(updateStudent)
+}
+
 module.exports = {
     getAllStudent,
     
     addStudent,
+    updateStudent,
+    deleteStudent,
 }

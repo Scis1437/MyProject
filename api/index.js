@@ -6,6 +6,7 @@ const studentRouter = require('./routes/student.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
 const authRouter = require('./routes/auth.route');
+const exportRouter = require('./routes/export.route');
 const refreshRouter = require('./routes/refresh.route');
 const logoutRouter = require('./routes/logout.route');
 const useJWT = require('./middleware/verifyJWT');
@@ -31,6 +32,7 @@ app.use(useJWT)
 app.use('/student', studentRouter)
 app.use('/station',stationRouter)
 app.use('/test',testRouter)
+app.use('/export',exportRouter)
 
 //app.use('/auth', authRouter)
 // start server

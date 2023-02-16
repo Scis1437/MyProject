@@ -50,6 +50,56 @@ const addTest = async(req, res)=>{
     //logger.teacherLog.log('info','add score success')
 }
 
+const updateTest = async(req, res)=>{
+    const data = req.body
+
+
+    const updateScore = await prisma.test.updateMany({
+        
+        where:{
+            station_Id:data.station_Id,
+            student_id:data.student_id,
+            test_number:data.test_number,
+            // score:data.score,
+        },
+        
+        data: {score: data.score},
+        // data: {
+        //     test_number:2,
+        //     score: 10,
+        //     station_Id: "clbgnzizb0000v4ag550yepfe",
+        //     student_id: "clbhmthk20000v4s4f4yu874a",
+        // }
+    }).catch(console.error)
+    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id+' action = update score'])
+    res.json(updateScore)
+
+    //logger.teacherLog.log('info','add score success')
+}
+
+const deleteTest = async(req, res)=>{
+    const data = req.body
+    const deleteScore = await prisma.test.deleteMany({
+        where:{
+            station_Id:data.station_Id,
+            student_id:data.student_id,
+            test_number:data.test_number,
+            score:data.score,
+        },
+
+
+        // }
+    })
+    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete score'])
+    res.json(deleteScore)
+
+    //logger.teacherLog.log('info','add score success')
+}
+
+
+
+
+
 // const addScore = (req, res) => {
 //     const scores = await prisma.station.tests.update({})
 //     res.json({err: 'need implemented'})
@@ -59,4 +109,6 @@ module.exports = {
     getAllTest,
     addTest,
     getStudenttest,
+    updateTest,
+    deleteTest,
 }

@@ -40,8 +40,40 @@ const addStation = async(req, res) => {
     res.json(createStation)
 }
 
+const updateStation = async(req, res) => {
+    const data = req.body
+    console.log(data)
+    const updateStation = await prisma.station.updateMany({
+        where: {
+            OR :[{id:data.id},{station_name:data.station_name}]
+            
+            
+        }, 
+        data,
+    })
+    logger.teacherLog.log('info',[req.user,data.id,data.station_name+' action = update station'])
+    res.json(updateStation)
+}
+
+const deleteStation = async(req, res) => {
+    const data = req.body
+    console.log(data)
+    const deleteStation = await prisma.station.deleteMany({
+        where: {
+            id:data.id
+            
+            
+        }, 
+        
+    })
+    logger.teacherLog.log('info',[req.user,data.id,data.station_name+' action = delete station'])
+    res.json(deleteStation)
+}
+
 module.exports = {
     getAllStation,
     getStation,
     addStation,
+    updateStation,
+    deleteStation,
 }
