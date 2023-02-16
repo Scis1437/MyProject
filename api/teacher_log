@@ -46,3 +46,6 @@
 {"0":"test1","1":"clbgnbwnk0000v49gc4vzxi30","2":"undefined action = deletestdname","level":"info","timestamp":"2023-02-16 15:41:26.463"}
 {"0":"test1","1":"clbgnzizb0000v4ag550yepfe","2":"undefined action = delete station","level":"info","timestamp":"2023-02-16 15:51:51.826"}
 {"0":"test1","1":"clbgo02yy0000v47c39zdnn7c","2":"Station7 action = update station","level":"info","timestamp":"2023-02-16 15:53:46.797"}
+{"level":"info","message":" action = logout ","timestamp":"2023-02-16 18:50:58.948"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-02-16 18:51:01.554"}
+{"level":"info","message":"test1show success","timestamp":"2023-02-16 19:04:41.197"}
