@@ -7,24 +7,25 @@ const getAllStudent = async (req, res) => {
 }
 
 
-// const getStudent = async (req, res) => {
-//     const studentCheck = await prisma.student.findMany({
-//         where: {
+const getStudent = async (req, res) => {
+    const data = req.body
+    const studentCheck = await prisma.student.findMany({
+        where: {
             
-//             name:  req.params.name,
+            name: data.name,
             
             
-//         },
-//         select:{
-//             id:true,
-//             name:true,
-//             tests:true
-//         }
+        },
+        select:{
+            id:true,
+            name:true,
+            tests:true
+        }
  
         
-//     })
-//     res.json(studentCheck)
-// }
+    })
+    res.json(studentCheck)
+}
 
 
 const addStudent = async(req, res) => {
@@ -70,6 +71,7 @@ const updateStudent = async(req, res) => {
 
 module.exports = {
     getAllStudent,
+    getStudent,
     
     addStudent,
     updateStudent,
