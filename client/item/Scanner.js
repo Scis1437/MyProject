@@ -70,7 +70,7 @@ class Scanner extends Component {
   render() {
  
     return <div className='h-10'>
-      <div id="interactive" className="viewport"></div>
+      <div id="interactive" className="viewport flex justify-center  scaner_css"></div>
     </div>
     }
 }

@@ -7,7 +7,7 @@ import ScanBarcode from "../../item/scanBarcode";
 const gradding = () => {
     return(
         <div className="h-screen bg-main-green   flex flex-col justify-center items-center ">
-            <p>SCAN BARCODE</p>
+            <p className="text-header">SCAN BARCODE</p>
             <div className="container">
                 <ScanBarcode/>
        

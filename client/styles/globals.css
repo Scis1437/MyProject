@@ -44,3 +44,7 @@
 .invalid_Login {
   display: block;
 }
+
+.scaner_css :nth-child(2){
+  @apply hidden
+}

@@ -86,12 +86,12 @@ const edit = () => {
           Add new
         </button>
 
-          <div className= {`${newOrderPostOpen === "open" ? "fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm" : ""}`}>
+          <div className= {`${newOrderPostOpen === "open" ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm " : ""}`}>
               {newOrderPost}
           </div>
         
    
-        {/* <div className="absolute inset-0  bg-opacity-30 backdrop-blur-sm  h-full rounded-md  "><EditExam data={data} visible={true}/></div> */}
+        {/* <div className="fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm flex justify-center items-center"><EditExam data={data} visible={true}/></div> */}
       </div>
 
       {/* <EditExam visible={true}/> */}
