@@ -96,7 +96,33 @@ const deleteTest = async(req, res)=>{
     //logger.teacherLog.log('info','add score success')
 }
 
+const errorTest = async(req, res)=>{
+    const data = req.body
 
+
+    const cheatedScore = await prisma.test.create({
+        
+        select:{
+            station_Id:true,
+            student_id:true,
+
+
+        },
+        data: {            station_Id:data.station_Id,
+            student_id:data.student_id,
+            test_number:data.test_number,score: 0},
+        // data: {
+        //     test_number:2,
+        //     score: 10,
+        //     station_Id: "clbgnzizb0000v4ag550yepfe",
+        //     student_id: "clbhmthk20000v4s4f4yu874a",
+        // }
+    }).catch(console.error)
+    logger.teacherLog.log('error',[req.user,data.station_Id,data.student_id+'This Student is Cheat'])
+    res.json(cheatedScore)
+
+    //logger.teacherLog.log('info','add score success')
+}
 
 
 
@@ -111,4 +137,5 @@ module.exports = {
     getStudenttest,
     updateTest,
     deleteTest,
+    errorTest,
 }

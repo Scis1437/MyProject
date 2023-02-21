@@ -49,3 +49,11 @@
 {"level":"info","message":" action = logout ","timestamp":"2023-02-16 18:50:58.948"}
 {"level":"info","message":"test1 action = login ","timestamp":"2023-02-16 18:51:01.554"}
 {"level":"info","message":"test1show success","timestamp":"2023-02-16 19:04:41.197"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-02-21 19:19:06.620"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"error","timestamp":"2023-02-21 20:26:39.396"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"error","timestamp":"2023-02-21 20:28:10.163"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"\u001b[31merror\u001b[39m","timestamp":"2023-02-21 20:33:54.185"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"\u001b[31merror\u001b[39m","timestamp":"2023-02-21 20:35:31.740"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"\u001b[31merror\u001b[39m","timestamp":"2023-02-21 20:36:28.536"}
+{"level":"\u001b[32m\u001b[32minfo\u001b[32m\u001b[39m","message":"    test1show success","timestamp":"2023-02-21 20:39:45.236"}
+{"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"error","timestamp":"2023-02-21 20:42:28.810"}

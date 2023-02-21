@@ -16,7 +16,7 @@ const getDataFromDatabase = async (req, res) => {
     const excelData = xlsx.write(workbook, { type: "buffer", bookType: "xlsx" });
     await fs.promises.writeFile("data.xlsx", excelData);
     console.log("Excel file saved");
-  
+    res.attachment("data.xlsx");
     res.sendStatus(200);
   };
 module.exports = {getDataFromDatabase}
