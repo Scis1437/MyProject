@@ -1,14 +1,19 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Item from "../item/studentChecklistItem";
 import Image from "next/image";
 import medImg from "../img/logoMEDCMUen-1280x227.png";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import {
 
+  faChevronCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const subject = [
   { title: "OS", status: "Complete" },
   { title: "Algorithm", status: "Incomplete" },
+  { title: "OOP", status: "Incomplete" },
 ];
 
 const item = subject.map((items, index) => {
@@ -19,9 +24,8 @@ const item = subject.map((items, index) => {
   );
 });
 function Redirect({ to }) {
-
   const router = useRouter();
-  console.log("Redirect_work")
+  console.log("Redirect_work");
   useEffect(() => {
     router.push(to);
   }, [to]);
@@ -50,37 +54,34 @@ const Table = (props) => {
 
   return (
     <table className="w-full">
-      <thead className="bg-white ">
-        <tr>
+      <thead className=" ">
+        <tr className="rounded-lg bg-gray ">
           <th
             scope="col"
-            className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+            className="rounded-tl-lg text-sm   font-medium text-gray-900 px-6 py-4 text-left "
           >
             <p>Title</p>
           </th>
-          <th className="text-sm font-medium text-gray-900 px-6 py-4 text-right">
+          <th className="rounded-tr-lg rounded-tb-md text-sm font-medium text-gray-900 px-6 py-4 text-right">
             <p>Status</p>
           </th>
         </tr>
       </thead>
 
       <tbody>
-        {data.map(
-          (items) => (
-            // console.log(items)
-            // console.log(`${items.title}` +"  " + `${items.status}` );
+        {data.map((items) => (
+          // console.log(items)
+          // console.log(`${items.title}` +"  " + `${items.status}` );
 
-            <tr className="bg-gray-100 border-b">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {`${items.title}`}
-              </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
-                {`${items.status}`}
-              </td>
-            </tr>
-          )
-
-        )}
+          <tr class="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
+            <td class=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
+              {`${items.title}`}
+            </td>
+            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+              {`${items.status}`}
+            </td>
+          </tr>
+        ))}
 
         {/* // {data.map(row => {
         //   <Row title={row.title} 
@@ -94,11 +95,26 @@ const Table = (props) => {
 function studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState(subject);
-  if(shouldRedirect){
+  if (shouldRedirect) {
     return <Redirect to="/" />;
   }
   return (
-    <div className="h-screen  bg-main-green flex justify-center items-center">
+    <div className="background">
+      <div className="pl-10% flex flex-row w-full justify-start">
+        <div className="flex items-center">
+          <FontAwesomeIcon
+            className="  text-white mr-2   text-2xl"
+            icon={faChevronCircleLeft}
+            onClick={() => {
+              setShouldRedirect(true);
+            }}
+          ></FontAwesomeIcon>
+        </div>
+
+        <p className="text-white font-extrabold text-xl  w-full md:text-2xl ">
+          StudentCheck
+        </p>
+      </div>
       <div className="container">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -106,7 +122,6 @@ function studentpage() {
               <div className="overflow-hidden">
                 <div className="grid grid-cols-1  w-full h-12 mb-5 md:grid-cols-2 px-5 ">
                   <div className="flex justify-center md:justify-start items-center mb-4 md:mb-0">
-                  <p onClick={() => {setShouldRedirect(true)} }>back</p>
                     <Image
                       className="w-32 md:w-44  flex justify-start items-center "
                       src={medImg}

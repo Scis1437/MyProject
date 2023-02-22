@@ -27,7 +27,7 @@ const TodoList = () => {
 
   return (
     <div className="">
-      <h1>Title</h1>{" "}
+      <h1>title</h1>{" "}
       <ul>
         {list.map((todo) => (
           <li key={todo.id}>

@@ -64,6 +64,7 @@ module.exports = {
       'input-green' : '#C9EAEA',
       'light-green' : '#239fa0',
       'btn-red' : '#d11a2a' ,
+      'table-odd' : '#D8EBEB' 
       
     }),
     columns: {

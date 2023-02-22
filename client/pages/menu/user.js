@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import React from "react";
-const user = [
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import Adduser from "../../popup/adduser";
+const users = [
   {
     firstname: "charnnarong",
     lastname: "charoensanongkun",
@@ -12,81 +14,125 @@ const user = [
     station: "cpe96",
   },
 ];
-function userEdit() {
+
+
+
+function UserEdit() {
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
+  const [order, setOrder] = useState([]);
+  const [data, setData] = useState(null);
+
+
+
+  const onNewOrderClick = (type, data) => {
+
+    // handle new order click
+    setData(data);
+    setNewOrderPostOpen(type);
+  }
+   console.log(newOrderPostOpen);
+  let newOrderPost = null;
+  switch (newOrderPostOpen) {
+ 
+    case "open":
+      newOrderPost = <Adduser data={data} visible={true} />;
+      break;
+    case "closed":
+      newOrderPost = null;
+      break;
+  };
+
+  
+
   return (
-    <div className={`background`}>
-      <p className="text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl   ">
-        Edit user
-      </p>
-
-      <div className="container ">
-        <table class="table-auto w-full">
-          <thead>
-            <tr>
-              <th class="px-4 py-2">Firstname</th>
-              <th class="px-4 py-2">Lastname</th>
-              <th className="">Station</th>
-              <th> sd</th>
-            </tr>
-          </thead>
-          {/* <tbody class = "">
-            <tr class="bg-gray-100 ">
-              <td class="px-4 py-2">John Smith</td>
-              <td class="px-4 py-2">john.smith@example.com</td>
-              <td class="px-4 py-2">john.smith@example.com</td>
-            </tr>
-            <tr class="bg-white">
-              <td class="px-4 py-2">Jane Doe</td>
-              <td class="px-4 py-2">jane.doe@example.com</td>
-              <td class="px-4 py-2">john.smith@example.com</td>
-            </tr>
-            <tr class="bg-gray-100">
-              <td class="px-4 py-2">Bob Johnson</td>
-              <td class="px-4 py-2">bob.johnson@example.com</td>
-              <td class="px-4 py-2">john.smith@example.com</td>
-            </tr>
-          </tbody> */}
-        </table>
-        <tbody class="">
-          {user.map((items) => (
-            <tr class="bg-gray-100 ">
-              <td class="px-4 py-2">{items.firstname}</td>
-              <td class="px-4 py-2">{items.lastname}</td>
-              <td class="px-4 py-2">{items.station}</td>
-            </tr>
-
-            // <div className="flex w-full justify-between px-4 my-1">
-            //   <p className="text-sm">{items.firstname}</p>
-            //   <p className="text-sm">{items.lastname}</p>
-            //   <p className="text-sm">{items.station}</p>
-
-            //   <div className="flex gap-1">
-            //     <button
-            //       className="btn"
-            //       onClick={() => onNewOrderClick("open", { items })}
-            //     >
-            //       Edit
-            //     </button>
-            //     <button
-            //       className=" rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
-            //       data="data"
-            //     >
-            //       Delete
-            //     </button>
-            //   </div>
-
-            // </div>
-          ))}{" "}
-        </tbody>
-        <div>
-          <button className="btn">add user</button>
+    <div className="background">
+      <div className="pl-10% flex flex-row w-full justify-start">
+        <div className="flex items-center">
+          <FontAwesomeIcon
+            className="text-white mr-2 text-2xl"
+            icon={faChevronCircleLeft}
+            onClick={() => setShouldRedirect(true)}
+          />
         </div>
-        {/* <div className="fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm flex justify-center items-center"><EditExam data={data} visible={true}/></div> */}
+        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+          Edit user
+        </p>
       </div>
 
-      {/* <EditExam visible={true}/> */}
+      <div className="container">
+        <table className="w-full">
+          <thead className="rounded-xl bg-gray border-radius-table">
+            <tr>
+              <td className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <p>Firstname</p>
+              </td>
+              <td className="text-sm font-medium text-gray-900 px-6">
+                <p>Lastname</p>
+              </td>
+              <td className="text-sm font-medium text-gray-900 px-6 ">
+                <p>Station</p>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((item) => (
+              <tr
+                key={item.station}
+                className="bg-gray-100 mx-4 odd:bg-table-odd even:bg-slate-50 rounded-lg"
+              >
+                <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {item.firstname}
+                </td>
+                <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {item.lastname}
+                </td>
+                <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {item.station}
+                </td>
+                <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button
+                    className="btn"
+                    onClick={() =>  onNewOrderClick(open , item)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
+                    onClick={() =>  onNewOrderClick(open , item)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {/* <button
+                  className="btn"
+                  onClick={() => onNewOrderClick("open", { user })}
+                >
+                  Edit
+                </button>
+                <button
+                  className="rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
+                  data="data"
+                >
+                  Delete
+                </button> */}
+          </tbody>
+        </table>
+
+        <button className="btn" onClick={() => onNewOrderClick("open")}>
+          Add new
+        </button>
+        <div className= {`${newOrderPostOpen === "open" ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm " : ""}`}>
+              {newOrderPost}
+          </div>
+        
+     
+      </div>
     </div>
   );
 }
 
-export default userEdit;
+export default UserEdit;
