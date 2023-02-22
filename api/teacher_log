@@ -58,3 +58,9 @@
 {"level":"\u001b[32m\u001b[32minfo\u001b[32m\u001b[39m","message":"    test1show success","timestamp":"2023-02-21 20:39:45.236"}
 {"0":"test1","1":"clbhm8yef0000v4gchx39mhao","2":"620610795This Student is Cheat","level":"error","timestamp":"2023-02-21 20:42:28.810"}
 {"level":"info","message":"test1 action = show ","timestamp":"2023-02-21 21:25:31.651"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-02-22 21:56:17.413"}
+{"level":"info","message":" action = logout ","timestamp":"2023-02-22 21:57:40.153"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-02-22 21:58:42.241"}
+{"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = update score","level":"info","timestamp":"2023-02-22 21:59:05.726"}
+{"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = update score","level":"info","timestamp":"2023-02-22 22:01:22.282"}
+{"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = add score","level":"info","timestamp":"2023-02-22 22:03:29.477"}
