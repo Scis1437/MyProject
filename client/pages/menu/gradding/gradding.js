@@ -49,6 +49,16 @@ function SelectStation() {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-between mx-2">
+          <div className="flex flex-row">
+            <p>
+              comment : 
+            </p>
+            <input></input>
+          </div>
+
+          <button className="btn">submit</button>
+        </div>
       </div>
     </div>
   );
