@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Adduser from "../../popup/adduser";
+import { useRouter } from "next/router";
+
+
 const users = [
   {
     firstname: "charnnarong",
@@ -15,35 +18,41 @@ const users = [
   },
 ];
 
-
-
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
   const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
 
-
-
+  function Redirect({ to }) {
+    const router = useRouter();
+    console.log("Redirect_work");
+    useEffect(() => {
+      router.push(to);
+    }, [to]);
+  
+    return null;
+  }
+  
+  if (shouldRedirect) {
+    return <Redirect to="/menu" />;
+  }
   const onNewOrderClick = (type, data) => {
-
     // handle new order click
     setData(data);
     setNewOrderPostOpen(type);
-  }
-   console.log(newOrderPostOpen);
+  };
+  console.log(newOrderPostOpen);
   let newOrderPost = null;
   switch (newOrderPostOpen) {
- 
     case "open":
       newOrderPost = <Adduser data={data} visible={true} />;
       break;
-    case "closed":
+
+    case "close":
       newOrderPost = null;
       break;
-  };
-
-  
+  }
 
   return (
     <div className="background">
@@ -94,42 +103,32 @@ function UserEdit() {
                 <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     className="btn"
-                    onClick={() =>  onNewOrderClick(open , item)}
+                    onClick={() => onNewOrderClick("open", item)}
                   >
                     Edit
                   </button>
-                  <button
-                    className="rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
-                    onClick={() =>  onNewOrderClick(open , item)}
-                  >
+                  <button className="rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red">
                     Delete
                   </button>
                 </td>
               </tr>
             ))}
-            {/* <button
-                  className="btn"
-                  onClick={() => onNewOrderClick("open", { user })}
-                >
-                  Edit
-                </button>
-                <button
-                  className="rounded-2xl px-3 py-1 font-semibold text-white bg-btn-red"
-                  data="data"
-                >
-                  Delete
-                </button> */}
+
           </tbody>
         </table>
 
-        <button className="btn" onClick={() => onNewOrderClick("open")}>
+        <button className="btn" onClick={() => onNewOrderClick("open", null)}>
           Add new
         </button>
-        <div className= {`${newOrderPostOpen === "open" ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm " : ""}`}>
-              {newOrderPost}
-          </div>
-        
-     
+        <div
+          className={`${
+            newOrderPostOpen === "open"
+              ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
+              : ""
+          }`}
+        >
+          {newOrderPost}
+        </div>
       </div>
     </div>
   );

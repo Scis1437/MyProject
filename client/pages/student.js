@@ -60,7 +60,7 @@ const Table = (props) => {
             scope="col"
             className="rounded-tl-lg text-sm   font-medium text-gray-900 px-6 py-4 text-left "
           >
-            <p>Title</p>
+            <p>station</p>
           </th>
           <th className="rounded-tr-lg rounded-tb-md text-sm font-medium text-gray-900 px-6 py-4 text-right">
             <p>Status</p>
