@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
+import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const station = [
   { "History talking patient ": [1, 2, 3] },
@@ -13,6 +16,31 @@ const data = [
 
   {
     studentCode: "6206xxx3",
+    station: "History talking patient ",
+    substation: ["History talking patient ", "Peptic ulcer"],
+  },
+  {
+    studentCode: "6206xxx4",
+    station: "History talking patient ",
+    substation: ["History talking patient ", "Peptic ulcer"],
+  },
+  {
+    studentCode: "6206xxx4",
+    station: "History talking patient ",
+    substation: ["History talking patient ", "Peptic ulcer"],
+  },
+  {
+    studentCode: "6206xxx4",
+    station: "History talking patient ",
+    substation: ["History talking patient ", "Peptic ulcer"],
+  },
+  {
+    studentCode: "6206xxx4",
+    station: "History talking patient ",
+    substation: ["History talking patient ", "Peptic ulcer"],
+  },
+  {
+    studentCode: "6206xxx4",
     station: "History talking patient ",
     substation: ["History talking patient ", "Peptic ulcer"],
   },
@@ -63,6 +91,15 @@ const data = [
 // </div>
 //   );
 // };
+function Redirect({ to }) {
+  const router = useRouter();
+  console.log("Redirect_work");
+  useEffect(() => {
+    router.push(to);
+  }, [to]);
+
+  return null;
+}
 
 const List = (props) => {
   const [dropdown, setDropdown] = useState(false);
@@ -93,7 +130,7 @@ const List = (props) => {
           <label> {station}</label>
           <div>
             <form className="flex justify-between w-full">
-              <label className="text-xs mx-3" htmlFor="subStation">
+              <label className="text-xs mx-3 w-full" htmlFor="subStation">
                 {subStationOptions}
               </label>
           
@@ -110,16 +147,34 @@ const student = data.map((list) => {
   return <List {...list} />;
 });
 function studentlist() {
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  if (shouldRedirect) {
+    return <Redirect to="/menu" />;
+  }
   return (
     <div className="background">
-      <p className="text-header">Student list</p>
+            <div className="header-page">
+        <div className="flex items-center">
+          <FontAwesomeIcon
+            className="text-white mr-2 text-2xl"
+            icon={faChevronCircleLeft}
+            onClick={() => setShouldRedirect(true)}
+          />
+        </div>
+        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+          Student list
+        </p>
+      </div>
       <div className="container ">
         <div className="flex w-full items-center justify-start">
-          <p className="text-subheader">student code : </p>
+          <p className="text-subheader">search for student :  </p>
           <input className="rounded-md w-36 bg-input-green pl-3 "></input>
         </div>
 
         {student}
+        <button className="btn">
+          SUBMIT
+        </button>
       </div>
     </div>
   );
