@@ -14,14 +14,28 @@ get : http://localhost:9000/export/
  ***************parse value มาทาง body*******
  
  API METHOD
+ 
+ 
  method login .post '/auth'
+ 
+ 
 ex JSON content body
+ 
 {"user": "test1",
 "pwd":"1234"}
+ 
+ 
 method refresh .get '/refresh'
+ 
+ 
 method logout .logout '/logout'
+ 
+ 
 method register for admin role only .post '/register'
+ 
+ 
 ex JSON content body
+ 
 {"user": "test7",
 "pwd":"1234"}
 
