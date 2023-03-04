@@ -64,3 +64,15 @@
 {"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = update score","level":"info","timestamp":"2023-02-22 21:59:05.726"}
 {"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = update score","level":"info","timestamp":"2023-02-22 22:01:22.282"}
 {"0":"test1","1":"clbgo28uj0002v47chxiqv7nf","2":"620610795 action = add score","level":"info","timestamp":"2023-02-22 22:03:29.477"}
+{"level":"info","message":"test1 action = login ","timestamp":"2023-03-04 14:37:53.323"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-03-04 14:38:24.153"}
+{"level":"info","message":"test1show success","timestamp":"2023-03-04 14:39:49.934"}
+{"level":"info","message":"test1show success","timestamp":"2023-03-04 14:39:59.226"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-03-04 14:54:56.946"}
+{"level":"info","message":" action = logout ","timestamp":"2023-03-04 14:56:21.743"}
+{"level":"info","message":"test2 action = login ","timestamp":"2023-03-04 14:56:27.293"}
+{"level":"info","message":"test1show success","timestamp":"2023-03-04 15:24:00.759"}
+{"level":"info","message":"test1show success","timestamp":"2023-03-04 15:24:11.013"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-03-04 15:24:20.137"}
+{"level":"info","message":"test1 action = show ","timestamp":"2023-03-04 15:24:54.659"}
+{"level":"info","message":"test1show success","timestamp":"2023-03-04 15:26:00.066"}
