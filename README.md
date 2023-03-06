@@ -90,8 +90,91 @@ show test .get '/test'
   
 {"id": "620610795","name":"Olive"}
 
-show test โดยเรียกดูผ่านรหัสนักศึกษา .get '/test/idที่ต้องการ
-เช่น '/test/620610795
+show test โดยเรียกดูผ่านรหัสนักศึกษา .get '/student/idที่ต้องการ
+เช่น '/student/620719000
+ โดย parse id มาทาง Body
+ {"id":"620719000"}
+ Result 
+ [
+  {
+    "id": "620719000",
+    "name": "Rachel Thompson",
+    "tests": [
+      {
+        "student_id": "620719000",
+        "station_Id": "1",
+        "test_number": 1,
+        "test_name": "Dyspnea",
+        "score": 5
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "1",
+        "test_number": 2,
+        "test_name": "Anemia",
+        "score": 10
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "3",
+        "test_number": 1,
+        "test_name": "urine catheter",
+        "score": 8
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "3",
+        "test_number": 2,
+        "test_name": "CPR",
+        "score": 10
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "4",
+        "test_number": 1,
+        "test_name": "Breast feeding",
+        "score": 8
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "4",
+        "test_number": 2,
+        "test_name": "Brain dead",
+        "score": 8
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "5",
+        "test_number": 1,
+        "test_name": "Pneumonia",
+        "score": 6
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "5",
+        "test_number": 2,
+        "test_name": "Blood smear thalassemia",
+        "score": 7
+      }
+    ]
+  }
+]
+ 
+ 
 
 export file score โดยเรียกดาวโหลดเป็นคะแนนของสเตชั้นไหน
   
