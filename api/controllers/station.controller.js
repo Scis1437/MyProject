@@ -10,13 +10,15 @@ const getStation = async (req, res) => {
     const station1 = await prisma.station.findMany({
         where: {
             
-            station_name:  req.params.station_name,
+            id:req.body.id,
             
             
         },
         select:{
             id:true,
-            tests:true
+            station_name:true,
+            station_teacher:true,
+            
         }
  
         
@@ -24,6 +26,25 @@ const getStation = async (req, res) => {
     res.json(station1)
 }
 
+const getStationScore= async (req, res) => {
+    const station_testScore = await prisma.station.findMany({
+        where: {
+            
+            id:req.body.id,
+            
+            
+        },
+        select:{
+            id:true,
+            station_name:true,
+            station_teacher:true,
+            tests:true,
+        }
+ 
+        
+    })
+    res.json(station_testScore)
+}
 
 const addStation = async(req, res) => {
     const data = req.body
@@ -32,6 +53,7 @@ const addStation = async(req, res) => {
         select: {
             id: true,
             station_name: true,
+            station_teacher:true,
             
         },  
         data,
@@ -71,9 +93,10 @@ const deleteStation = async(req, res) => {
 }
 
 module.exports = {
-    getAllStation,
+    
     getStation,
     addStation,
     updateStation,
     deleteStation,
+    getStationScore,getAllStation,
 }
