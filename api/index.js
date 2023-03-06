@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const studentRouter = require('./routes/student.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
+const teacherRouter = require('./routes/teacher.route');
 const authRouter = require('./routes/auth.route');
 const exportRouter = require('./routes/export.route');
 const refreshRouter = require('./routes/refresh.route');
@@ -29,6 +30,7 @@ app.use('/logout', logoutRouter);
 
 app.use(useJWT)
 // router
+app.use('/teacher', teacherRouter)
 app.use('/student', studentRouter)
 app.use('/station',stationRouter)
 app.use('/test',testRouter)

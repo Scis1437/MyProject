@@ -45,3 +45,8 @@ model Test {
 
   @@id([student_id, station_Id,test_number,test_name])
 }
+
+model Teacher {
+  teacher_name String@unique
+  station_name String
+}

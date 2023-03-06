@@ -1,4 +1,5 @@
 const {prisma} = require('../db')
+const user = require("../model/users.json")
 const logger = require('../controllers/logger.controller')
 const getAllTest = async (req, res) => {
     const tests = await prisma.test.findMany({})
@@ -71,7 +72,7 @@ const updateTest = async(req, res)=>{
         //     student_id: "clbhmthk20000v4s4f4yu874a",
         // }
     }).catch(console.error)
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id+' action = update score'])
+    logger.teacherLog.log('info',[req.user,data.student_teacher,data.station_Id,data.student_id+' action = update score'])
     res.json(updateScore)
 
     //logger.teacherLog.log('info','add score success')
