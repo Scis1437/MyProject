@@ -78,13 +78,14 @@ id ที่ต้องการเปลี่ยน แล้วเปลี�
 }
 
 cheated student .post'/test/cheated'
-  
+  role
 ระบบจะเซ็ทคะะแนนเทสนั้นให้ 0เทสข้อไหนstation id ไหน ละนักเรียนไอดีอะไร
   
 {"test_number":12,
 "station_Id": "clbhm8yef0000v4gchx39mhao",
 "student_id": "620610795"}
 
+-
 
 show test .get '/test'
   
@@ -109,7 +110,7 @@ update score .put '/test'
 
 ให้คะแนน .put '/test'
   {"test_number":10,
-"score": 8,
+"score": 8,T
 "station_Id": "clbgo28uj0002v47chxiqv7nf",
 "student_id": "620610795"}
 

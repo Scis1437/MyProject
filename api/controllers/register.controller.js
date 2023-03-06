@@ -11,6 +11,7 @@ const bcrypt = require("bcrypt");
 const handleNewUser = async (req, res) => {
 
     const { user, pwd } = req.body;
+    console.log(pwd)
     if (!user || !pwd)
       return res
         .status(400)

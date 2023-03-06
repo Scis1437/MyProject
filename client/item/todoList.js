@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import EditExam from "../popup/edit";
+import EditExam from "../popup/editStation";
 const TodoList = () => {
   const [list, setList] = useState([]);
   const [input, setInput] = useState("");
@@ -9,6 +9,8 @@ const TodoList = () => {
     const newTodo = {
       id: Math.random(),
       todo: todo,
+      // id: 1 , 
+      // todo:"csadsda" 
     };
 
     // add the todo to the list

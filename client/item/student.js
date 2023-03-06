@@ -8,13 +8,7 @@ const subject = [
   { title: "Algorithm", status: "Incomplete" },
 ];
 
-const item = subject.map((items, index) => {
-  return (
-    <div>
-      <Item key={index} title={items.title} status={items.status} />
-    </div>
-  );
-});
+
 
 const Row = (props) => {
   const { title, status } = props;

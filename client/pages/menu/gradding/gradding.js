@@ -12,9 +12,9 @@ const title = {
   4: "open, relax yet professional body language",
 };
 
-function SelectStation() {
+function Gradding() {
   const router = useRouter();
-  const { station, studentCode } = router.query;
+  const { station, studentCode , method ,data} = router.query;
   const [points, setPoints] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const handlePointChange = (titleId, pointValue) => {
@@ -23,13 +23,52 @@ function SelectStation() {
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;
   }
+
+  function MethodCheck() {
+    const {method} = router.query; 
+    console.log(method)
+    if (method === "point") {
+      return (
+        <select
+
+        >
+          <option value=""></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      );
+    } else if (method === "pass/fail") {
+      return (
+        <select
+    
+        >
+          <option value=""></option>
+          <option value="pass">pass</option>
+          <option value="fail">fail</option>
+        </select>
+      );
+    }
+  }
+
   return (
     <div className="background">
-      <p className="text-header">{station}</p>
+      <div className="header-page">
+        <div className="flex items-center ">
+          <FontAwesomeIcon
+            className="backward-btn"
+            icon={faChevronCircleLeft}
+            onClick={() => setShouldRedirect(true)}
+          />
+        </div>{" "}
+        <p className="text-header">{station}</p>
+      </div>
+
       <div className="container ">
         <div>
           <p>student code : {studentCode}</p>
-          <p>student name : </p>
+          <p>student name : {data.name} </p>
         </div>
         <table className="table-auto w-full">
           <thead>
@@ -48,31 +87,26 @@ function SelectStation() {
                   {title}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
-                  <select
-                    onChange={(e) => handlePointChange(id, e.target.value)}
-                  >
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
+                  <MethodCheck />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="flex justify-between">
-          <div className="flex">  <p>comment : </p>
-          <input></input>
-
+          <div className="flex">
+            {" "}
+            <p>comment : </p>
+            <input></input>
           </div>
-        
-          <button className="btn"   onClick={() => setShouldRedirect(true)}>SUBMIT</button>
+
+          <button className="btn" onClick={() => setShouldRedirect(true)}>
+            SUBMIT
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-export default SelectStation;
+export default Gradding;

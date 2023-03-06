@@ -12,7 +12,7 @@
   @apply  rounded-md md:w-60 bg-input-green pl-3 ;
 }
 .container {
-       @apply w-11/12 md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center  overflow-auto
+       @apply w-11/12 md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center overflow-x-hidden
 }
 .select-button {
         @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
@@ -39,7 +39,7 @@
 }
 
 .text-header {
-    @apply text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl  ; 
+    @apply text-white font-extrabold text-xl w-full md:text-2xl ; 
 }
 
 .text-subheader {
@@ -56,4 +56,16 @@
 
 .header-page {
   @apply pl-1/12 md:pl-10% flex flex-row w-full justify-start ; 
+}
+
+.text-data-table {
+  @apply m-5
+}
+
+.text-title-table {
+  @apply text-sm  md:text-xl font-medium  px-6 py-4
+}
+
+.backward-btn {
+  @apply text-white mr-2 text-2xl hover:text-gray-light
 }
