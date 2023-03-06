@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt");
 
 const handleNewUser = async (req, res) => {
 
-    const { user, pwd } = req.body;
+    const { user,name, pwd } = req.body;
     if (!user || !pwd)
       return res
         .status(400)
@@ -25,6 +25,7 @@ const handleNewUser = async (req, res) => {
       const newUser = {
         username: user,
         roles: { Teacher: 2 },
+        name: name,
         password: hashedPwd,
       };
       usersDB.setUsers([...usersDB.users, newUser]);

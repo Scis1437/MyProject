@@ -44,7 +44,7 @@ const addScore = async(req, res)=>{
         //     student_id: "clbhmthk20000v4s4f4yu874a",
         // }
     })
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id+' action = add score'])
+    logger.teacherLog.log('info',[req.name,data.station_Id,data.student_id+' action = add score'])
     res.json(addScore)
 
     //logger.teacherLog.log('info','add score success')
