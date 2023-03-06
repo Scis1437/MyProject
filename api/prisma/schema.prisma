@@ -36,7 +36,9 @@ model Test {
   student Student @relation(fields: [student_id], references: [id])
   station_Id String
   station Station @relation(fields: [station_Id], references: [id])
-  
+  station_name String
+  station_teacher String 
+  name String 
   test_number Int
   test_name String
   score Int

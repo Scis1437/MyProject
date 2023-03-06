@@ -82,7 +82,8 @@ const deleteStation = async(req, res) => {
     console.log(data)
     const deleteStation = await prisma.station.deleteMany({
         where: {
-            id:data.id
+            id:data.id,
+            
             
             
         }, 

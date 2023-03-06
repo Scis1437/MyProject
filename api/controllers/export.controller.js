@@ -12,9 +12,11 @@ const getDataFromDatabase = async (req, res) => {
     },
     select:{
         station_Id:true,
-        
+        station_name:true,
+        station_teacher:true,
         
         student_id:true,
+        name:true,
         
         
         test_number:true,
