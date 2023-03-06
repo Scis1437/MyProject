@@ -12,10 +12,10 @@ const verifyRoles = require("../middleware/verifyRoles");
 
 // create router
 const router = express.Router();
-
+router.get("/:student_id", getStudenttest);
 router.get("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), getAllTest);
 router.post("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), addTest);
-router.get("/:student_id", getStudenttest);
+
 router.put("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), updateTest);
 router.delete(
   "/",

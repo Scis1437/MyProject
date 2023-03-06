@@ -25,8 +25,8 @@ model Station {
   id String @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
-  
-  station_name String
+  station_name String 
+  station_teacher String 
 
   tests Test[]
 }
@@ -36,9 +36,12 @@ model Test {
   student Student @relation(fields: [student_id], references: [id])
   station_Id String
   station Station @relation(fields: [station_Id], references: [id])
-  
-  test_number Int 
+  station_name String
+  station_teacher String 
+  name String 
+  test_number Int
+  test_name String
   score Int
 
-  @@id([student_id, station_Id,test_number])
+  @@id([student_id, station_Id,test_number,test_name])
 }

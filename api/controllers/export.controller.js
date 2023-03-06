@@ -11,9 +11,16 @@ const getDataFromDatabase = async (req, res) => {
         
     },
     select:{
-        student_id:true,
         station_Id:true,
+        station_name:true,
+        station_teacher:true,
+        
+        student_id:true,
+        name:true,
+        
+        
         test_number:true,
+        test_name:true,
         score:true
     },
 
@@ -31,7 +38,7 @@ const getDataFromDatabase = async (req, res) => {
     xlsx.utils.book_append_sheet(workbook, sheet, "Sheet1");
   
     const excelData = xlsx.write(workbook, { type: "buffer", bookType: "xlsx" });
-    await fs.promises.writeFile("data.xlsx", excelData);
+    await fs.promises.writeFile("data_station_Score.xlsx", excelData);
     console.log("Excel file saved");
     res.attachment("data.xlsx");
     res.sendStatus(200);

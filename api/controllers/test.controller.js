@@ -10,7 +10,7 @@ const getStudenttest = async (req, res) => {
     const studentCheck = await prisma.test.findMany({
         where: {
             
-            student_id:  req.params.student_id,
+            student_id:  req.param.student_id,
             
             
         },
@@ -84,6 +84,7 @@ const deleteTest = async(req, res)=>{
             station_Id:data.station_Id,
             student_id:data.student_id,
             test_number:data.test_number,
+            test_name:data.test_name,
             score:data.score,
         },
 
