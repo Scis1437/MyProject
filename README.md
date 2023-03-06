@@ -40,11 +40,195 @@ ex JSON content body
 "pwd":"1234"}
 
 method station for station detail .get '/station'
-  
-  
-{"Station_name":"station3",
-}
+ result
+ [
+  {
+    "id": "1",
+    "createdAt": "2023-03-06T07:58:49.781Z",
+    "updatedAt": "2023-03-06T07:58:49.781Z",
+    "station_name": "History taking",
+    "station_teacher": "Naruto Uzumaki"
+  },
+  {
+    "id": "2",
+    "createdAt": "2023-03-06T08:15:33.250Z",
+    "updatedAt": "2023-03-06T08:15:33.250Z",
+    "station_name": "Physical examination",
+    "station_teacher": "Mikasa Ackerman"
+  },
+  {
+    "id": "3",
+    "createdAt": "2023-03-06T08:16:02.205Z",
+    "updatedAt": "2023-03-06T08:16:02.205Z",
+    "station_name": "Technical skill",
+    "station_teacher": "Son Goku"
+  },
+  {
+    "id": "4",
+    "createdAt": "2023-03-06T08:16:22.347Z",
+    "updatedAt": "2023-03-06T08:16:22.347Z",
+    "station_name": "Communication skill",
+    "station_teacher": "Edward Elric"
+  },
+  {
+    "id": "5",
+    "createdAt": "2023-03-06T08:16:39.250Z",
+    "updatedAt": "2023-03-06T08:16:39.250Z",
+    "station_name": "Interpretation skill",
+    "station_teacher": "Monkey D. Luffy"
+  }
+]
 
+ show station score .get '/station'/2
+ parse id via body
+ {
+  "id": "2"
+}
+ result
+ [
+  {
+    "id": "2",
+    "station_name": "Physical examination",
+    "station_teacher": "Mikasa Ackerman",
+    "tests": [
+      {
+        "student_id": "620719000",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719000",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719001",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719001",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 6
+      },
+      {
+        "student_id": "620719002",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719002",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 6
+      },
+      {
+        "student_id": "620719003",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 6
+      },
+      {
+        "student_id": "620719004",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719004",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719005",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 5
+      },
+      {
+        "student_id": "620719005",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719006",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 7
+      },
+      {
+        "student_id": "620719006",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719007",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 7
+      },
+      {
+        "student_id": "620719007",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 9
+      },
+      {
+        "student_id": "620719008",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 7
+      },
+      {
+        "student_id": "620719008",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 8
+      },
+      {
+        "student_id": "620719009",
+        "station_Id": "2",
+        "test_number": 1,
+        "test_name": "Knee pain",
+        "score": 7
+      },
+      {
+        "student_id": "620719009",
+        "station_Id": "2",
+        "test_number": 2,
+        "test_name": "Acute abdominal pain",
+        "score": 5
+      }
+    ]
+  }
+]
+ 
+ 
   
 method delete test score .delete'/test'
   
