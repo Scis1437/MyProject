@@ -84,6 +84,7 @@ const deleteTest = async(req, res)=>{
             station_Id:data.station_Id,
             student_id:data.student_id,
             test_number:data.test_number,
+            test_name:data.test_name,
             score:data.score,
         },
 
