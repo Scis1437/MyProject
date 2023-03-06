@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getAllTest,
-  addTest,
+  addScore,
   getStudenttest,
   updateTest,
   deleteTest,
@@ -14,7 +14,7 @@ const verifyRoles = require("../middleware/verifyRoles");
 const router = express.Router();
 router.get("/:student_id", getStudenttest);
 router.get("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), getAllTest);
-router.post("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), addTest);
+router.post("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), addScore);
 
 router.put("/", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Teacher), updateTest);
 router.delete(

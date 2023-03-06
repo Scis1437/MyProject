@@ -27,7 +27,7 @@ const getStudenttest = async (req, res) => {
     res.json(studentCheck);
     //logger.teacherLog.log('info','show success')  
 }
-const addTest = async(req, res)=>{
+const addScore = async(req, res)=>{
     const data = req.body
     const addScore = await prisma.test.create({
         select:{
@@ -134,7 +134,7 @@ const errorTest = async(req, res)=>{
 
 module.exports = {
     getAllTest,
-    addTest,
+    addScore,
     getStudenttest,
     updateTest,
     deleteTest,
