@@ -39,7 +39,16 @@ ex JSON content body
 {"user": "test7",
 "pwd":"1234"}
 
+ method add station .post '/station'
+ 
 method station for station detail .get '/station'
+ {
+  "id":"4",
+  "station_name":"Communication skill",
+  "station_teacher":"Naruto Uzumaki"
+}
+ 
+ 
  result
  [
   {
