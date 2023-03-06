@@ -374,11 +374,16 @@ update score .put '/test'
 "student_id": "620610795"}
 
 
-ให้คะแนน .put '/test'
-  {"test_number":10,
-"score": 8,
-"station_Id": "clbgo28uj0002v47chxiqv7nf",
-"student_id": "620610795"}
+ให้คะแนน .post '/test'
+{"test_number":2,
+"test_name":"Anemia",
+"score":8,
+"station_Id": "1",
+"student_id": "620719000",
+"station_name":"History taking",
+"station_teacher":"Mikasa Ackerman",
+"name":"Rachel Thompson"
+}
 
  
  
