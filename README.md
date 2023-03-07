@@ -395,4 +395,17 @@ update score .put '/test'
 }
 
  
+teacher 
+ create teacher .post '/teacher'
+ delete .delete '/teacher'
+ create and delete decare teacher in body 
+ {
+"teacher_name":"ioi oi"
+}
+ show all teacher .get '/teacher' 
+ 
+ 
+ show all log
+ .get '/teacher-log'
+ 
  
