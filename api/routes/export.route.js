@@ -3,5 +3,5 @@ const router = express.Router();
 const { getDataFromDatabase,getDataStationScore } = require('../controllers/export.controller');
 
 router.get('/', getDataFromDatabase);
-// router.get('/export-station', getDataStationScore);
+router.get('/:station_id', getDataStationScore);
 module.exports = router;

@@ -30,7 +30,7 @@ const getStationScore= async (req, res) => {
     const station_testScore = await prisma.station.findMany({
         where: {
             
-            id:req.body.id,
+            id:  req.body.id,
             
             
         },
