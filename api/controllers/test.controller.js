@@ -11,7 +11,7 @@ const getStudenttest = async (req, res) => {
     const studentCheck = await prisma.test.findMany({
         where: {
             
-            student_id:  req.body.student_id,
+            student_id:  req.param.student_id,
             
             
         },

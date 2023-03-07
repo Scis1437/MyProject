@@ -37,7 +37,7 @@ app.use(cors())
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bodyParser.json())
-app.use('/student', studentRouter)
+
 app.use(cookieParser());
 app.use('/register', registerRouter)
 app.use('/auth', authRouter);
@@ -49,7 +49,7 @@ app.use(useJWT)
 app.use('/teacher-log', logRouter);
 app.use('/export',exportRouter)
 app.use('/teacher', teacherRouter)
-
+app.use('/student', studentRouter)
 app.use('/station',stationRouter)
 app.use('/test',testRouter)
 app.use('/export-station',exportStationRouter)
