@@ -1,20 +1,48 @@
 import React from "react";
 import TodoList from "../item/todoList";
 import Homemodule from "../styles/Home.module.css";
-import { useState } from "react";
-const adduser = ({ visible, data }) => {
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const adduser = ({ visible }) => {
   const station = [
     "History talking patient ",
     "Peptic ulcer ",
     "Palpation of the thyroid",
   ];
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
+  const regUser = async (e) => {
+    e.preventDefault();
+    let token;
+    if (typeof localStorage !== "undefined") {
+      token = localStorage.getItem("access");
+    }
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    try {
+      const response = await axios.post(
+        `http://localhost:9000/register/`,
+        { user: username.username, pwd: password.password },
+        config
+      );
+      visible = false ;
+      console.log(response.status);
+    } catch (error) {
+      setError("reg error");
+    }
+  };
+  // useEffect(() => {
+  //   fetchStudent();
+  // }, []);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const [dataInput, setDataInput] = useState(data);
   const TodoList_user = () => {
     const [list, setList] = useState([]);
     const [input, setInput] = useState("");
@@ -38,7 +66,6 @@ const adduser = ({ visible, data }) => {
 
       setList(newList);
     };
-
     return (
       <div className="">
         <h1></h1>{" "}
@@ -81,68 +108,15 @@ const adduser = ({ visible, data }) => {
           </button>
         </div>
         <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full ">submit</button>
+          <button className="btn w-full  "  onClick={(e) => regUser(e)}>submit</button>
         </div>
       </div>
     );
   };
-  function IsNull() {
-    console.log("is null ");
-    return (
-      <div>
-        <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
-          <div className="flex flex-col space-y-4">
-            <div className="space-y-4">
-              <label
-                htmlFor="firstname-input"
-                className="text-gray-600 font-medium "
-              >
-                Firstname:
-              </label>
-              <input
-                id="firstname-input"
-                className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              />
-            </div>
-            <div className="mb-2 space-y-4">
-              <label
-                htmlFor="lastname-input"
-                className="text-gray-600 font-medium"
-              >
-                Lastname:
-              </label>
-              <input
-                id="lastname-input"
-                className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              />
-            </div>
-            <div className="space-y-4">
-              <label
-                htmlFor="password-input"
-                className="text-gray-600 font-medium"
-              >
-                Password:
-              </label>
-              <input
-                id="password-input"
-                className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-                type="password"
-                placeholder=""
-              />
-            </div>
-          </div>
+  if (!visible) return null;
 
-          <div>
-            <label>Station</label>
-            <TodoList_user />
-          </div>
-        </form>
-      </div>
-    );
-  }
-  function NotNull() {
-    console.log("not null ");
-    return( <div>
+  return (
+    <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
         <div className="flex flex-col space-y-4">
           <div className="space-y-4">
@@ -150,45 +124,32 @@ const adduser = ({ visible, data }) => {
               htmlFor="firstname-input"
               className="text-gray-600 font-medium "
             >
-              Firstname:
+              USERNAME :
             </label>
             <input
               id="firstname-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              value={dataInput.firstname}
               onChange={(e) =>
-                setDataInput({ ...dataInput, firstname: e.target.value })
+                setUsername({ ...username, username: e.target.value })
               }
             />
           </div>
-          <div className="mb-2 space-y-4">
-            <label
-              htmlFor="lastname-input"
-              className="text-gray-600 font-medium"
-            >
-              Lastname:
-            </label>
-            <input
-              id="lastname-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              value={dataInput.lastname}
-              onChange={(e) =>
-                setDataInput({ ...dataInput, lastname: e.target.value })
-              }
-            />
-          </div>
+          <div className="mb-2 space-y-4"></div>
           <div className="space-y-4">
             <label
               htmlFor="password-input"
               className="text-gray-600 font-medium"
             >
-              Password:
+              PASSWORD:
             </label>
             <input
               id="password-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               type="password"
               placeholder=""
+              onChange={(e) =>
+                setPassword({ ...password, password: e.target.value })
+              }
             />
           </div>
         </div>
@@ -198,74 +159,68 @@ const adduser = ({ visible, data }) => {
           <TodoList_user />
         </div>
       </form>
-    </div>)
-  }
-
-  if (!visible) return null;
-  if (data === null) {
-    return <IsNull />;
-  } else {
-    return <NotNull />;
-  }
-  // return (
-  //   <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
-  //     <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
-  //       <div className="flex flex-col space-y-4">
-  //         <div className="space-y-4">
-  //           <label
-  //             htmlFor="firstname-input"
-  //             className="text-gray-600 font-medium "
-  //           >
-  //             Firstname:
-  //           </label>
-  //           <input
-  //             id="firstname-input"
-  //             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-  //             value={dataInput.firstname}
-  //             onChange={(e) =>
-  //               setDataInput({ ...dataInput, firstname: e.target.value })
-  //             }
-  //           />
-  //         </div>
-  //         <div className="mb-2 space-y-4">
-  //           <label
-  //             htmlFor="lastname-input"
-  //             className="text-gray-600 font-medium"
-  //           >
-  //             Lastname:
-  //           </label>
-  //           <input
-  //             id="lastname-input"
-  //             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-  //             value={dataInput.lastname}
-  //             onChange={(e) =>
-  //               setDataInput({ ...dataInput, lastname: e.target.value })
-  //             }
-  //           />
-  //         </div>
-  //         <div className="space-y-4">
-  //           <label
-  //             htmlFor="password-input"
-  //             className="text-gray-600 font-medium"
-  //           >
-  //             Password:
-  //           </label>
-  //           <input
-  //             id="password-input"
-  //             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-  //             type="password"
-  //             placeholder=""
-  //           />
-  //         </div>
-  //       </div>
-
-  //       <div>
-  //         <label>Station</label>
-  //         <TodoList_user />
-  //       </div>
-  //     </form>
-  //   </div>
-  // );
+    </div>
+  );
 };
+
+// return (
+//   <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
+//     <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
+//       <div className="flex flex-col space-y-4">
+//         <div className="space-y-4">
+//           <label
+//             htmlFor="firstname-input"
+//             className="text-gray-600 font-medium "
+//           >
+//             Firstname:
+//           </label>
+//           <input
+//             id="firstname-input"
+//             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+//             value={dataInput.firstname}
+//             onChange={(e) =>
+//               setDataInput({ ...dataInput, firstname: e.target.value })
+//             }
+//           />
+//         </div>
+//         <div className="mb-2 space-y-4">
+//           <label
+//             htmlFor="lastname-input"
+//             className="text-gray-600 font-medium"
+//           >
+//             Lastname:
+//           </label>
+//           <input
+//             id="lastname-input"
+//             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+//             value={dataInput.lastname}
+//             onChange={(e) =>
+//               setDataInput({ ...dataInput, lastname: e.target.value })
+//             }
+//           />
+//         </div>
+//         <div className="space-y-4">
+//           <label
+//             htmlFor="password-input"
+//             className="text-gray-600 font-medium"
+//           >
+//             Password:
+//           </label>
+//           <input
+//             id="password-input"
+//             className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+//             type="password"
+//             placeholder=""
+//           />
+//         </div>
+//       </div>
+
+//       <div>
+//         <label>Station</label>
+//         <TodoList_user />
+//       </div>
+//     </form>
+//   </div>
+// );
 
 export default adduser;

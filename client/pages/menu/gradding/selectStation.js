@@ -1,121 +1,20 @@
-// import React from "react";
-// import { useState } from "react";
-// import { useRouter } from "next/router";
-// // import StudentCheck from "../student";
-// const station = [
-//   { station: "Hisstory talking patient ", status: "Complete" },
-//   { station: "Peptic ulcer ", status: "Incomplete" },
-//   { station: "Palpation of the thyroid", status: "Complete" },
-//   { station: "comunityaquired pnueumonia", status: "" },
-// ];
-
-// function Redirect({ to  , station}) {
-//   const router = useRouter();
-//   console.log(to);
-//   console.log("Redirect_work");
-//   useEffect(() => {
-//     router.push(to);
-//     router.push(station);
-//   }, [to , station]);
-
-//   return null;
-// }
-
-//  function gradding(props) {
-//   const router = useRouter();
-//   const data = props;
-  
-//   console.log(data.station);
-//   if (props.status === "Complete") {
-//     // shouldRedirect(true) ;
-//     console.log("This station already grad");
-//     return null;
-//   } else {
-   
-//     console.log("Redirect");
-//     return  <Redirect to="/menu/gradding/gradding"  station={data.station}/>;
-//   }
-// }
-// const student = station.map((items) => (
-//   // console.log(`${items.title}` +"  " + `${items.status}` );
-
-//   <tr
-//     className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50"
-//     onClick={() => gradding({ ...items })}
-//   >
-//     <td className=" py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-//       {`${items.station}`}
-//     </td>
-//     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
-//       {`${items.status}`}
-//     </td>
-//   </tr>
-
-//   // <div className="flex justify-between mx-2 text-sm  ">
-//   //   <p className="w-1/2  inline-block overflow-hidden whitespace-nowrap "> {`${items.station}`}</p>
-//   //   <p className=""> {`${items.status}`}</p>
-//   // </div>
-// ));
-// function selectStation() {
-//   const router = useRouter();
-//   const { studentCode } = router.query;
-//   const [shouldRedirect, setShouldRedirect] = useState(false);
-//   return (
-//     <div className="background">
-//       <p className="text-header">SELECT STATION</p>
-//       <div className="container ">
-//         <div>
-//           <p>student code : {`${studentCode}`}</p>
-//           <p>student name : </p>
-//         </div>
-//         {/* <div className="flex justify-between mx-10">
-//           <p className="">
-//             Station
-//           </p>
-//           <p>
-//             Status 
-//           </p>
-//         </div>
-//         {student} */}
-//         <table class="table-auto w-full  ">
-//           <thead class="">
-//             <tr className=" w-full  ">
-//               <th class="w-1/2 px-4 py-2">Station</th>
-//               <th class=" w-1/2  px-4 py-2 text-right">Status</th>
-//             </tr>
-//           </thead>
-//           <tbody>{student}</tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// }
-// export default selectStation;
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Redirect from "../../../item/Redirect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const station = [
-  { station: "Hisstory talking patient ", status: "Complete" },
-  { station: "Peptic ulcer ", status: "Incomplete" },
-  { station: "Palpation of the thyroid", status: "Complete" },
-  { station: "community-acquired pneumonia", status: "" },
+  { station: "Hisstory talking patient ", status: "Complete" , method:"point" },
+  { station: "Peptic ulcer ", status: "Incomplete"  , method:"pass/fail"},
+  { station: "Palpation of the thyroid", status: "Complete" , method:"point" },
+  { station: "community-acquired pneumonia", status: "Incomplete"  , method:"pass/fail"},
 ];
 
-function Redirect({ to, station }) {
-  const router = useRouter();
-  console.log("Redirect");
-  useEffect(() => {
-    router.push({
-      pathname: to,
-      query: { station: station }
-    });
-  }, [to, station]);
 
-  return null;
-}
 
-function Gradding({ station, status , studentCode}) {
+function Gradding({ station, status , studentCode , method}) {
   const router = useRouter();
   const [redirecting, setRedirecting] = useState(false);
 
@@ -130,14 +29,14 @@ function Gradding({ station, status , studentCode}) {
   if (redirecting) {
     router.push({
       pathname: "/menu/gradding/gradding",
-      query: { station , studentCode },
+      query: { station , studentCode , method },
     });
     return null;
   }
 
   return (
     <tr
-      className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
+      className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
       onClick={handleOnClick}
     >
       <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -153,10 +52,22 @@ function Gradding({ station, status , studentCode}) {
 function SelectStation() {
   const router = useRouter();
   const { studentCode } = router.query;
-
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  if(shouldRedirect){
+   return <Redirect to ="/menu/gradding"/>
+  }
   return (
-    <div className="background">
-      <p className="text-header">SELECT STATION</p>
+    <div className="background"> <div className="header-page">
+    <div className="flex items-center">
+      <FontAwesomeIcon
+        className="text-white mr-2 text-2xl"
+        icon={faChevronCircleLeft}
+        onClick={() => setShouldRedirect(true)}
+      />
+    </div>
+    <p className="text-header">SELECT STATION</p>
+  </div>
+ 
       <div className="container ">
         <div>
           <p>student code : {studentCode}</p>
@@ -164,14 +75,14 @@ function SelectStation() {
         </div>
         <table className="table-auto w-full">
           <thead>
-            <tr className="w-full">
-              <th className="w-1/2 px-4 py-2">Station</th>
-              <th className="w-1/2 px-4 py-2 text-right">Status</th>
+            <tr className="w-full rounded-lg bg-gray ">
+              <th className="rounded-tl-lg text-sm  md:text-lg font-medium text-gray-900 px-6 py-4 ">Station</th>
+              <th className="rounded-tr-lg text-sm  md:text-lg font-medium text-gray-900 px-6 py-4 ">Status</th>
             </tr>
           </thead>
           <tbody>
             {station.map((item, index) => (
-              <Gradding key={index} station={item.station} status={item.status} studentCode={studentCode} />
+              <Gradding key={index} station={item.station} status={item.status} studentCode={studentCode} method={item.method}/>
             ))}
           </tbody>
         </table>

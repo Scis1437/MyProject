@@ -1,6 +1,7 @@
 const {prisma} = require('../db')
 const logger = require('../controllers/logger.controller')
 const getAllStation = async (req, res) => {
+
     const station = await prisma.station.findMany({})
     logger.teacherLog.log('info',req.user +' action = show ')
     res.json(station)
@@ -48,7 +49,7 @@ const getStationScore= async (req, res) => {
 
 const addStation = async(req, res) => {
     const data = req.body
-    console.log(data)
+
     const createStation = await prisma.station.create({
         // select: {
         //     id: true,
@@ -63,8 +64,8 @@ const addStation = async(req, res) => {
 }
 
 const updateStation = async(req, res) => {
+
     const data = req.body
-    console.log(data)
     const updateStation = await prisma.station.updateMany({
         where: {
             OR :[{id:data.id},{station_name:data.station_name}]
@@ -79,7 +80,7 @@ const updateStation = async(req, res) => {
 
 const deleteStation = async(req, res) => {
     const data = req.body
-    console.log(data)
+    console.log("delete " + data.station_name);
     const deleteStation = await prisma.station.deleteMany({
         where: {
             id:data.id,

@@ -13,7 +13,9 @@ const fsPromises = require("fs").promises;
 const path = require("path");
 
 const handleLogin = async (req, res) => {
-  const { user, pwd } = req.body;
+  let { user, pwd } = req.body;
+  user = user.username ; 
+  pwd = pwd.password
   if (!user || !pwd)
     return res
       .status(400)
@@ -55,10 +57,12 @@ const handleLogin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
-    res.json({ roles,accessToken });
+    res.json({ roles,accessToken } );
+    
   } else {
     res.sendStatus(401);
   }
 };
+
 
 module.exports = { handleLogin };

@@ -372,6 +372,7 @@ module.exports = {
       '10/12': '83.333333%',
       '11/12': '91.666667%',
       full: '100%',
+      '30%' : '30%',
     }),
     flexGrow: {
       0: '0',
@@ -573,6 +574,7 @@ module.exports = {
       '11/12' : '91.667%' ,
       full: '100%',
       screen: '100vh',
+      '50': '50vh',
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',

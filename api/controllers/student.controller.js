@@ -8,13 +8,14 @@ const getAllStudent = async (req, res) => {
 
 
 const getStudent = async (req, res) => {
+
     const data = req.body
     const studentCheck = await prisma.student.findMany({
         where: {
             
             id: req.body.id,
             
-            
+    
         },
         select:{
             id:true,
@@ -24,6 +25,7 @@ const getStudent = async (req, res) => {
  
         
     })
+
     res.json(studentCheck)
 }
 

@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import Adduser from "../../popup/adduser";
+import Adduser from "../../popup/addUser";
 import { useRouter } from "next/router";
 
 
@@ -16,57 +16,7 @@ const users = [
     lastname: "kaewtew",
     station: "cpe96",
   },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-];
+]
 
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -118,9 +68,10 @@ function UserEdit() {
           Edit user
         </p>
       </div>
-
+      {/* sticky top-0 */}
       <div className="container ">
-        <table className="w-full ">
+        {/* <div><p>Search for user</p></div> */}
+        <table className="table-auto w-full " >
           <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
@@ -135,22 +86,23 @@ function UserEdit() {
               <td className="rounded-tr-lg "></td>
             </tr>
           </thead>
-          <tbody className="">
+          
+          <tbody className="w-full  h-auto overflow-y-auto">
             {users.map((item) => (
               <tr
                 key={item.station}
-                className="bg-gray-100 text-xs mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg"
+                className="bg-gray-100 text-xs mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg "
               >
-                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900">
+                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.firstname}
                 </td>
-                <td className="py-4  text-xs whitespace-nowrap md:text-sm font-medium text-gray-900">
+                <td className="py-4  text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.lastname}
                 </td>
-                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900">
+                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.station}
                 </td>
-                <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1">
                   <button
                     className="btn "
                     onClick={() => onNewOrderClick("open", item)}

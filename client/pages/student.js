@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Item from "../item/studentChecklistItem";
 import Image from "next/image";
 import medImg from "../img/logoMEDCMUen-1280x227.png";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import {
-
-  faChevronCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import Redirect from "../item/Redirect";
+import useQuery from "use-query";
+import axios from "axios";
+import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const subject = [
   { title: "OS", status: "Complete" },
@@ -16,53 +15,22 @@ const subject = [
   { title: "OOP", status: "Incomplete" },
 ];
 
-const item = subject.map((items, index) => {
-  return (
-    <div>
-      <Item key={index} title={items.title} status={items.status} />
-    </div>
-  );
-});
-function Redirect({ to }) {
-  const router = useRouter();
-  console.log("Redirect_work");
-  useEffect(() => {
-    router.push(to);
-  }, [to]);
 
-  return null;
-}
 
-const Row = (props) => {
-  const { title, status } = props;
-  console.log(title);
-  return (
-    <tr className="bg-gray-100 border-b">
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-        {title}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
-        {status}
-      </td>
-    </tr>
-  );
-};
 
 const Table = (props) => {
   const { data } = props;
   console.log(data);
 
+//   }
   return (
     <table className="w-full">
       <thead className=" ">
         <tr className="rounded-lg bg-gray ">
-          <th
-            scope="col"
-            className="rounded-tl-lg text-sm   font-medium text-gray-900 px-6 py-4 text-left "
-          >
-            <p>station</p>
+          <th scope="col" className="text-title-table text-left rounded-tl-lg ">
+            Title
           </th>
-          <th className="rounded-tr-lg rounded-tb-md text-sm font-medium text-gray-900 px-6 py-4 text-right">
+          <th className="text-title-table text-right rounded-tr-lg ">
             <p>Status</p>
           </th>
         </tr>
@@ -73,11 +41,11 @@ const Table = (props) => {
           // console.log(items)
           // console.log(`${items.title}` +"  " + `${items.status}` );
 
-          <tr class="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
-            <td class=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
-              {`${items.title}`}
+          <tr className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
+            <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
+              {`${items.station_Id}`}
             </td>
-            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
               {`${items.status}`}
             </td>
           </tr>
@@ -95,15 +63,40 @@ const Table = (props) => {
 function studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState(subject);
+  const [studentCode, setStudentCode] = useState("");
+  const [error, setError] = useState("");
   if (shouldRedirect) {
     return <Redirect to="/" />;
   }
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const studentId = studentCode.studentCode;
+    const token = localStorage.getItem("access");
+  
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+  
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/test/${studentId}`,
+        config
+      );
+       setRows(response.data);
+      console.log(response.data);
+    } catch (error) {
+      setError("Error searching for student data");
+    }
+    
+  };
+  
   return (
     <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
         <div className="flex items-center">
           <FontAwesomeIcon
-            className="  text-white mr-2   text-2xl"
+            className="  backward-btn"
             icon={faChevronCircleLeft}
             onClick={() => {
               setShouldRedirect(true);
@@ -133,12 +126,17 @@ function studentpage() {
                       type="text"
                       id="username"
                       name="username"
-                      placeholder="62061xxxx , charnnarong"
+                      placeholder="62061xxxx"
+                      value={studentCode.value}
+                      onChange={(e) =>
+                        setStudentCode({ studentCode: e.target.value })
+                      }
                       className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
                     />
-                    <button className="bg-main-green hover:bg-hover-green flex place-items-center text-white font-semibold py-1 px-2 h-6 rounded-md ">
+                    <button className="btn" onClick={(e) => handleSearch(e)}>
                       SUBMIT
-                    </button>
+                    </button>{" "}
+                    <p>{error}</p>
                   </div>
                 </div>
 

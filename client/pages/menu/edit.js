@@ -2,13 +2,13 @@ import React, { useState , useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import todoList from "../../item/todoList";
-import EditExam from "../../popup/edit";
+import EditExam from "../../popup/editStation";
+import AddExam from "../../popup/addNewStation";
 import TodoList from "../../item/todoList";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
 const subject = [
   {
     title: "Histrory taking patient",
@@ -29,27 +29,127 @@ function Redirect({ to }) {
 
 const edit = () => {
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
+  const [createPostOpen, setCreatePostOpen] = useState("close");
   const [order, setOrder] = useState([]);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
+  const [popupData , setPopupData] = useState();
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [error, setError] = useState("");
+
+
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
+
   function onNewOrderClick(x, data) {
-    setData(data);
+    setPopupData(data);
     setNewOrderPostOpen(x);
+   
   }
-  console.log(newOrderPostOpen);
+  function createExamClick (status){
+    setCreatePostOpen(status)
+  }
+  // console.log(newOrderPostOpen);
   let newOrderPost = null;
   switch (newOrderPostOpen) {
+    
     case "open":
-      newOrderPost = <EditExam data={data} visible={true} />;
+      newOrderPost = <EditExam data={popupData} visible={true} />;
       break;
     case "closed":
       newOrderPost = null;
       break;
   }
+  switch (createPostOpen) {
+    
+    case "open":
+      newOrderPost = <AddExam  visible={true} />;
+      break;
+    case "closed":
+      newOrderPost = null;
+      break;
+  }
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
+  const fetchStation = async () => {
+
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/station/`,
+        config
+      );
+ 
+      setData(response.data);
+     
+    } catch (error) {
+      setError("Error searching for student data");
+    }
+  };
+  useEffect(() => {
+    fetchStation();
+    
+  }, []);
+console.log(data)
+  const deleteStation = async (data) => {
+    const { id } = data;
+    console.log(data)
+    try {
+      const response = await axios.delete(
+        `http://localhost:9000/station/`,
+        { data: { id }, headers: config.headers }
+      );
+        // setData(response)
+        console.log(data)
+    } catch (error) {
+      setError("");
+      console.log(error)
+    }
+  };
+  
+  const List = (dataSet) => {
+  // if (!Array.isArray(dataSet)) {
+  //   return <div>Data set is not an array</div>;
+  // }
+ 
+  const [dropdown, setDropdown] = useState(false);
+  // const { id, name } =props.data;
+
+  // const subStationOptions = substation.map((item) => (
+  //   <div key={item} value={item} className = "w-full flex justify-between">
+  //     {item}
+  //     <select className="h-5">
+  //               <option value="1">1</option>
+  //               <option value="2">2</option>
+  //               <option value="3">3</option>
+  //               <option value="4">4</option>
+  //               <option value="5">5</option>
+  //             </select>
+  //   </div>
+  // ));
+
+  return (
+    <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
+    <td className="text-sm">{dataSet.station_name}</td>
+
+    <td className="flex gap-1">
+      <button
+        className="btn"
+        onClick={() => {onNewOrderClick("open", { ...dataSet})}}
+      >
+        Edit
+      </button>
+      <button className=" delete-btn" onClick={() => deleteStation({...dataSet})}>Delete</button>
+
+    </td>
+  </tr>
+  );
+};
   return (
     <div className="background ">
       <div className="header-page">
@@ -85,33 +185,19 @@ const edit = () => {
             </tr>
           </thead>
           <tbody className="">
-            {subject.map((items) => (
-              <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
-                <td className="text-sm">{items.title}</td>
-
-                <td className="flex gap-1">
-                  <button
-                    className="btn"
-                    onClick={() => onNewOrderClick("open", { items })}
-                  >
-                    Edit
-                  </button>
-                  <button className=" delete-btn" data="data">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+          {data?.map((list) => {
+            return <List key={list.id}  {...list} />;
+          })}
           </tbody>
         </table>
 
-        <button className="btn " onClick={() => onNewOrderClick("open")}>
+        <button className="btn mt-2" onClick={() => createExamClick("open")}>
           Add new
         </button>
 
         <div
           className={`${
-            newOrderPostOpen === "open"
+            newOrderPostOpen === "open" || createPostOpen ==="open"
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
               : ""
           }`}
