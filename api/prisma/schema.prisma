@@ -48,5 +48,4 @@ model Test {
 
 model Teacher {
   teacher_name String@unique
-  station_name String
 }
