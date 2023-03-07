@@ -1,5 +1,10 @@
 # MyProject
 
+ดูแบบไม่ล็อกอน
+.get http://localhost:9000/check-station
+parse body id ?ี่ต้องการ
+{"id":"620719000"}
+
 
 to export all station score
 get : http://localhost:9000/export/  ****ไม่ต้องส่งค่า***
