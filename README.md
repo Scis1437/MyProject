@@ -372,10 +372,12 @@ show test โดยเรียกดูผ่านรหัสนักศึ�
 
 export file score โดยเรียกดาวโหลดเป็นคะแนนของสเตชั้นไหน
   
-ต้องการคะแนนสเตชั่นไหน .get '/export'
+ต้องการคะแนนสเตชั่นไหน .get '/export-station'
   
 {"station_id":"clbgnzizb0000v4ag550yepfe"}
 
+ export คะแนนทั้งหมด
+ ต้องการคะแนน .get '/export'
 update score .put '/test'
   
 {"test_number":6,
@@ -395,5 +397,18 @@ update score .put '/test'
 "name":"Rachel Thompson"
 }
 
+ 
+teacher 
+ create teacher .post '/teacher'
+ delete .delete '/teacher'
+ create and delete decare teacher in body 
+ {
+"teacher_name":"ioi oi"
+}
+ show all teacher .get '/teacher' 
+ 
+ 
+ show all log
+ .get '/teacher-log'
  
  

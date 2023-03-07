@@ -9,47 +9,6 @@ const station = [
   { "Peptic ulcer": [4, 5, 6] },
 ];
 
-// const stations = stationTitle.map((station) => {
-//   return (
-//     <div>
-//         station
-//     </div>
-//     )
-// });
-// const List = (props) => {
-//   const [dropdown, setDropdown] = useState(false);
-//   const list = props;
-//   const stationTitle = list.station;
-
-//   return (
-//     <div className="py-2">
-//       <div
-//         className="rounded-md bg-light-green "
-//         onClick={() => setDropdown(!dropdown)}
-//       >
-//         <p className="text-sm mx-1">{list.studentCode}</p>
-//       </div>
-
-//       {dropdown ? (
-//     <div className="">
-//       <label> {list.station}</label>
-//       <div>
-//         <form className="flex justify-between ">
-//           <label className="text-xs mx-3" htmlFor="activeListening">
-//          { subStations}
-//           </label>
-//           <select className="h-5">
-//             <option value="1">1</option>
-//             <option value="2">2</option>
-//             <option value="3">3</option>
-//           </select>
-//         </form>
-//       </div>
-//     </div>
-//   ) : null}
-// </div>
-//   );
-// };
 function Redirect({ to }) {
   const router = useRouter();
   console.log("Redirect_work");
@@ -60,69 +19,21 @@ function Redirect({ to }) {
   return null;
 }
 
-const List = (dataSet) => {
-  // if (!Array.isArray(dataSet)) {
-  //   return <div>Data set is not an array</div>;
-  // }
-
-  const [dropdown, setDropdown] = useState(false);
-  // const { id, name } =props.data;
-
-  // const subStationOptions = substation.map((item) => (
-  //   <div key={item} value={item} className = "w-full flex justify-between">
-  //     {item}
-  //     <select className="h-5">
-  //               <option value="1">1</option>
-  //               <option value="2">2</option>
-  //               <option value="3">3</option>
-  //               <option value="4">4</option>
-  //               <option value="5">5</option>
-  //             </select>
-  //   </div>
-  // ));
-
-  return (
-    <div className="py-2 " key={dataSet.id}>
-      <div
-        className="rounded-md bg-table-odd h-7 py-5 flex items-center"
-        onClick={() => setDropdown(!dropdown)}
-      >
-        <p className="text-sm mx-1 flex ">{dataSet.id}</p>
-      </div>
-
-      {dropdown ? (
-        <div className="">
-          <label> {dataSet.name}</label>
-          <div>
-            <form className="flex justify-between w-full">
-              <label className="text-xs mx-3 w-full" htmlFor="subStation">
-                {/* subStationOptions */}
-              </label>
-            </form>
-          </div>
-          <button className="btn">SAVE</button>
-        </div>
-      ) : null}
-    </div>
-  );
-};
-
 function studentlist() {
   const [error, setError] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [studentCode, setStudentCode] = useState("");
   const [data, setData] = useState([]);
-
+  const [station, setStation] = useState([]);
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
   const fetchStudent = async () => {
-    let token;
-    if (typeof localStorage !== "undefined") {
-      token = localStorage.getItem("access");
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
     try {
       const response = await axios.get(
         `http://localhost:9000/student/`,
@@ -130,27 +41,151 @@ function studentlist() {
       );
 
       setData(response.data);
-      
+    } catch (error) {
+      setError("Error searching for student data");
+    }
+  };
+  // useEffect(() => {
+
+  // }, []);
+
+  const fetchStation = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/station/`,
+        config
+      );
+
+      setStation(response.data);
     } catch (error) {
       setError("Error searching for student data");
     }
   };
   useEffect(() => {
+    fetchStation();
     fetchStudent();
   }, []);
 
+  // console.log(station);
+  // console.log(data);
   const searchStudent = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
 
-    const student = data.find((student) => student.id === studentId)
-  
-      setData([student])
+    const student = data.find((student) => student.id === studentId);
+
+    setData([student]);
+  };
+
+  const DropdownTitle = (data) => {
+    const [test, setTest] = useState();
+    const fetchTest = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/test/1`,
+          config
+        );
+
+        setTest(response.data);
+      } catch (error) {
+        setError("Error fetch test ");
+      }
+    };
+    useEffect(() => {
+      fetchTest();
+    }, []);
+
+    console.log(test);
+    // console.log(data);
+    const [dropdownTitle, setDropdownTitle] = useState(false);
+    return (
+      <div>
+        <div onClick={() => setDropdownTitle(!dropdownTitle)}>
+          {data.station_name}
+        </div>
+
+        {dropdownTitle ? (
+          <div>
+            <form className="">
+              {test.map((list) => {
+                return (
+                  <div className="flex justify-between w-full">
+                    <label className="text-xs mx-3 w-full" htmlFor="subStation">
+                      {list.station_Id}
+                    </label>
+    
+                    <select className="h-5" defaultValue = {list.score}>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    
+
+                    </select>
+                  </div>
+                );
+              })}
+              <label className="text-xs mx-3 w-full" htmlFor="subStation">
+                test1
+              </label>
+            </form>
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+  const List = (dataSet) => {
+    // if (!Array.isArray(dataSet)) {
+    //   return <div>Data set is not an array</div>;
+    // }
+
+    const [dropdown, setDropdown] = useState(false);
+
+    // const { id, name } =props.data;
+
+    // const subStationOptions = substation.map((item) => (
+    //   <div key={item} value={item} className = "w-full flex justify-between">
+    //     {item}
+    //     <select className="h-5">
+    //               <option value="1">1</option>
+    //               <option value="2">2</option>
+    //               <option value="3">3</option>
+    //               <option value="4">4</option>
+    //               <option value="5">5</option>
+    //             </select>
+    //   </div>
+    // ));
+
+    return (
+      <div className="py-2 " key={dataSet.id}>
+        <div
+          className="rounded-md bg-table-odd h-7 py-5 flex items-center"
+          onClick={() => setDropdown(!dropdown)}
+        >
+          <p className="text-sm mx-1 flex ">{dataSet.id}</p>
+        </div>
+
+        {dropdown ? (
+          <div>
+            {station.map((list) => {
+              return <DropdownTitle key={list.id} {...list} />;
+            })}
+
+            <button className="btn" onClick={() => updateData()} >SAVE</button>
+          </div>
+        ) : null}
+      </div>
+    );
+  };
+  const updateData = () => {
+    
   }
-
- 
-  console.log(data)
-
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
@@ -182,12 +217,17 @@ function studentlist() {
             className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
           />
 
-          <button className="btn" onClick={(e) => {searchStudent(e)}}>
+          <button
+            className="btn"
+            onClick={(e) => {
+              searchStudent(e);
+            }}
+          >
             SUBMIT
           </button>
         </div>
         <div className="overflow-y-scroll">
-          {data.map((list ) => {
+          {data.map((list) => {
             return <List key={list.id} {...list} />;
           })}
         </div>
