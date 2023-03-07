@@ -1,11 +1,17 @@
 # MyProject
 
 
-to export score //
-get : http://localhost:9000/export/
+to export all station score
+get : http://localhost:9000/export/  ****ไม่ต้องส่งค่า***
+จะได้ไฟล์ชื่อ data_Allstation_score
+to export 1 station  score //
+get : http://localhost:9000/export/2
 ส่งค่า station_id มาทาง <body>
- EX. {"station_id":"clbgnzizb0000v4ag550yepfe"}
-  
+ EX. {"station_id":"2"}
+หรือใช้ .get http://localhost:9000/export-station
+ ส่งค่า station_id มาทาง <body>
+ EX. {"station_id":"2"} จะได้ไฟล์ชื่อ data_station_score
+ 
   
 ใช้ user name test1 for admin user
   
