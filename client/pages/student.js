@@ -1,5 +1,4 @@
 import React, { useState, useEffect, use } from "react";
-import Item from "../item/studentChecklistItem";
 import Image from "next/image";
 import medImg from "../img/logoMEDCMUen-1280x227.png";
 import { useRouter } from "next/router";
@@ -9,19 +8,29 @@ import useQuery from "use-query";
 import axios from "axios";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
-const subject = [
-  { title: "OS", status: "Complete" },
-  { title: "Algorithm", status: "Incomplete" },
-  { title: "OOP", status: "Incomplete" },
-];
 
 
 
 
+
+function studentpage() {
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [rows, setRows] = useState();
+  const [studentCode, setStudentCode] = useState("");
+  const [error, setError] = useState("");
+  if (shouldRedirect) { 
+    return <Redirect to="/" />;
+  }
 const Table = (props) => {
   const { data } = props;
   console.log(data);
-
+  console.log(studentCode.studentCode)
+  const results = data?.filter(function async(el)
+  {
+    return el.station_id == studentCode.studentCode
+  }
+  );
+  console.log(results)
 //   }
   return (
     <table className="w-full">
@@ -37,7 +46,7 @@ const Table = (props) => {
       </thead>
 
       <tbody>
-        {data.map((items) => (
+        {data?.map((items) => (
           // console.log(items)
           // console.log(`${items.title}` +"  " + `${items.status}` );
 
@@ -59,16 +68,6 @@ const Table = (props) => {
     </table>
   );
 };
-
-function studentpage() {
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [rows, setRows] = useState(subject);
-  const [studentCode, setStudentCode] = useState("");
-  const [error, setError] = useState("");
-  if (shouldRedirect) {
-    return <Redirect to="/" />;
-  }
-
   const handleSearch = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
@@ -140,7 +139,7 @@ function studentpage() {
                   </div>
                 </div>
 
-                <Table data={rows} />
+                <Table data={rows} student = {studentCode}/>
               </div>
             </div>
           </div>

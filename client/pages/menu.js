@@ -13,76 +13,21 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
-// const [user, setUser] = useState('');
-
-// useEffect(() => {
-//   // Get the JWT token from local storage
-//   const token = localStorage.getItem("access");
-
-//   // Make an authenticated GET request to the backend API
-//   axios
-//     .get("/api/user", {
-//       headers: { Authorization: `Bearer ${token}` },
-//     })
-//     .then((response) => setUser(response.data))
-//     .catch((error) => console.error(error));
-// }, []);
-
-// if (!user) {
-
-//     <p>Loading...</p>
-
-// }
-const parseJwt = (bearerToken) => {
-  const token = bearerToken.split(" ")[1];
-  const decoded = JSON.parse(atob(token.split(".")[1]));
-  return decoded;
-};
-let token;
-if (typeof localStorage !== "undefined") {
-  token = localStorage.getItem("access");
-}
-
-// function parseJwt (token) {
-//   var base64Url = token.split('.')[1];
-//   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-//   var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-//       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//   }).join(''));
-
-//   return JSON.parse(jsonPayload);
-// }
-const handleMenu = async () => {
-  const [error, setError] = useState("");
-  const data = parseJwt(`Bearer ${token}`);
-
-  try {
-    console.log(data.UserInfo.roles[0]);
-    return data.UserInfo.roles[0];
-    //  menu = data.UserInfo.roles === "" ? menuName_admin : menuName;
-    // const response = await axios.get(
-    //   `http://localhost:9000/test/${studentId}`,
-    //   config
-    // );
-    //  setRows(response.data);
-    // console.log(response.data);
-  } catch (error) {
-    setError("Error on load menu");
-  }
-};
-// try {
-//   const response = await axios.get(
-//     `http://localhost:9000/test/${studentId}`,
-//     config
-//   );
-//    setRows(response.data);
-//   console.log(response.data);
-// } catch (error) {
-//   setError("Error searching for student data");
-// }
-
-export default function menu() {
+export default function Menu() {
   const router = useRouter();
+
+  let roles;
+
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
+  };
+  const [error, setError] = useState("");
+  let data 
+  useEffect(() => {
+    data= parseJwt(`Bearer ${localStorage.getItem("access")}`);;
+  }, []);
 
   const menuName = [
     {
@@ -122,9 +67,99 @@ export default function menu() {
     },
   ];
 
-  const menu =
-    handleMenu()===
-   " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InRlc3QxIiwicm9sZXMiOlsxXX0sImlhdCI6MTY3ODAzNTUwNywiZXhwIjoxNjc4Mzk1NTA3fQ.epkXBmnZNLfNPOLuq-oMsKZPXeSjy8gAzhmDQ9oryL8" ?  menuName    : menuName_admin;
+  const [role, setRole] = useState(null);
+
+  let menu;
+  async function getDataPromise() {
+    try {
+      const value = await data;
+      setRole(value.UserInfo.roles[0])
+      console.log(value); // 👉️ "Hello World"
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  console.log(role)
+  const handleMenu = async () => {
+    try {
+        
+      await  getDataPromise()
+      setRole(getDataPromise())
+      return data.UserInfo.roles[0];
+    } catch (error) {
+      setError("Error on load menu");
+    }
+  };  
+  useEffect(() => {
+   (handleMenu());
+  
+  }, []);
+
+  // const printAddress = () => {
+  //   data.then((a) => {
+  //     console.log(a);
+  //   });
+  // };
+
+  // const printAddress = async () => {
+  //   const a = await handleMenu();
+  //   return a;
+  // };
+
+  // console.log(printAddress()) 
+
+  // const Admin = () => {
+  //   return (
+  //     <div className="flex h-screen bg-main-green ">
+  //       <div className="p-5 m-auto items-center justify-center md:w-auto">
+  //         <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-3 ">
+  //           {menuName_admin.map((menus, index) => {
+  //             console.log(menus);
+  //             return (
+  //               <MenuItem
+  //                 key={index}
+  //                 title={menus.title}
+  //                 url={menus.url}
+  //                 link={menus.link}
+  //               />
+  //             );
+  //           })}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+
+  // const Teacher = () => {
+  //   return(
+  //     <div className="flex h-screen bg-main-green ">
+  //     <div className="p-5 m-auto items-center justify-center md:w-auto">
+  //       <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-3 ">
+  //         {menuName.map((menus, index) => {
+  //           console.log(menus);
+  //           return (
+  //             <MenuItem
+  //               key={index}
+  //               title={menus.title}
+  //               url={menus.url}
+  //               link={menus.link}
+  //             />
+  //           );
+  //         })}
+  //       </div>
+  //     </div>
+  //   </div>
+  //   )
+  // }
+  // console.log(role === 1)
+  // if(role == 1 ){
+  //   <Admin/>
+
+  // }else {
+  //   <Teacher/>
+  // }
+  menu = role  === 1  ? menuName_admin :menuName ;
 
   return (
     <div className="flex h-screen bg-main-green ">

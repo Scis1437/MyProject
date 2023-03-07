@@ -106,7 +106,7 @@ function studentlist() {
 
         {dropdownTitle ? (
           <div>
-            <form className="">
+            <form className="scroll-y">
               {test.map((list) => {
                 return (
                   <div className="flex justify-between w-full">
@@ -131,9 +131,7 @@ function studentlist() {
                   </div>
                 );
               })}
-              <label className="text-xs mx-3 w-full" htmlFor="subStation">
-                test1
-              </label>
+       
             </form>
           </div>
         ) : null}
@@ -147,21 +145,7 @@ function studentlist() {
 
     const [dropdown, setDropdown] = useState(false);
 
-    // const { id, name } =props.data;
-
-    // const subStationOptions = substation.map((item) => (
-    //   <div key={item} value={item} className = "w-full flex justify-between">
-    //     {item}
-    //     <select className="h-5">
-    //               <option value="1">1</option>
-    //               <option value="2">2</option>
-    //               <option value="3">3</option>
-    //               <option value="4">4</option>
-    //               <option value="5">5</option>
-    //             </select>
-    //   </div>
-    // ));
-
+   
     return (
       <div className="py-2 " key={dataSet.id}>
         <div
