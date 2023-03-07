@@ -15,7 +15,7 @@ const addTeacher = async(req, res) => {
         }, 
         data,
     })
-    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = add score'])
+    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = add teacher'])
     res.json(addTeacher)
 }
 
@@ -29,7 +29,7 @@ const deleteTeacher = async(req, res)=>{
 
         // }
     })
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete score'])
+    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete teacher'])
     res.json(deleteTeacher)}
    
 

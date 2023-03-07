@@ -8,6 +8,7 @@ const testRouter = require('./routes/test.route');
 const teacherRouter = require('./routes/teacher.route');
 const authRouter = require('./routes/auth.route');
 const exportRouter = require('./routes/export.route');
+const exportStationRouter = require('./routes/export_stationscore.route');
 const refreshRouter = require('./routes/refresh.route');
 const logoutRouter = require('./routes/logout.route');
 const useJWT = require('./middleware/verifyJWT');
@@ -37,6 +38,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bodyParser.json())
 app.use('/teacher-log', logRouter);
+app.use('/export',exportRouter)
 app.use(cookieParser());
 app.use('/register', registerRouter)
 app.use('/auth', authRouter);
@@ -49,7 +51,8 @@ app.use('/teacher', teacherRouter)
 app.use('/student', studentRouter)
 app.use('/station',stationRouter)
 app.use('/test',testRouter)
-app.use('/export',exportRouter)
+app.use('/export-station',exportStationRouter)
+
 
 //app.use('/auth', authRouter)
 // start server
