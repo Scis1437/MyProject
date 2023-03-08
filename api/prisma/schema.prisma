@@ -34,7 +34,7 @@ model Station {
 model Test {
   student_id String
   student Student @relation(fields: [student_id], references: [id])
-  station_Id String
+  station_Id String 
   station Station @relation(fields: [station_Id], references: [id])
   station_name String
   station_teacher String 
@@ -44,6 +44,12 @@ model Test {
   score Int
 
   @@id([student_id, station_Id,test_number,test_name])
+}
+model Subtest{
+  station_Id String
+  station_name String
+  test_number Int
+  test_name String@unique
 }
 
 model Teacher {

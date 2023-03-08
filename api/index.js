@@ -6,6 +6,7 @@ const studentRouter = require('./routes/student.route');
 const nonLoginRouter = require('./routes/nonLogin.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
+const subtestRouter = require('./routes/subTest.route');
 const teacherRouter = require('./routes/teacher.route');
 const authRouter = require('./routes/auth.route');
 const exportRouter = require('./routes/export.route');
@@ -53,6 +54,7 @@ app.use('/teacher', teacherRouter)
 app.use('/student', studentRouter)
 app.use('/station',stationRouter)
 app.use('/test',testRouter)
+app.use('/subtest',subtestRouter)
 app.use('/export-station',exportStationRouter)
 
 

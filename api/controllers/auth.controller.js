@@ -14,8 +14,8 @@ const path = require("path");
 
 const handleLogin = async (req, res) => {
   let { user, pwd } = req.body;
-  user = user.username ; 
-  pwd = pwd.password
+  // user = user.username; 
+  // pwd = pwd.password
   if (!user || !pwd)
     return res
       .status(400)
