@@ -11,7 +11,7 @@ const getStudenttest = async (req, res) => {
     const studentCheck = await prisma.test.findMany({
         where: {
             
-            student_id:  req.body.student_id,
+            student_id:  req.query.student_id,
             
             
         },
@@ -22,10 +22,10 @@ const getStudenttest = async (req, res) => {
             score:true
         },
  
-          
     })
+    res.json(req.params.student_id)
     logger.teacherLog.log('info',req.user +' action = show ')
-    res.json(studentCheck);
+    //res.json(studentCheck);
     //logger.teacherLog.log('info','show success')  
 }
 const addScore = async(req, res)=>{
