@@ -1,5 +1,20 @@
 # MyProject
+*********************************************************
+get mrthod parse มาทาง req.query."data ที่ต้องการ " แทนนน
+**********************************************************
 
+add subtest 
+.post http://localhost:9000/subtest
+body {
+  "station_Id":"1",
+  "station_name":"History taking",
+  "test_number":3,
+  "test_name":"Diarhea"
+}
+delete .delete http://localhost:9000/subtest
+{
+    "station_Id":"3", 
+}
 ดูแบบไม่ล็อกอน
 .get http://localhost:9000/check-station
 parse body id ?ี่ต้องการ
