@@ -4,13 +4,28 @@ const usersDB = {
     this.users = data;
   },
 };
+
+const {prisma} = require('../db')
+const logger = require('../controllers/logger.controller')
 const fsPromises = require("fs").promises;
 const path = require("path");
 const bcrypt = require("bcrypt");
 
 const handleNewUser = async (req, res) => {
 
-    const { user,name, pwd } = req.body;
+    const { user,teacher_name, pwd } = req.body;
+    var data = String(teacher_name)
+
+    await prisma.teacher.create({
+      select: {
+            
+        teacher_name: true,
+    }, 
+    data: {
+      teacher_name: teacher_name,
+      
+    }
+  })
     if (!user || !pwd)
       return res
         .status(400)
@@ -25,9 +40,11 @@ const handleNewUser = async (req, res) => {
       const newUser = {
         username: user,
         roles: { Teacher: 2 },
-        name: name,
+        name: teacher_name,
         password: hashedPwd,
       };
+
+    
       usersDB.setUsers([...usersDB.users, newUser]);
       await fsPromises.writeFile(
         path.join(__dirname, "..", "model", "users.json"),
