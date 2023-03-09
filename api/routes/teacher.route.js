@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllTeacher,addTeacher, deleteTeacher } = require('../controllers/teacher.controller')
+const { getAllTeacher,addTeacher, deleteTeacher,updateTeacher } = require('../controllers/teacher.controller')
 const ROLES_LIST = require('../config/roles_list');
 const verifyRoles = require('../middleware/verifyRoles')
 //const verifyJWT = require('../middleware/verifyJWT');
@@ -10,7 +10,7 @@ const router = express.Router()
 //router.get('/', verifyJWT,getAllStudent)
 router.get('/',verifyRoles(ROLES_LIST.Admin,ROLES_LIST.Teacher), getAllTeacher)
 // router.get('/:student_id',getStudent)
-// router.put('/',verifyRoles(ROLES_LIST.Admin,ROLES_LIST.Teacher), updateStudent)
+router.put('/',verifyRoles(ROLES_LIST.Admin,ROLES_LIST.Teacher), updateTeacher)
 router.delete('/',verifyRoles(ROLES_LIST.Admin,ROLES_LIST.Teacher), deleteTeacher)
 router.post('/',verifyRoles(ROLES_LIST.Admin,ROLES_LIST.Teacher), addTeacher)
 

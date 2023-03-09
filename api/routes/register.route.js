@@ -1,10 +1,10 @@
+
 const express = require('express');
-const handleNewUser = require('../controllers/register.controller');
+const {handleNewUser,changePassword} = require('../controllers/register.controller');
+const ROLES_LIST = require("../config/roles_list");
+const verifyRoles = require("../middleware/verifyRoles");
 const router = express.Router();
-const ROLES_LIST = require('../config/roles_list');
-const verifyRoles = require('../middleware/verifyRoles')
-
-
-router.post('/', handleNewUser);
+router.put('/', verifyRoles(ROLES_LIST.Admin,),changePassword);
+router.post('/', verifyRoles(ROLES_LIST.Admin),handleNewUser);
 
 module.exports = router;

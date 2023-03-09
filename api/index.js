@@ -41,13 +41,14 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use('/check-station',nonLoginRouter);
 app.use(cookieParser());
-app.use('/register', registerRouter)
+
 app.use('/auth', authRouter);
 app.use('/refresh', refreshRouter);
 app.use('/logout', logoutRouter);
 
 app.use(useJWT)
 // router
+app.use('/register', registerRouter)
 app.use('/teacher-log', logRouter);
 app.use('/export',exportRouter)
 app.use('/teacher', teacherRouter)

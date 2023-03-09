@@ -65,17 +65,13 @@ const updateTest = async(req, res)=>{
         },
         
         data: {score: data.score},
-        // data: {
-        //     test_number:2,
-        //     score: 10,
-        //     station_Id: "clbgnzizb0000v4ag550yepfe",
-        //     student_id: "clbhmthk20000v4s4f4yu874a",
-        // }
+
+
     }).catch(console.error)
     logger.teacherLog.log('info',[req.user,data.student_teacher,data.station_Id,data.student_id+' action = update score'])
     res.json(updateScore)
 
-    //logger.teacherLog.log('info','add score success')
+
 }
 
 const deleteTest = async(req, res)=>{
