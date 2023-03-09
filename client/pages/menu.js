@@ -72,6 +72,7 @@ export default function Menu() {
   let menu;
   async function getDataPromise() {
     try {
+      console.log(data)
       const value = await data;
       setRole(value.UserInfo.roles[0])
       console.log(value); // 👉️ "Hello World"

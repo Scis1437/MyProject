@@ -3,40 +3,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Adduser from "../../popup/addUser";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { Teacher } from "../../../api/config/roles_list";
 
-
-const users = [
-  {
-    firstname: "charnnarong",
-    lastname: "charoensanongkun",
-    station: "cpe69",
-  },
-  {
-    firstname: "Prayat",
-    lastname: "kaewtew",
-    station: "cpe96",
-  },
-]
+// const users = [
+//   {
+//     firstname: "charnnarong",
+//     lastname: "charoensanongkun",
+//     station: "cpe69",
+//   },
+//   {
+//     firstname: "Prayat",
+//     lastname: "kaewtew",
+//     station: "cpe96",
+//   },
+// ]
 
 function UserEdit() {
+
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
   const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
+  const [teacher , setTeacher] = useState (null) ;
+  const [errorMsg, setErrMsg] = useState (null)
+    let token;
 
+    if (typeof localStorage !== "undefined") {
+      token = localStorage.getItem("access");
+    }
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
   function Redirect({ to }) {
     const router = useRouter();
     console.log("Redirect_work");
     useEffect(() => {
       router.push(to);
     }, [to]);
-  
+    // window.location("/menu")
     return null;
   }
   
-  if (shouldRedirect) {
-    return <Redirect to="/menu" />;
-  }
+
   const onNewOrderClick = (type, data) => {
     // handle new order click
     setData(data);
@@ -54,6 +63,35 @@ function UserEdit() {
       break;
   }
 
+ 
+
+  useEffect(() => {    
+
+        fetchTeacher()
+        if(teacher != null){
+          
+        }
+  }, []); 
+  const fetchTeacher = async () => {
+
+
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/teacher/`,
+        config
+      );
+      console.log(response)
+
+      setTeacher(response.data);
+            // return(response.data)
+    } catch (error) {
+      // setErrMsg(error);
+    }
+  };   
+ if (shouldRedirect) {
+    return <Redirect to="/menu" />;
+  }
+  // setTeacher();
   return (
     <div className="background">
       <div className="header-page">
@@ -75,12 +113,10 @@ function UserEdit() {
           <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
-                <p>Firstname</p>
+                <p>name</p>
               </td>
-              <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6">
-                <p>Lastname</p>
-              </td>
-              <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6 ">
+         
+              <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6 text-center ">
                 <p>Station</p>
               </td >
               <td className="rounded-tr-lg "></td>
@@ -88,21 +124,19 @@ function UserEdit() {
           </thead>
           
           <tbody className="w-full  h-auto overflow-y-auto">
-            {users.map((item) => (
+            {teacher?.map((item) => (
               <tr
-                key={item.station}
+                key={item.teacher_name}
                 className="bg-gray-100 text-xs mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg "
               >
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
-                  {item.firstname}
+                  {item.teacher_name}
                 </td>
-                <td className="py-4  text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
-                  {item.lastname}
-                </td>
+            
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
-                  {item.station}
+                  {item.username}
                 </td>
-                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1">
+                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-center">
                   <button
                     className="btn "
                     onClick={() => onNewOrderClick("open", item)}

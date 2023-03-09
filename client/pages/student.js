@@ -8,88 +8,84 @@ import useQuery from "use-query";
 import axios from "axios";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
-
-
-
-
-
 function studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState();
   const [studentCode, setStudentCode] = useState("");
   const [error, setError] = useState("");
-  if (shouldRedirect) { 
+  if (shouldRedirect) {
     return <Redirect to="/" />;
   }
-const Table = (props) => {
-  const { data } = props;
-  console.log(data);
-  console.log(studentCode.studentCode)
-  const results = data?.filter(function async(el)
-  {
-    return el.station_id == studentCode.studentCode
-  }
-  );
-  console.log(results)
-//   }
-  return (
-    <table className="w-full">
-      <thead className=" ">
-        <tr className="rounded-lg bg-gray ">
-          <th scope="col" className="text-title-table text-left rounded-tl-lg ">
-            Title
-          </th>
-          <th className="text-title-table text-right rounded-tr-lg ">
-            <p>Status</p>
-          </th>
-        </tr>
-      </thead>
+  const Table = (props) => {
+    const { data } = props;
 
-      <tbody>
-        {data?.map((items) => (
-          // console.log(items)
-          // console.log(`${items.title}` +"  " + `${items.status}` );
-
-          <tr className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
-            <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
-              {`${items.station_Id}`}
-            </td>
-            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
-              {`${items.status}`}
-            </td>
+    console.log(data)
+    // let results = data?.filter(function async(el) {
+    //   return el.id == studentCode.studentCode;
+    // });
+    //  results = results.tests
+    // console.log(results);
+    //   const set = {results}
+    // console.log(set[0])
+    return (
+      <table className="w-full">
+        <thead className=" ">
+          <tr className="rounded-lg bg-gray ">
+            <th
+              scope="col"
+              className="text-title-table text-left rounded-tl-lg "
+            >
+              Title
+            </th>
+            <th className="text-title-table text-right rounded-tr-lg ">
+              <p>Status</p>
+            </th>
           </tr>
-        ))}
+        </thead>
 
-        {/* // {data.map(row => {
+        <tbody>
+          {data?.map((items) => (
+            // console.log(items)
+            // console.log(`${items.title}` +"  " + `${items.status}` );
+
+            <tr className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
+              <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
+                {`${items.station_name}`}
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+                {`${items.status}`}
+              </td>
+            </tr>
+          ))}
+
+          {/* // {data.map(row => {
         //   <Row title={row.title} 
         //   status={row.status} />;
         // })} */}
-      </tbody>
-    </table>
-  );
-};
+        </tbody>
+      </table>
+    );
+  };
   const handleSearch = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
     const token = localStorage.getItem("access");
-  
+
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-  
+
     try {
-      const response = await axios.get(
-        `http://localhost:9000/test/${studentId}`,
-        config
-      );
-       setRows(response.data);
-      console.log(response.data);
+      const response = await axios.get("http://localhost:9000/check-station", {
+        student_id: studentId, 
+      });
+      setRows(response.data[0].tests);
+      console.log(response.data[0].tests);
     } catch (error) {
       setError("Error searching for student data");
     }
-    
   };
-  
+
   return (
     <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
@@ -139,7 +135,7 @@ const Table = (props) => {
                   </div>
                 </div>
 
-                <Table data={rows} student = {studentCode}/>
+                <Table data={rows} student={studentCode} />
               </div>
             </div>
           </div>

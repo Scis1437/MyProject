@@ -12,6 +12,7 @@ const adduser = ({ visible }) => {
   ];
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
@@ -25,14 +26,14 @@ const adduser = ({ visible }) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-
+    console.log(name)
     try {
       const response = await axios.post(
         `http://localhost:9000/register/`,
-        { user: username.username, pwd: password.password },
+        { user: username.username, name : name.name , pwd: password.password },
         config
       );
-      visible = false ;
+      visible = false;
       console.log(response.status);
     } catch (error) {
       setError("reg error");
@@ -108,7 +109,9 @@ const adduser = ({ visible }) => {
           </button>
         </div>
         <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full  "  onClick={(e) => regUser(e)}>submit</button>
+          <button className="btn w-full  " onClick={(e) => regUser(e)}>
+            submit
+          </button>
         </div>
       </div>
     );
@@ -134,7 +137,24 @@ const adduser = ({ visible }) => {
               }
             />
           </div>
-          <div className="mb-2 space-y-4"></div>
+          <div className="mb-2 space-y-4"></div>{" "}
+          <div className="space-y-4">
+            <label
+              htmlFor="password-input"
+              className="text-gray-600 font-medium"
+            >
+              NAME :
+            </label>
+            <input
+              id="password-input"
+              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              type=""
+              placeholder="Charnnarong chaoroensanongkun"
+              onChange={(e) =>
+                setName({ ...name, name: e.target.value })
+              }
+            />
+          </div>
           <div className="space-y-4">
             <label
               htmlFor="password-input"
@@ -154,10 +174,17 @@ const adduser = ({ visible }) => {
           </div>
         </div>
 
-        <div>
-          <label>Station</label>
-          <TodoList_user />
+
+          <div className="flex flex-col w-full items-center ">
+          <button className="btn w-full  " onClick={(e) => regUser(e)}>
+            submit
+          </button>
+          <button className="delete-btn w-full  " onClick={() => visible = false}>
+            cancel
+          </button>
         </div>
+          {/* <TodoList_user /> */}
+
       </form>
     </div>
   );

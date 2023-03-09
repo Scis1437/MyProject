@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import todoList from "../../item/todoList";
@@ -32,27 +32,19 @@ const edit = () => {
   const [createPostOpen, setCreatePostOpen] = useState("close");
   const [order, setOrder] = useState([]);
   const [data, setData] = useState();
-  const [popupData , setPopupData] = useState();
+  const [popupData, setPopupData] = useState();
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [error, setError] = useState("");
-
-
-  if (shouldRedirect) {
-    return <Redirect to="/menu" />;
-  }
-
+  const [errMsg, setErrMsg] = useState(null);
   function onNewOrderClick(x, data) {
     setPopupData(data);
     setNewOrderPostOpen(x);
-   
   }
-  function createExamClick (status){
-    setCreatePostOpen(status)
+  function createExamClick(status) {
+    setCreatePostOpen(status);
   }
   // console.log(newOrderPostOpen);
   let newOrderPost = null;
   switch (newOrderPostOpen) {
-    
     case "open":
       newOrderPost = <EditExam data={popupData} visible={true} />;
       break;
@@ -61,14 +53,14 @@ const edit = () => {
       break;
   }
   switch (createPostOpen) {
-    
     case "open":
-      newOrderPost = <AddExam  visible={true} />;
+      newOrderPost = <AddExam visible={true} />;
       break;
     case "closed":
       newOrderPost = null;
       break;
   }
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -78,78 +70,67 @@ const edit = () => {
   };
 
   const fetchStation = async () => {
-
     try {
       const response = await axios.get(
         `http://localhost:9000/station/`,
         config
       );
- 
+
       setData(response.data);
-     
     } catch (error) {
-      setError("Error searching for student data");
+      setErrMsg("Error searching for student data");
     }
   };
   useEffect(() => {
     fetchStation();
-    
   }, []);
-console.log(data)
+  console.log(data);
   const deleteStation = async (data) => {
     const { id } = data;
-    console.log(data)
+    console.log(data);
     try {
-      const response = await axios.delete(
-        `http://localhost:9000/station/`,
-        { data: { id }, headers: config.headers }
-      );
-        // setData(response)
-        console.log(data)
+      const response = await axios.delete(`http://localhost:9000/station/`, {
+        data: { id },
+        headers: config.headers,
+      });
+      //setData(response)
+      console.log(data);
     } catch (error) {
-      setError("");
-      console.log(error)
+      setErrMsg("");
+      console.log(error);
     }
   };
-  
+
   const List = (dataSet) => {
-  // if (!Array.isArray(dataSet)) {
-  //   return <div>Data set is not an array</div>;
-  // }
- 
-  const [dropdown, setDropdown] = useState(false);
-  // const { id, name } =props.data;
+    const [dropdown, setDropdown] = useState(false);
 
-  // const subStationOptions = substation.map((item) => (
-  //   <div key={item} value={item} className = "w-full flex justify-between">
-  //     {item}
-  //     <select className="h-5">
-  //               <option value="1">1</option>
-  //               <option value="2">2</option>
-  //               <option value="3">3</option>
-  //               <option value="4">4</option>
-  //               <option value="5">5</option>
-  //             </select>
-  //   </div>
-  // ));
+    if (shouldRedirect) {
+      return <Redirect to="/menu" />;
+    }
 
-  return (
-    <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
-    <td className="text-sm">{dataSet.station_name}</td>
+    return (
+      <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
+        <td className="text-sm">{dataSet.station_name}</td>
 
-    <td className="flex gap-1">
-      <button
-        className="btn"
-        onClick={() => {onNewOrderClick("open", { ...dataSet})}}
-      >
-        Edit
-      </button>
-      <button className=" delete-btn" onClick={() => deleteStation({...dataSet})}>Delete</button>
-
-    </td>
-  </tr>
-  );
-};
+        <td className="flex gap-1">
+          <button
+            className="btn"
+            onClick={() => {
+              onNewOrderClick("open", { ...dataSet });
+            }}
+          >
+            Edit
+          </button>
+          <button
+            className=" delete-btn"
+            onClick={() => deleteStation({ ...dataSet })}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    );
+  };
   return (
     <div className="background ">
       <div className="header-page">
@@ -185,9 +166,9 @@ console.log(data)
             </tr>
           </thead>
           <tbody className="">
-          {data?.map((list) => {
-            return <List key={list.id}  {...list} />;
-          })}
+            {data?.map((list) => {
+              return <List key={list.id} {...list} />;
+            })}
           </tbody>
         </table>
 
@@ -197,7 +178,7 @@ console.log(data)
 
         <div
           className={`${
-            newOrderPostOpen === "open" || createPostOpen ==="open"
+            newOrderPostOpen === "open" || createPostOpen === "open"
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
               : ""
           }`}

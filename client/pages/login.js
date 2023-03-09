@@ -69,8 +69,8 @@ const handleSubmit = async (e) => {
     const response = await axios.post(
       "http://localhost:9000/auth",
       {
-        user: username,
-       pwd: password,
+       user: username.username,
+       pwd: password.password,
       }
     
    

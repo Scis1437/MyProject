@@ -1,44 +1,103 @@
 import React, { useState, useEffect } from "react";
-import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
 
 const editExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
-  function handleOptionChange(e) {
-    setSelectedOption(e.target.value);
+  const [errMsg, setErrMsg] = useState("");
+  const [teacher, setTeacher] = useState();
+  const [subTest, setSubtest] = useState();    
+  const [maxId , setMaxId] = useState();
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
   }
- 
-  const [error, setError] = useState("");
-  const editStation = async () => {
-    
-    let token;
-    if (typeof localStorage !== "undefined") {
-      token = localStorage.getItem("access");
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
+
+  function generateId(data) {
+    let maxId = Math.max(...data?.map(item => item.test_number));
+    console.log(maxId) // find the largest ID in the array
+    setMaxId( maxId + 1);
+  }
+  
+  const fetchSubtest = async () => {
+    const station_Id = data.id;
+
+    try {
+      const response = await axios.get(`http://localhost:9000/subtest`, {
+        params: { station_Id },
+        headers: { Authorization: `Bearer ${token}` },
+      });      
+      console.log(response.data);  
+      await setSubtest(response.data);
+      await generateId(response.data)
+   
+
+      {
+      }
+    } catch (error) {
+      setErrMsg(error);
+    }
+  };
+
+  const fetchTeacher = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/teacher/`,
+        config
+      );
+
+      setTeacher(response.data);
+    } catch (error) {
+      setErrMsg(error);
+    }
+  };
+  useEffect(() => {
+    fetchTeacher();
+    fetchSubtest();
+  }, []);
+
+
+
+  // console.log(teacher);
+  // console.log(subTest);
+  // console.log(errMsg);
+  const editStation = async () => {
     try {
       console.log(dataInput);
       const response = await axios.put(
         `http://localhost:9000/station`,
         dataInput,
-        config
+        config.headers
       );
-
       setDataInput(response.data);
-     
     } catch (error) {
-      setError("Error searching for student data");
+      setErrMsg("Error searching for student data");
     }
   };
 
-
-  const TodoList = () => {
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState("");
-
+  const TodoList = ({data}) => {
+    const [list, setList] = useState((subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []));
+    const [input, setInput] = useState("");   
+    const station_Id = data.id;
+  
+   const dataSet = {
+        station_Id: station_Id,
+        test_name: input,
+         test_number:maxId,
+        station_name : data.station_name ,
+      }; 
+      // console.log(data.station_name)
+      // console.log(dataSet) 
+      // console.log(station_Id )
+    // useEffect(() => {
+    //   setList(
+    //     subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
+    //   );
+    // }, []);
+ 
     const addTodo = (todo) => {
       const newTodo = {
         id: Math.random(),
@@ -49,28 +108,82 @@ const editExam = ({ visible, data }) => {
 
       // add the todo to the list
       setList([...list, newTodo]);
-
+      console.log(list)
       // clear input box
       setInput("");
     };
-
+    console.log(input)
+    const addSubTest = async (e) => {
+        e.preventDefault();
+     
+      try {
+        const response = await axios.post(
+          `http://localhost:9000/subtest/`,
+          dataSet,
+          config
+        );
+        const newSubtest = {
+          id: maxId,
+          todo: dataInput,
+  
+        };
+        setList([...list, newSubtest ]);
+       setSubtest(response);
+        console.log(response.data);
+        setList(
+          subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
+        );
+        {
+        }
+      } catch (error) {
+        setErrMsg(error);
+      }
+    };
     const deleteTodo = (id) => {
       // Filter out todo with the id
       const newList = list.filter((todo) => todo.id !== id);
 
       setList(newList);
-    };
+    };   
+    const test = { station_Id: 2} 
+    const test2 = test.data ;
+   
+     const deleteSubTest = async () => {
+    
+ 
+    try {
+      const response = await axios.delete(
+        `http://localhost:9000/subtest/`,{
+          test ,
+          // data : {  station_Id: 4}      
+          config}
+          
+  
+      );
+  
+      // setSubtest(response.data);
+      console.log(response.data);
+      {
+      }
+    } catch (error) {
+      setErrMsg(error);
+    }
+  };
 
     return (
       <div className="">
         <h1>title</h1>{" "}
-        <ul>
+        <ul className="mx-3 ">
           {list.map((todo) => (
-            <li key={todo.id}>
+            <li
+              key={todo.id}
+              className="flex justify-between "
+              // onClick={() => deleteTodo(todo.id)}
+            >
               {todo.todo}
               <button
-                className="bg-btn-red rounded-md"
-                onClick={() => deleteTodo(todo.id)}
+                className="delete-btn"
+                onClick={() => deleteSubTest()}
               >
                 &times;
               </button>
@@ -90,7 +203,7 @@ const editExam = ({ visible, data }) => {
             <option value="2">score</option>
           </select> */}
 
-          <button className="btn" onClick={() => addTodo(input)}>
+          <button className="btn" onClick={(e) =>  addSubTest(e)}>
             Add
           </button>
         </div>
@@ -126,7 +239,20 @@ const editExam = ({ visible, data }) => {
             <option value="2">score</option>
           </select>
         </div>
-        <TodoList />
+        <div className="flex mb-4">
+          <label className="mr-4">Assign to :</label>
+          <select
+            className="h-5 mx-2 rounded-md"
+            // value={this.state.selectValue}
+          >
+            {teacher?.map((obj) => (
+              <option key={obj.teacher_name} value={obj.value}>
+                {obj.teacher_name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <TodoList data = {data}/>
       </form>
     </div>
   );

@@ -4,21 +4,41 @@ import axios from "axios";
 
 const addExam = ({ visible }) => {
   const [dataInput , setDataInput] = useState();
-
+  const [errMsg, setErrMsg] = useState("");
+  const [teacher, setTeacher] = useState();
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
     
   const [error, setError] = useState("");
 
-  console.log(dataInput)
-const addStation = async () => {
-
     const  token = localStorage.getItem("access");
 
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
+  console.log(dataInput) 
+   const fetchTeacher = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/teacher/`,
+        config
+      );
+
+      setTeacher(response.data);
+
+    } catch (error) {
+      setErrMsg(error);
+    }
+  };
+  useEffect(() => {
+    fetchTeacher();
+
+  
+  }, []);
+  
+const addStation = async () => {
+
 
     try {
         
@@ -125,6 +145,21 @@ const addStation = async () => {
           <select className="h-5 mx-2 rounded-md">
             <option value="1">pass/fail</option>
             <option value="2">score</option>
+          </select>
+        </div>
+        <div className="flex mb-4">
+          <label className="mr-4">Assign to :</label>
+          <select
+            className="h-5 mx-2 rounded-md"
+            // value={this.state.selectValue}
+          >
+            {teacher?.map((obj) => (
+              <option key={obj.teacher_name} value={obj.value}>
+                {obj.teacher_name} 
+              </option>
+            ))}
+
+     
           </select>
         </div>
         <TodoList />
