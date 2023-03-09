@@ -2,7 +2,10 @@
 *********************************************************
 get mrthod parse มาทาง req.query."data ที่ต้องการ " แทนนน
 **********************************************************
-
+change password ส่งไอดี กับ พาสเวิดใหม่มาได้เลย
+.put http://localhost:9000/register
+{"user":"test23",
+"pwd":"12345"}
 add subtest 
 .post http://localhost:9000/subtest
 body {
