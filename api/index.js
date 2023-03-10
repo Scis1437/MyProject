@@ -44,12 +44,11 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cookieParser());
 
-const apiRouter = express.Router()
 
-apiRouter.use('/check-station',nonLoginRouter);
-apiRouter.use('/auth', authRouter);
-apiRouter.use('/refresh', refreshRouter);
-apiRouter.use('/logout', logoutRouter);
+app.use('/check-station',nonLoginRouter);
+app.use('/auth', authRouter);
+app.use('/refresh', refreshRouter);
+app.use('/logout', logoutRouter);
 
 // app.use(useJWT)
 const useJWTRouter = express.Router();
@@ -65,8 +64,7 @@ useJWTRouter.use('/test',testRouter)
 useJWTRouter.use('/subtest',subtestRouter)
 useJWTRouter.use('/export-station',exportStationRouter)
 
-apiRouter.use(useJWTRouter)
-app.use('/api', apiRouter);
+app.use(useJWTRouter);
 
 //app.use('/auth', authRouter)
 // start server
