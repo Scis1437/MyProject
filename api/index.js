@@ -1,7 +1,12 @@
 const express =  require("express");
 const cors = require('cors')
+const corsOptions = require("./config/corsOption");
 const bodyParser = require('body-parser');
 const logRouter = require('./routes/log.route');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const fs = require('fs');
+
 const studentRouter = require('./routes/student.route');
 const nonLoginRouter = require('./routes/nonLogin.route');
 const stationRouter = require('./routes/station.route');
@@ -13,14 +18,12 @@ const exportRouter = require('./routes/export.route');
 const exportStationRouter = require('./routes/export_stationscore.route');
 const refreshRouter = require('./routes/refresh.route');
 const logoutRouter = require('./routes/logout.route');
-const useJWT = require('./middleware/verifyJWT');
-const cookieParser = require('cookie-parser');
 const registerRouter = require('./routes/register.route');
+
+const useJWT = require('./middleware/verifyJWT');
+
+
 const app = express()
-const morgan = require('morgan');
-const fs = require('fs');
-
-
 // app.get('/teacher-log', (req, res) => {
 //     fs.readFile('teacher_log', 'utf-8', (err, data) => {
 //       if (err) {
@@ -35,13 +38,13 @@ const fs = require('fs');
 app.use(morgan('combined'));
 // use middleware
 //app.use(useJWT)
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bodyParser.json())
-app.use('/check-station',nonLoginRouter);
 app.use(cookieParser());
 
+app.use('/check-station',nonLoginRouter);
 app.use('/auth', authRouter);
 app.use('/refresh', refreshRouter);
 app.use('/logout', logoutRouter);
@@ -64,3 +67,5 @@ app.use('/export-station',exportStationRouter)
 app.listen(9000, () => {
     console.log('Server started')
 })
+
+module.exports = app;
