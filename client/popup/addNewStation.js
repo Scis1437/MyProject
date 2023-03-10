@@ -3,22 +3,27 @@ import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
 
 const addExam = ({ visible }) => {
-  const [dataInput , setDataInput] = useState();
+  const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
+  const [selectedTeacher, setSelectedTeacher] = useState();
+  const [station, setStation] = useState();
+  const [maxId, setMaxId] = useState();
+
+
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
-    
+
   const [error, setError] = useState("");
 
-    const  token = localStorage.getItem("access");
+  const token = localStorage.getItem("access");
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-  console.log(dataInput) 
-   const fetchTeacher = async () => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  // console.log(dataInput);
+  const fetchTeacher = async () => {
     try {
       const response = await axios.get(
         `http://localhost:9000/teacher/`,
@@ -26,34 +31,64 @@ const addExam = ({ visible }) => {
       );
 
       setTeacher(response.data);
-
     } catch (error) {
       setErrMsg(error);
     }
   };
   useEffect(() => {
     fetchTeacher();
-
-  
   }, []);
-  
-const addStation = async () => {
-
-
-    try {
-        
-      const response = await axios.post(
-        `http://localhost:9000/station/`,
-        
-        { station_name: dataInput.station_name },
-        config
+  const handleSelectChange = (event) => {
+    setSelectedTeacher(event.target.value);
+  };
+  function generateId(e) {
        
+    let maxId = Math.max(...e?.map((item) => item.id));
+    console.log(maxId)
+    setMaxId(maxId + 1);
+  }
+  const fetchStation = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/station/`,
+        config
       );
-      console.log(response)
-      setDataInput(response);
-      setError("");
+      await generateId(response.data)
+        
+      setStation(response.data);
     } catch (error) {
-        setError(error.response.data.message);
+      setErrMsg("Error searching for student data");
+    }
+  };
+  useEffect(() => {
+    fetchStation();
+  }, []);
+  const data = {    
+    id: maxId,
+    station_name: dataInput?.station_name,
+    station_teacher: selectedTeacher,
+  }; 
+  console.log(data)
+  const addStation = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:9000/station/`,{
+          //   id: true,
+          //   station_name:true,
+          //   station_teacher:true,
+        id: maxId, 
+        station_name: dataInput.station_name,
+        station_teacher: selectedTeacher,
+        // data , 
+         
+        headers: { Authorization: `Bearer ${token}`}}
+      );
+      console.log(response);
+     
+      // setDataInput(response);
+      // setError("");
+    } catch (error) {
+      setError(error.response.data.message);
     }
   };
   const TodoList = () => {
@@ -141,25 +176,25 @@ const addStation = async () => {
           ></input>
         </div>
         <div className="flex mb-4">
-          <label className="mr-4">Grading method :</label>
+          {/* <label className="mr-4">Grading method :</label>
           <select className="h-5 mx-2 rounded-md">
             <option value="1">pass/fail</option>
             <option value="2">score</option>
-          </select>
+          </select> */}
         </div>
         <div className="flex mb-4">
           <label className="mr-4">Assign to :</label>
           <select
-            className="h-5 mx-2 rounded-md"
-            // value={this.state.selectValue}
+            className="h-5"
+            value={selectedTeacher}
+            onChange={handleSelectChange}
           >
-            {teacher?.map((obj) => (
-              <option key={obj.teacher_name} value={obj.value}>
-                {obj.teacher_name} 
+            <option value="">Select a teacher</option>
+            {teacher?.map((teacher) => (
+              <option key={teacher.value} value={teacher.value}>
+                {teacher.teacher_name}
               </option>
             ))}
-
-     
           </select>
         </div>
         <TodoList />

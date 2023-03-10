@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Redirect from "../../../item/Redirect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const title = {
   1: "active listening",
@@ -17,27 +17,77 @@ function Gradding() {
   const { station, studentCode , method ,data} = router.query;
   const [points, setPoints] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [student ,setStudent] = useState([]);
+  const [errMsg , setErrMsg] = useState()
+
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
   };
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const fetchStudent = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/student/`,
+        config
+      );
+
+    
+      const student = response.data.find((student) => student.id === studentCode);
+      
+      setStudent(student);
+
+    } catch (error) {
+      setErrMsg("Error searching for student data");
+    }
+  };
+ 
+  useEffect(() => {
+    fetchStudent();
+  }, []);
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;
   }
-
+    console.log(student)
   function MethodCheck() {
-    const {method} = router.query; 
-    console.log(method)
-    if (method === "point") {
+    // const {method} = query.method; 
+    // console.log(method)
+    if (true) {
       return (
         <select
-
-        >
-          <option value=""></option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+        className="h-5"
+        // defaultValue={ <option value="0">0</option>}
+        // onChange={(e) => {
+        //   const newData = test.map((item) => {
+        //     if (item.station_Id === list.station_Id) {
+        //       return {
+        //         ...item,
+        //         score: parseInt(e.target.value),
+        //       };
+        //     } else {
+        //       return item;
+        //     }
+        //   });
+        //   setTest(newData);
+        // }}
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
       );
     } else if (method === "pass/fail") {
       return (
@@ -68,7 +118,7 @@ function Gradding() {
       <div className="container ">
         <div>
           <p>student code : {studentCode}</p>
-          <p>student name : {data.name} </p>
+          <p>student name : {student?.name} </p>
         </div>
         <table className="table-auto w-full">
           <thead>
@@ -95,7 +145,7 @@ function Gradding() {
         </table>
         <div className="flex justify-between">
           <div className="flex">
-            {" "}
+            {/* {" "} */}
             <p>comment : </p>
             <input></input>
           </div>

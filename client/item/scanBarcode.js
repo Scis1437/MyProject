@@ -12,56 +12,100 @@ function scanBarcode() {
   const [results, setResults] = useState([]);
   const [studentCode, setStudentCode] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [error , setError] = useState () ;
+  const [errMsg, setErrMsg] = useState();
+
   let token;
   if (typeof localStorage !== "undefined") {
-   token = localStorage.getItem("access");
+    token = localStorage.getItem("access");
   }
-  
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  function Gradding({ station, studentCode }) {
+  function Gradding({ station_Id , station, studentCode }) {
     const router = useRouter();
     const [redirecting, setRedirecting] = useState(false);
-    const [studentStatus , setStudentStatus] = useState({}) ; 
-    const fetchTest= async () => {
-      try {
-      //   const response = await axios.get(
-      //     `http://localhost:9000/Test/620719000`,
-      // config
-        
-      //   );
-        const response = await axios.get(
-          `http://localhost:9000/student/620719000`,
-        config
-         
+    const [subTest, setSubtest] = useState();
+    const [studentStatus, setStudentStatus] = useState("Complete");
+    const [stationId , setStationId]  = useState(station_Id)
+    const [data , setData ] = useState({}) ;
+    console.log(stationId) 
+
+    const fetchSubtest = async () => {
+      const station_Id =  stationId ;
      
-          
-        
-        );
-        setStudentStatus(response.data);
+      try {
+        const response = await axios.get(`http://localhost:9000/subtest`, {
+          params: {station_Id},
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(response.data);
+        setSubtest(response.data);
+        // setStudentStatus(data?.map(test => test.test_number))
+        // console.log(studentStatus)
+        {
+        }
       } catch (error) {
-        setError("Error fetch test");
+        setErrMsg(error);
+      }
+    };
+    const fetchTest = async () => {
+      try {
+        //   const response = await axios.get(
+        //     `http://localhost:9000/Test/620719000`,
+        // config
+
+        //   );
+        const response = await axios.get(
+          `http://localhost:9000/student/${studentCode}`,
+          config
+        );
+
+       const filterData =  await response.data.filter(
+       (item) =>  item.id === studentCode  
+        );
+        // const filterData2 =  await filterData[0].test.filter(
+        //   (item) =>  item.station_Id === studentId
+        //    );     
+         console.log(filterData[0].tests)
+        const statusCheck = (filterData[0].tests.filter(
+          (item) =>  item.station_Id === station_Id
+           ))
+        console.log(statusCheck)
+       
+        console.log(statusCheck.length === 0)
+        if(statusCheck.length === 0) { 
+        
+            setStudentStatus("Incomplete")
+        }
+        // && item.station_Id === studentId
+        // useEffect(() => {
+        //   fetchSubtest(filterData.id)
+        // }, []);
+        
+        // await fetchSubtest();
+   
+      setData(filterData[0].tests);
+      } catch (error) {
+        setErrMsg("Error fetch test");
       }
     };
     useEffect(() => {
       fetchTest();
-
     }, []);
-    console.log(studentStatus)
+
     const handleOnClick = () => {
-      if (status === "Complete") {
+      if (studentStatus === "Complete") {
         console.log("This station already graded");
       } else {
         setRedirecting(true);
       }
     };
-
+  
     if (redirecting) {
       router.push({
         pathname: "/menu/gradding/gradding",
-        query: { station, studentCode, method },
+        query: { station, studentCode },
       });
       return null;
     }
@@ -75,14 +119,14 @@ function scanBarcode() {
           {station}
         </td>
         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
-          {status}
+          {studentStatus}
         </td>
       </tr>
     );
   }
-  if (shouldRedirect) {
-    return <Redirect to="/menu/gradding/selectStation" studentCode={data} />;
-  }
+  // if (shouldRedirect) {
+  //   return <Redirect to="/menu/gradding/selectStation" studentCode={data} />;
+  // }
 
   const [studentData, setStudentData] = useState([]);
   const [data, setData] = useState();
@@ -96,7 +140,7 @@ function scanBarcode() {
 
       setStation(response.data);
     } catch (error) {
-      setError("Error searching for student data");
+      setErrMsg("Error searching for student data");
     }
   };
   const fetchStudent = async () => {
@@ -107,8 +151,9 @@ function scanBarcode() {
       );
 
       setStudentData(response.data);
+      console.log(studentData);
     } catch (error) {
-      setError("Error searching for student data");
+      setErrMsg("Error searching for student data");
     }
   };
   useEffect(() => {
@@ -116,17 +161,12 @@ function scanBarcode() {
     fetchStudent();
   }, []);
 
-  if (shouldRedirect) {
-    return <Redirect to="/menu/gradding/gradding" />;
-  }
-
   const searchStudent = async (e) => {
     e.preventDefault();
 
     const studentId = studentCode;
-
+    console.log(studentId);
     const student = studentData.find((student) => student.id === studentId);
-
     setData(student);
   };
 
@@ -135,7 +175,11 @@ function scanBarcode() {
     code = String(code).slice(4, -1);
     setStudentCode(code);
   };
-  console.log(station);
+
+  if (shouldRedirect) {
+    return <Redirect to="/menu/gradding/gradding" />;
+  }
+
   return (
     <div className="h-10 flex flex-col justify-center">
       <Scanner onDetected={handleScan} />
@@ -190,6 +234,7 @@ function scanBarcode() {
                   key={item.id}
                   station={item.station_name}
                   studentCode={studentCode}
+                  station_Id = {item.id}
                   // method={item.method}
                 />
               ))}

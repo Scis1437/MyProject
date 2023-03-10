@@ -28,7 +28,7 @@ function Redirect({ to }) {
 }
 
 const edit = () => {
-  const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
+  const [newOrderPostOpen, setNewOrderPostOpen] = useState("");
   const [createPostOpen, setCreatePostOpen] = useState("close");
   const [order, setOrder] = useState([]);
   const [data, setData] = useState();
