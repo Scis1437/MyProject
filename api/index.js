@@ -44,23 +44,29 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cookieParser());
 
-app.use('/check-station',nonLoginRouter);
-app.use('/auth', authRouter);
-app.use('/refresh', refreshRouter);
-app.use('/logout', logoutRouter);
+const apiRouter = express.Router()
 
-app.use(useJWT)
+apiRouter.use('/check-station',nonLoginRouter);
+apiRouter.use('/auth', authRouter);
+apiRouter.use('/refresh', refreshRouter);
+apiRouter.use('/logout', logoutRouter);
+
+// app.use(useJWT)
+const useJWTRouter = express.Router();
+useJWTRouter.use(useJWT)
 // router
-app.use('/register', registerRouter)
-app.use('/teacher-log', logRouter);
-app.use('/export',exportRouter)
-app.use('/teacher', teacherRouter)
-app.use('/student', studentRouter)
-app.use('/station',stationRouter)
-app.use('/test',testRouter)
-app.use('/subtest',subtestRouter)
-app.use('/export-station',exportStationRouter)
+useJWTRouter.use('/register', registerRouter)
+useJWTRouter.use('/teacher-log', logRouter);
+useJWTRouter.use('/export',exportRouter)
+useJWTRouter.use('/teacher', teacherRouter)
+useJWTRouter.use('/student', studentRouter)
+useJWTRouter.use('/station',stationRouter)
+useJWTRouter.use('/test',testRouter)
+useJWTRouter.use('/subtest',subtestRouter)
+useJWTRouter.use('/export-station',exportStationRouter)
 
+apiRouter.use(useJWTRouter)
+app.use('/api', apiRouter);
 
 //app.use('/auth', authRouter)
 // start server
