@@ -27,7 +27,7 @@ function Redirect({ to }) {
   return null;
 }
 
-const edit = () => {
+const Edit = () => {
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("");
   const [createPostOpen, setCreatePostOpen] = useState("close");
   const [order, setOrder] = useState([]);
@@ -193,4 +193,4 @@ const edit = () => {
     </div>
   );
 };
-export default edit;
+export default Edit;

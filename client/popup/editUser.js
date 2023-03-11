@@ -2,7 +2,7 @@ import React from "react";
 import TodoList from "../item/todoList";
 import Homemodule from "../styles/Home.module.css";
 import { useState } from "react";
-const adduser = ({ visible, data }) => {
+const EditUser  = ({ visible, data }) => {
   const station = [
     "History talking patient ",
     "Peptic ulcer ",
@@ -144,4 +144,4 @@ const adduser = ({ visible, data }) => {
     </form>
   </div>)
 }
-export default adduser ; 
+export default EditUser ; 

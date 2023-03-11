@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
 
-const addExam = ({ visible }) => {
+const AddExam = ({ visible }) => {
   const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
@@ -203,4 +203,4 @@ const addExam = ({ visible }) => {
   );
 };
 
-export default addExam;
+export default AddExam;

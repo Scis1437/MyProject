@@ -51,7 +51,7 @@ const Table = (props) => {
             // console.log(items)
             // console.log(`${items.title}` +"  " + `${items.status}` );
 
-            <tr className="bg-gray-100 border-b">
+            <tr key={items.station_Id} className="bg-gray-100 border-b">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 {`${items.title}`}
               </td>
@@ -72,7 +72,7 @@ const Table = (props) => {
   );
 };
 
-function student() {
+function Student() {
   const [rows, setRows] = useState(subject);
   return (
     <div className="h-screen  bg-main-green flex justify-center items-center">

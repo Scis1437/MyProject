@@ -48,7 +48,7 @@ function studentpage() {
             // console.log(items)
             // console.log(`${items.title}` +"  " + `${items.status}` );
 
-            <tr className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
+            <tr key={items.station_Id} className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
               <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
                 {`${items.station_name}`}
               </td>

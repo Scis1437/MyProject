@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const editExam = ({ visible, data }) => {
+const EditExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
@@ -259,4 +259,4 @@ const editExam = ({ visible, data }) => {
   );
 };
 
-export default editExam;
+export default EditExam;

@@ -8,7 +8,7 @@ import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 
-const gradding = () => {
+const Gradding = () => {
     const [shouldRedirect, setShouldRedirect] = useState(false);
     if (shouldRedirect) {
       return <Redirect to="/menu"  />;
@@ -34,4 +34,4 @@ const gradding = () => {
     </div>
   );
 };
-export default gradding;
+export default Gradding;

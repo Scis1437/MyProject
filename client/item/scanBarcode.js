@@ -8,7 +8,7 @@ import Redirect from "./Redirect";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-function scanBarcode() {
+function ScanBarcode() {
   const [results, setResults] = useState([]);
   const [studentCode, setStudentCode] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -246,4 +246,4 @@ function scanBarcode() {
   );
 }
 
-export default scanBarcode;
+export default ScanBarcode;

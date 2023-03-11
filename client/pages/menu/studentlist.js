@@ -19,7 +19,7 @@ function Redirect({ to }) {
   return null;
 }
 
-function studentlist() {
+function Studentlist() {
   const [error, setError] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [studentCode, setStudentCode] = useState("");
@@ -339,4 +339,4 @@ function studentlist() {
   );
 }
 
-export default studentlist;
+export default Studentlist;

@@ -4,7 +4,7 @@ import Homemodule from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const adduser = ({ visible }) => {
+const AddUser = ({ visible }) => {
   const station = [
     "History talking patient ",
     "Peptic ulcer ",
@@ -250,4 +250,4 @@ const adduser = ({ visible }) => {
 //   </div>
 // );
 
-export default adduser;
+export default AddUser;
