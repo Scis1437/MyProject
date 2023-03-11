@@ -97,15 +97,17 @@ function Studentlist() {
         score: score,
       };
       try {
-        const response = await axios.put(`http://localhost:9000/test/`, {
-          data: {
-            tudent_id: studentId,
-            station_Id: stationId,
-            test_number: testNumber,
-            score: score,
-          },
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.put(`http://localhost:9000/test/`, data, config
+        //  {
+        //   data: {
+        //     tudent_id: studentId,
+        //     station_Id: stationId,
+        //     test_number: testNumber,
+        //     score: score,
+        //   },
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+        );
         // console.log(response.data);
         alert("Test data saved successfully");
       } catch (error) {
@@ -205,7 +207,7 @@ function Studentlist() {
                         className="text-xs mx-3 w-full"
                         htmlFor="subStation"
                       >
-                        {list.test_number}
+                        {list.test_name}
                       </label>
 
                       <select

@@ -4,7 +4,7 @@ import Redirect from "../../../item/Redirect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { ScreenRotationSharp } from "@material-ui/icons";
+
 
 const title = {
   1: "active listening",

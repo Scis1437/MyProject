@@ -19,11 +19,11 @@ const EditExam = ({ visible, data }) => {
     let maxId = Math.max(...data?.map((item) => item.test_number));
     if (!isFinite(maxId) || maxId <= 0) {
       maxId = 1; // Set a default value of 1
-      setMaxId(maxId)
-    }else{
+      setMaxId(maxId);
+    } else {
       setMaxId(maxId + 1);
     }
-    
+
     // if (isFinite(maxId) || maxId <= 0) {
     //   setMaxId(1)
     // } else {
@@ -75,8 +75,9 @@ const EditExam = ({ visible, data }) => {
       const response = await axios.put(
         `http://localhost:9000/station`,
         dataInput,
-        config.headers
+        config
       );
+      alert("Station data saved successfully");
       setDataInput(response.data);
     } catch (error) {
       setErrMsg("Error searching for student data");
@@ -182,9 +183,7 @@ const EditExam = ({ visible, data }) => {
     // const test = { station_Id: 2 };
     // const test2 = test.data;
 
-    const deleteSubTest = async () => {
-      
-    };
+    const deleteSubTest = async () => {};
 
     return (
       <div className="">
