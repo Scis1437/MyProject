@@ -8,7 +8,7 @@ import useQuery from "use-query";
 import axios from "axios";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
-function studentpage() {
+function Studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState();
   const [studentCode, setStudentCode] = useState("");
@@ -181,4 +181,4 @@ function studentpage() {
   );
 }
 
-export default studentpage;
+export default Studentpage;

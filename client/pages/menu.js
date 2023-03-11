@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import {  useRef, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import axios from "axios";
 import MenuItem from "../item/MenuItem";
@@ -15,7 +15,7 @@ import {
 
 export default function Menu() {
   const router = useRouter();
-
+  const dataRef = useRef(null);
   let roles;
 
   const parseJwt = (bearerToken) => {
@@ -24,9 +24,10 @@ export default function Menu() {
     return decoded;
   };
   const [error, setError] = useState("");
-  let data 
+
   useEffect(() => {
-    data= parseJwt(`Bearer ${localStorage.getItem("access")}`);;
+    const data= parseJwt(`Bearer ${localStorage.getItem("access")}`);;
+    dataRef.current = data;
   }, []);
 
   const menuName = [
@@ -93,9 +94,9 @@ export default function Menu() {
     }
   };  
   useEffect(() => {
-   (handleMenu());
+  //  (handleMenu());
   
-  }, []);
+  }, [handleMenu]);
 
   // const printAddress = () => {
   //   data.then((a) => {

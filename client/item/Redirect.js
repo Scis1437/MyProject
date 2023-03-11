@@ -3,7 +3,7 @@ import React from 'react'
 import { useState , useEffect } from 'react'
 import { useRouter } from "next/router";
 
-function Redirect({ to, studentCode}) {
+function Redirect({ to, studentCode ,array}) {
   const router = useRouter();
   console.log(studentCode);
   useEffect(() => {

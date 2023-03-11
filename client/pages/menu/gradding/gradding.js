@@ -4,6 +4,7 @@ import Redirect from "../../../item/Redirect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { ScreenRotationSharp } from "@material-ui/icons";
 
 const title = {
   1: "active listening",
@@ -14,11 +15,14 @@ const title = {
 
 function Gradding() {
   const router = useRouter();
-  const { station, studentCode , method ,data} = router.query;
+  const { stationId, studentCode , method ,data} = router.query;
   const [points, setPoints] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [student ,setStudent] = useState([]);
   const [errMsg , setErrMsg] = useState()
+  const [subTest, setSubtest] = useState();
+  // const [stationId, setStationId] = useState();
+  
 
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
@@ -30,31 +34,99 @@ function Gradding() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
+  // const fetchStation = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:9000/station/`,
+  //       config
+  //     );
+  //     const filterData =  await response.data.filter(
+  //       (item) =>  item.station_name === station
+  //        );
+  //     setStationId(filterData);
+  //   } catch (error) {
+  //     setErrMsg("Error searching for student data");
+  //   }
+  // };
 
-  const fetchStudent = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/student/`,
-        config
-      );
+  // const fetchTest = async () => {
+  //   try {
+  //     //   const response = await axios.get(
+  //     //     `http://localhost:9000/Test/620719000`,
+  //     // config
+
+  //     //   );
+  //     const response = await axios.get(
+  //       `http://localhost:9000/student/${studentCode}`,
+  //       config
+  //     );
+
+  //    const filterData =  await response.data.filter(
+  //    (item) =>  item.id === studentCode  
+  //     );
+  //     // const filterData2 =  await filterData[0].test.filter(
+  //     //   (item) =>  item.station_Id === studentId
+  //     //    );     
+  //     const statusCheck = (filterData[0].tests.filter(
+  //       (item) =>  item.station_name === station_Id
+  //        ))
+  //     console.log(statusCheck )
+  //     setStationId(statusCheck.station_Id[0])
+  //   } catch (error) {
+  //     setErrMsg("Error fetch test");
+  //   }
+  // };
+
+  // const fetchStudent = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:9000/student/`,
+  //       config
+  //     );
 
     
-      const student = response.data.find((student) => student.id === studentCode);
+  //     const student = response.data.find((student) => student.id === studentCode);
       
-      setStudent(student);
+  //     setStudent(student);
 
+  //   } catch (error) {
+  //     setErrMsg("Error searching for student data");
+  //   }
+  // };
+ 
+  useEffect(() => {  
+    const fetchSubtest = async () => {
+    
+
+    try {
+      const response = await axios.get(`http://localhost:9000/subtest`, {
+        params: {  stationId },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const filterData =  await response.data.filter(
+        (item) =>  item.station_Id === stationId
+         );
+
+        console.log(filterData)
+        console.log(response.data)
+        setSubtest(filterData );
+        
+
+      {
+      }
     } catch (error) {
-      setErrMsg("Error searching for student data");
+      setErrMsg(error);
     }
   };
- 
-  useEffect(() => {
-    fetchStudent();
+    // fetchStudent();
+    fetchSubtest();
+    // fetchStation();
+    // fetchSubtest();
   }, []);
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;
   }
-    console.log(student)
+  console.log(stationId)
   function MethodCheck() {
     // const {method} = query.method; 
     // console.log(method)
@@ -112,13 +184,13 @@ function Gradding() {
             onClick={() => setShouldRedirect(true)}
           />
         </div>{" "}
-        <p className="text-header">{station}</p>
+        <p className="text-header">{stationId}</p>
       </div>
 
       <div className="container ">
         <div>
           <p>student code : {studentCode}</p>
-          <p>student name : {student?.name} </p>
+          <p>student name : {stationId} </p>
         </div>
         <table className="table-auto w-full">
           <thead>

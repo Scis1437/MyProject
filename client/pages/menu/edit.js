@@ -22,7 +22,7 @@ function Redirect({ to }) {
   console.log("Redirect_work");
   useEffect(() => {
     router.push(to);
-  }, [to]);
+  }, [to ,  router]);
 
   return null;
 }
@@ -69,7 +69,9 @@ const Edit = () => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const fetchStation = async () => {
+ 
+  useEffect(() => { 
+    const fetchStation = async () => {
     try {
       const response = await axios.get(
         `http://localhost:9000/station/`,
@@ -81,7 +83,6 @@ const Edit = () => {
       setErrMsg("Error searching for student data");
     }
   };
-  useEffect(() => {
     fetchStation();
   }, []);
   console.log(data);

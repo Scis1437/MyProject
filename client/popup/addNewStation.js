@@ -10,12 +10,12 @@ const AddExam = ({ visible }) => {
   const [station, setStation] = useState();
   const [maxId, setMaxId] = useState();
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addStation();
+  };
 
-  function handleOptionChange(e) {
-    setSelectedOption(e.target.value);
-  }
 
-  const [error, setError] = useState("");
 
   const token = localStorage.getItem("access");
 
@@ -42,9 +42,8 @@ const AddExam = ({ visible }) => {
     setSelectedTeacher(event.target.value);
   };
   function generateId(e) {
-       
     let maxId = Math.max(...e?.map((item) => item.id));
-    console.log(maxId)
+    console.log(maxId);
     setMaxId(maxId + 1);
   }
   const fetchStation = async () => {
@@ -53,8 +52,8 @@ const AddExam = ({ visible }) => {
         `http://localhost:9000/station/`,
         config
       );
-      await generateId(response.data)
-        
+      await generateId(response.data);
+
       setStation(response.data);
     } catch (error) {
       setErrMsg("Error searching for student data");
@@ -63,32 +62,34 @@ const AddExam = ({ visible }) => {
   useEffect(() => {
     fetchStation();
   }, []);
-  const data = {    
-    id: maxId,
+  const data = {
+    id: String(maxId),
     station_name: dataInput?.station_name,
     station_teacher: selectedTeacher,
-  }; 
-  console.log(data)
+  };
+
   const addStation = async () => {
+    console.log(data);
     try {
-      const response = await axios.post(
-        `http://localhost:9000/station/`,{
-          //   id: true,
-          //   station_name:true,
-          //   station_teacher:true,
-        id: maxId, 
-        station_name: dataInput.station_name,
-        station_teacher: selectedTeacher,
-        // data , 
-         
-        headers: { Authorization: `Bearer ${token}`}}
-      );
-      console.log(response);
-     
+      // const response = await axios.post(`http://localhost:9000/station/`, {
+      //   //   id: true,
+      //   //   station_name:true,
+      //   //   station_teacher:true,
+      //   id: maxId,
+      //   station_name: dataInput?.station_name,
+      //   station_teacher: selectedTeacher,
+      //     // data ,
+
+      //     config,
+      // });
+
+      const response = await axios.post(`http://localhost:9000/station/`, data, config);
+      console.log(response.data);
+
       // setDataInput(response);
       // setError("");
     } catch (error) {
-      setError(error.response.data.message);
+      setErrMsg("fetch error");
     }
   };
   const TodoList = () => {
@@ -164,7 +165,10 @@ const AddExam = ({ visible }) => {
 
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
-      <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray">
+      <form
+        className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray"
+        onSubmit={handleSubmit}
+      >
         <div className="flex mb-4">
           <label>Station : </label>
           <input
@@ -197,7 +201,15 @@ const AddExam = ({ visible }) => {
             ))}
           </select>
         </div>
-        <TodoList />
+        <div
+          className="flex flex-col w-full items-center "
+          // onClick={() => addStation()}
+        >
+          <button onClick={() => addStation()} className="btn w-full ">
+            submit
+          </button>
+        </div>
+        {/* <TodoList /> */}
       </form>
     </div>
   );

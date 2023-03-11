@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 
 function ScanBarcode() {
+
   const [results, setResults] = useState([]);
   const [studentCode, setStudentCode] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -29,7 +30,8 @@ function ScanBarcode() {
     const [studentStatus, setStudentStatus] = useState("Complete");
     const [stationId , setStationId]  = useState(station_Id)
     const [data , setData ] = useState({}) ;
-    console.log(stationId) 
+    const [redirectData , setRedirectData] = useState() ;
+
 
     const fetchSubtest = async () => {
       const station_Id =  stationId ;
@@ -72,10 +74,10 @@ function ScanBarcode() {
           (item) =>  item.station_Id === station_Id
            ))
         console.log(statusCheck)
-       
+        
         console.log(statusCheck.length === 0)
         if(statusCheck.length === 0) { 
-        
+            setRedirectData(statusCheck)
             setStudentStatus("Incomplete")
         }
         // && item.station_Id === studentId
@@ -101,12 +103,16 @@ function ScanBarcode() {
         setRedirecting(true);
       }
     };
-  
+    
     if (redirecting) {
-      router.push({
-        pathname: "/menu/gradding/gradding",
-        query: { station, studentCode },
-      });
+      // console.log(redirectData) 
+   
+
+        router.push({
+          pathname: "/menu/gradding/gradding",
+          query: {studentCode , stationId },
+        });
+   
       return null;
     }
 
@@ -176,9 +182,9 @@ function ScanBarcode() {
     setStudentCode(code);
   };
 
-  if (shouldRedirect) {
-    return <Redirect to="/menu/gradding/gradding" />;
-  }
+  // if (shouldRedirect) {
+  //   return <Redirect to="/menu/gradding/gradding" />;
+  // }
 
   return (
     <div className="h-10 flex flex-col justify-center">

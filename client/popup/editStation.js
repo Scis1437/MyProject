@@ -14,12 +14,22 @@ const EditExam = ({ visible, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-
+  console.log(data);
   function generateId(data) {
     let maxId = Math.max(...data?.map((item) => item.test_number));
-    setMaxId(maxId + 1);
-  }
+    if (!isFinite(maxId) || maxId <= 0) {
+      maxId = 1; // Set a default value of 1
+      setMaxId(maxId)
+    }else{
+      setMaxId(maxId + 1);
+    }
+    
+    // if (isFinite(maxId) || maxId <= 0) {
+    //   setMaxId(1)
+    // } else {
 
+    // }
+  }
   const fetchSubtest = async () => {
     const station_Id = data.id;
 
@@ -83,8 +93,9 @@ const EditExam = ({ visible, data }) => {
     );
     const [input, setInput] = useState("");
     const station_Id = data.id;
-    console.log(data);
-    console.log(test);
+    console.log(input);
+    console.log(station_Id);
+    console.log(maxId);
     console.log(subTest);
     console.log(list);
 
@@ -113,7 +124,6 @@ const EditExam = ({ visible, data }) => {
     };
 
     const addSubTest = async () => {
-
       const dataSet = {
         station_Id: station_Id,
         test_name: input,
@@ -172,7 +182,9 @@ const EditExam = ({ visible, data }) => {
     // const test = { station_Id: 2 };
     // const test2 = test.data;
 
-    // const deleteSubTest = async () => {};
+    const deleteSubTest = async () => {
+      
+    };
 
     return (
       <div className="">

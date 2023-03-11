@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ function Redirect({ to }) {
   console.log("Redirect_work");
   useEffect(() => {
     router.push(to);
-  }, [to]);
+  }, [to , router]);
 
   return null;
 }
@@ -34,39 +34,36 @@ function Studentlist() {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const fetchStudent = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/student/`,
-        config
-      );
-
-      setData(response.data);
-    } catch (error) {
-      setError("Error searching for student data");
-    }
-  };
-  // useEffect(() => {
-
-  // }, []);
-
-  const fetchStation = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/station/`,
-        config
-      );
-
-      setStation(response.data);
-    } catch (error) {
-      setError("Error searching for student data");
-    }
-  };
   useEffect(() => {
-    fetchStation();
-    fetchStudent();
-  }, []);
+    const fetchStudent = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/student/`,
+          config
+        );
+  
+        setData(response.data);
+      } catch (error) {
+        setError("Error searching for student data");
+      }
+    };
+  
+    const fetchStation = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/station/`,
+          config
+        );
+  
+        setStation(response.data);
+      } catch (error) {
+        setError("Error searching for student data");
+      }
+    };
 
+    fetchStudent();
+    fetchStation();
+  }, []);
   // console.log(station);
   // console.log(data);
   const searchStudent = async (e) => {
@@ -122,7 +119,10 @@ function Studentlist() {
       const [subTest , setSubtest] = useState([])
       // console.log(student.id)
       // console.log(studentId)    
-       const fetchSubtest = async () => {
+
+ 
+      useEffect(() => {       
+        const fetchSubtest = async () => {
         const station_Id = 1;
     
         try {
@@ -164,8 +164,6 @@ function Studentlist() {
         }
       };
 
- 
-      useEffect(() => {
         fetchTest();
         fetchSubtest();
       }, []);
@@ -202,7 +200,7 @@ function Studentlist() {
               <form className="">
                 {test?.map((list) => {
                   return (
-                    <div className="flex justify-between w-full">
+                    <div className="flex justify-between w-full"  key={list.station_Id}>
                       <label
                         className="text-xs mx-3 w-full"
                         htmlFor="subStation"
