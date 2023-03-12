@@ -66,7 +66,7 @@ export default function Menu() {
   useEffect(() => {
     const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
     // dataRef.current = data;
-    setRole(data.UserInfo.roles[0])
+    setRole(data.UserInfo.role)
     setMenu(role === 1 ? menuName_admin :menuName)
   }, [role]);
 
