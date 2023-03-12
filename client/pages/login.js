@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
     // window.location = "/menu";
   try {
     const response = await axios.post(
-      "http://localhost:9000/auth",
+      `http://${process.env.API_URL}/auth`,
       {
        user: username.username,
        pwd: password.password,
