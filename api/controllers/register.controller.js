@@ -1,15 +1,16 @@
-const usersDB = {
-  users: require("../model/users.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
+// const usersDB = {
+//   users: require("../model/users.json"),
+//   setUsers: function (data) {
+//     this.users = data;
+//   },
+// };
 
 const {prisma} = require('../db')
 const logger = require('../controllers/logger.controller')
 const fsPromises = require("fs").promises;
 const path = require("path");
 const bcrypt = require("bcrypt");
+const { Role } = require('@prisma/client');
 
 const handleNewUser = async (req, res) => {
 
@@ -22,26 +23,32 @@ const handleNewUser = async (req, res) => {
         .status(400)
         .json({ message: "Username and password are required." });
     // check for duplicate usernames in the db
-    const duplicate = usersDB.users.find((person) => person.username === user);
+    const duplicate = await prisma.user.findFirst({ where: { username: user}});
     if (duplicate) return res.sendStatus(409); //Conflict
     try {
       //encrypt the password
       const hashedPwd = await bcrypt.hash(pwd, 10);
       //store the new user
-      const newUser = {
+      // const newUser = {
+      //   username: user,
+      //   roles: { Teacher: 2 },
+      //   name: teacher_name,
+      //   password: hashedPwd,
+      // };
+      const newUser = await prisma.user.create({data: {
         username: user,
-        roles: { Teacher: 2 },
+        roles: Role.TEACHER,
         name: teacher_name,
         password: hashedPwd,
-      };
-
+      }})
     
-      await usersDB.setUsers([...usersDB.users, newUser]);
-      await fsPromises.writeFile(
-        path.join(__dirname, "..", "model", "users.json"),
-        JSON.stringify(usersDB.users)
-      );
-      console.log(usersDB.users);
+      console.log(newUser)
+      // await usersDB.setUsers([...usersDB.users, newUser]);
+      // await fsPromises.writeFile(
+      //   path.join(__dirname, "..", "model", "users.json"),
+      //   JSON.stringify(usersDB.users)
+      // );
+      // console.log(usersDB.users);
       res.status(201).json({ success: `New user ${user} created!` });
     } catch (err) {
       res.status(500).json({ message: err.message });

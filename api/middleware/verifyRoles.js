@@ -1,14 +1,29 @@
-const verifyRoles = (...allwedRoles)=>{
-    return (req, res, next) =>{
-        if(!req?.roles) return res.sendStatus(401);
-        const rolesArray = [...allwedRoles];
-        // console.log(rolesArray);
-        // console.log(req.roles);
-        const result = req.roles.map(role => rolesArray.includes(role)).find(val => val === true);
-        if(!result) return res.sendStatus(401);
-        next();
-
-    }
+function getRole(roleId) {
+  switch (roleId) {
+    case 1:
+      return "ADMIN";
+    case 2:
+      return "TEACHER";
+    case 3:
+      return "STUDENT";
+    default:
+      return "USER";
+  }
 }
 
-module.exports = verifyRoles
+const verifyRoles = (...allwedRoles) => {
+  return (req, res, next) => {
+    console.info(req?.roles);
+    if (!req?.roles) return res.sendStatus(401);
+    const rolesArray = [...allwedRoles];
+    // console.log(rolesArray);
+    // console.log(req.roles);
+    const result = [req.roles]
+    .map(getRole)
+    .some(role => rolesArray.includes(role))
+    if (!result) return res.sendStatus(401);
+    next();
+  };
+};
+
+module.exports = verifyRoles;
