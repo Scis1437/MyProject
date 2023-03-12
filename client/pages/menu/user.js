@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import Adduser from "../../popup/addUser";
+import AddUser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Teacher } from "../../../api/config/roles_list";
@@ -39,7 +39,7 @@ function UserEdit() {
   let newOrderPost = null;
   switch (newOrderPostOpen) {
     case "open":
-      newOrderPost = <Adduser data={data} visible={true} />;
+      newOrderPost = <AddUser data={data} visible={true} />;
       break;
 
     case "close":
