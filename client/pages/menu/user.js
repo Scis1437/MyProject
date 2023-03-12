@@ -19,32 +19,16 @@ import { Teacher } from "../../../api/config/roles_list";
 //   },
 // ]
 
+
+
 function UserEdit() {
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
-  const [order, setOrder] = useState([]);
+  // const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
   const [teacher , setTeacher] = useState (null) ;
-  const [errorMsg, setErrMsg] = useState (null)
-    let token;
-
-    if (typeof localStorage !== "undefined") {
-      token = localStorage.getItem("access");
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-  function Redirect({ to }) {
-    const router = useRouter();
-    console.log("Redirect_work");
-    useEffect(() => {
-      router.push(to);
-    }, [to]);
-    // window.location("/menu")
-    return null;
-  }
-  
+  // const [errorMsg, setErrMsg] = useState (null)
 
   const onNewOrderClick = (type, data) => {
     // handle new order click
@@ -63,32 +47,34 @@ function UserEdit() {
       break;
   }
 
- 
-
-  useEffect(() => {    
-
-        fetchTeacher()
-        if(teacher != null){
-          
-        }
-  }, []); 
-  const fetchTeacher = async () => {
-
-
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/teacher/`,
-        config
-      );
-      console.log(response)
-
-      setTeacher(response.data);
-            // return(response.data)
-    } catch (error) {
-      // setErrMsg(error);
+  useEffect( () => {
+    let token;
+    if (typeof localStorage !== "undefined") {
+      token = localStorage.getItem("access");
     }
-  };   
- if (shouldRedirect) {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const fetchTeacher = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/teacher/`,
+          config
+        );
+    
+        setTeacher(response.data);
+              // return(response.data)
+      } catch (error) {
+        // setErrMsg(error);
+      }
+    }; 
+        fetchTeacher()
+        // if(teacher != null){
+          
+        // }
+  }, []); 
+  
+  if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
   // setTeacher();
@@ -168,6 +154,16 @@ function UserEdit() {
       </div>
     </div>
   );
+}
+
+function Redirect({ to }) {
+  const router = useRouter();
+  console.log("Redirect_work");
+  useEffect(() => {
+    router.push(to);
+  }, [router, to]);
+  // window.location("/menu")
+  return null;
 }
 
 export default UserEdit;
