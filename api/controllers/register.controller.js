@@ -23,8 +23,8 @@ const handleNewUser = async (req, res) => {
         .status(400)
         .json({ message: "Username and password are required." });
     // check for duplicate usernames in the db
-    const duplicate = await prisma.user.findFirst({ where: { username: user}});
-    if (duplicate) return res.sendStatus(409); //Conflict
+    // const duplicate = await prisma.user.findFirst({ where: { username: user}});
+    // if (duplicate) return res.sendStatus(409); //Conflict
     try {
       //encrypt the password
       const hashedPwd = await bcrypt.hash(pwd, 10);
