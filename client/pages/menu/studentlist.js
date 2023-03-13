@@ -69,23 +69,11 @@ function studentlist() {
     //   setError("Error searching for student data");
     // }
     
-  });
+  }, []);
   // useEffect(() => {
 
   // }, []);
 
-  const fetchStation = async () => {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/station`,
-        config
-      );
-
-      setStation(response.data);
-    } catch (error) {
-      setError("Error searching for student data");
-    }
-  };
   useEffect(() => {
     fetchStation();
     fetchStudent();
