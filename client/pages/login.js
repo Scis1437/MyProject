@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
     // window.location = "/menu";
   try {
     const response = await axios.post(
-      `${BASE_URL}/auth`,
+      `https://my-project-ppdr.vercel.app/auth`,
       {
        user: username.username,
        pwd: password.password,
