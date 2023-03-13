@@ -71,6 +71,18 @@ const updateStudent = async(req, res) => {
     res.json(updateStudent)
 }
 
+const addAllStudent = async(req, res) => {
+    const data = req.body
+    const addAllStudent = await prisma.student.create({
+        select: {
+            id: true,
+            name: true,
+        }, 
+        data,
+    })
+    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = add score'])
+    res.json(addAllStudent)
+}
 module.exports = {
     getAllStudent,
     getStudent,

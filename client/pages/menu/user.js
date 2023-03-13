@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import Adduser from "../../popup/addUser";
+import AddUser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Teacher } from "../../../api/config/roles_list";
@@ -19,11 +19,14 @@ import Logout from "../../item/logout";
 //   },
 // ]
 
+
+
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
-  const [order, setOrder] = useState([]);
+  // const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
+<<<<<<< HEAD
   const [teacher, setTeacher] = useState(null);
   const [errorMsg, setErrMsg] = useState(null);
   let token;
@@ -43,6 +46,10 @@ function UserEdit() {
     // window.location("/menu")
     return null;
   }
+=======
+  const [teacher , setTeacher] = useState (null) ;
+  // const [errorMsg, setErrMsg] = useState (null)
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
 
   const onNewOrderClick = (type, data) => {
     // handle new order click
@@ -53,7 +60,7 @@ function UserEdit() {
   let newOrderPost = null;
   switch (newOrderPostOpen) {
     case "open":
-      newOrderPost = <Adduser data={data} visible={true} />;
+      newOrderPost = <AddUser data={data} visible={true} />;
       break;
 
     case "close":
@@ -61,6 +68,7 @@ function UserEdit() {
       break;
   }
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
@@ -79,6 +87,35 @@ function UserEdit() {
     fetchTeacher();
   }, []);
 
+=======
+  useEffect( () => {
+    let token;
+    if (typeof localStorage !== "undefined") {
+      token = localStorage.getItem("access");
+    }
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const fetchTeacher = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/teacher/`,
+          config
+        );
+    
+        setTeacher(response.data);
+              // return(response.data)
+      } catch (error) {
+        // setErrMsg(error);
+      }
+    }; 
+        fetchTeacher()
+        // if(teacher != null){
+          
+        // }
+  }, []); 
+  
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
@@ -160,6 +197,16 @@ function UserEdit() {
       <div className="absolute top-3.5 right-3.5 "><Logout/></div>
     </div>
   );
+}
+
+function Redirect({ to }) {
+  const router = useRouter();
+  console.log("Redirect_work");
+  useEffect(() => {
+    router.push(to);
+  }, [router, to]);
+  // window.location("/menu")
+  return null;
 }
 
 export default UserEdit;

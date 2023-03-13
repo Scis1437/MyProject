@@ -36,12 +36,41 @@ function studentlist() {
     headers: { Authorization: `Bearer ${token}` },
   };
 
+<<<<<<< HEAD
   const fetchStudent = async () => {
     try {
       const response = await axios.get(
         `https://my-project-ppdr.vercel.app/student`,
         config
       );
+=======
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/student/`,
+          config
+        );
+  
+        setData(response.data);
+      } catch (error) {
+        setError("Error searching for student data");
+      }
+    };
+  
+    const fetchStation = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/station/`,
+          config
+        );
+  
+        setStation(response.data);
+      } catch (error) {
+        setError("Error searching for student data");
+      }
+    };
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
 
       setData(response.data);
     } catch (error) {
@@ -106,6 +135,7 @@ function studentlist() {
         score: score,
       };
       try {
+<<<<<<< HEAD
         const response = await axios.put(
           `https://my-project-ppdr.vercel.app/test`,
           data,
@@ -119,6 +149,18 @@ function studentlist() {
           //   },
           //   headers: { Authorization: `Bearer ${token}` },
           // }
+=======
+        const response = await axios.put(`https://my-project-ppdr.vercel.app/test/`, data, config
+        //  {
+        //   data: {
+        //     tudent_id: studentId,
+        //     station_Id: stationId,
+        //     test_number: testNumber,
+        //     score: score,
+        //   },
+        //   headers: { Authorization: `Bearer ${token}` },
+        // }
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
         );
         // console.log(response.data);
         alert("Test data saved successfully");
@@ -136,6 +178,7 @@ function studentlist() {
         const station_Id = data;
 
         try {
+<<<<<<< HEAD
           const response = await axios.get(
             `https://my-project-ppdr.vercel.app/subtest`,
             {
@@ -144,6 +187,13 @@ function studentlist() {
             }
           );
 
+=======
+          const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
+            params: { station_Id },
+            headers: { Authorization: `Bearer ${token}` },
+          });
+       
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
           await setSubtest(response.data);
           console.log(response.data);
           {
@@ -152,6 +202,7 @@ function studentlist() {
           setErrMsg(error);
         }
       };
+<<<<<<< HEAD
 
       useEffect(() => {
         const fetchTest = async () => {
@@ -181,6 +232,32 @@ function studentlist() {
             setError("Error fetch test ");
           }
         };
+=======
+      const fetchTest = async () => {
+        try {
+          const response = await axios.get(`https://my-project-ppdr.vercel.app/test/`, {
+            student_id: studentId,
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const filterData = response.data.filter(
+            (item) => item.student_id === studentId
+          );
+          const filterStation = filterData.filter(
+            (item) => item.station_Id === props.id
+          );
+      
+          setTest(filterStation);
+          // useEffect(() => {
+          //   fetchSubtest (filterStation.station_Id) ;
+          // }, []);
+          console.log(response.data);    
+          console.log(subTest)
+          console.log(filterStation);
+        } catch (error) {
+          setError("Error fetch test ");
+        }
+      };
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
 
         fetchTest();
       }, []);

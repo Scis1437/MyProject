@@ -49,9 +49,21 @@ model Subtest{
   station_Id String
   station_name String
   test_number Int
-  test_name String@unique
+  test_name String @unique
 }
 
-model Teacher {
-  teacher_name String@unique
+model User {
+  id Int @id @default(autoincrement())
+  
+  username String @unique
+  name String @unique
+  roles Role
+  password String
+  refresh_token String @default("")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
 }

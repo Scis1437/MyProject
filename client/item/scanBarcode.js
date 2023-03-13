@@ -1,7 +1,12 @@
 import useScanDetection from "use-scan-detection";
 import React, { useState, useEffect , useRef } from "react";
 import Scanner from "./Scanner";
+<<<<<<< HEAD
 import { Fab, TextareaAutosize, Paper } from "@material-ui/core";
+=======
+// import { Fab, TextareaAutosize, Paper } from "@material-ui/core";
+// import { ArrowBack } from "@material-ui/icons";
+>>>>>>> ac1a54faab350828aad75b553ce08356349f8828
 import Link from "next/link";
 import Redirect from "./Redirect";
 import { useRouter } from "next/router";

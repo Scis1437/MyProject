@@ -1,6 +1,6 @@
 import React from "react";
 import TodoList from "../item/todoList";
-import Homemodule from "../styles/Home.module.css";
+// import Homemodule from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ const AddUser = ({ visible }) => {
     console.log(name)
     try {
       const response = await axios.post(
-        `http://localhost:9000/register/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/register`,
         { user: username.username, name : name.name , pwd: password.password },
         config
       );
