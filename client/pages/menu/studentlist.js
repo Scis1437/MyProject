@@ -38,7 +38,7 @@ function Studentlist() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/student/`,
+          `https://my-project-ppdr.vercel.app/student/`,
           config
         );
   
@@ -51,7 +51,7 @@ function Studentlist() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/station/`,
+          `https://my-project-ppdr.vercel.app/station/`,
           config
         );
   
