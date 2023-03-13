@@ -29,7 +29,7 @@ const AddUser = ({ visible }) => {
     console.log(name)
     try {
       const response = await axios.post(
-        `https://my-project-ppdr.vercel.app/register/`,
+        `https://my-project-ppdr.vercel.app/register`,
         { user: username.username, name : name.name , pwd: password.password },
         config
       );
