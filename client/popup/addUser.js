@@ -30,7 +30,7 @@ const AddUser = ({ visible }) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/register`,
-        { user: username.username, name : name.name ,password:password.password},
+        { user: username.username, teacher_name : name.name ,password:password.password},
         config
       );
       visible = false;
