@@ -7,7 +7,7 @@ import axios from "axios";
 import useInput from "../hook/useInput";
 import useAuth from '../hook/useAuth';
 import { env } from 'process'
-require('dotenv').config();
+// require('dotenv').config();
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
 //  const errRef = useRef();
 function Redirect({ to, role }) {
@@ -70,8 +70,8 @@ const handleSubmit = async (e) => {
     // window.location = "/menu";
   try {
     const response = await axios.post(
-      `${BASE_URL}/auth`,
-      // `https://my-project-ppdr.vercel.app/auth`,
+      // `${BASE_URL}/auth`,
+      `https://my-project-ppdr.vercel.app/auth`,
       {
        user: username.username,
        pwd: password.password,
