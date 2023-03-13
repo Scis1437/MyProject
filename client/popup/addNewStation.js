@@ -76,11 +76,8 @@ const AddExam = ({ visible }) => {
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-       { data : { id: maxId,
-          station_name: dataInput?.station_name,
-          station_teacher: selectedTeacher}},
-        // data ,
-
+       data,
+      
         config
       );
 

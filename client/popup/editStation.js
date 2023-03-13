@@ -73,7 +73,7 @@ const EditExam = ({ visible, data }) => {
   // console.log(subTest);
   // console.log(errMsg);
   console.log(dataInput);
-  const updateStation = async () => {
+  const updateStation = async () => {  
     try {
       console.log(dataInput);
       const response = await axios.put(
@@ -87,7 +87,7 @@ const EditExam = ({ visible, data }) => {
           config,
         }
       );
-      alert("Station data saved successfully");
+    alert("Station data saved successfully");
       setDataInput(response.data);
     } catch (error) {
       setErrMsg("Error searching for student data");
@@ -168,7 +168,7 @@ const EditExam = ({ visible, data }) => {
       // Filter out todo with the id
       // const newList = list.filter((todo) => todo.id !== id);
       const data = {
-        station_Id: todo.id,
+        station_Id:todo.id,
         test_number: todo.test_number,
       };
       console.log(data);
@@ -178,16 +178,16 @@ const EditExam = ({ visible, data }) => {
         const response = await axios.delete(
           `https://my-project-ppdr.vercel.app/subtest/`,
           {
-            data: {
-              station_Id: todo.id,
-              test_number: todo.test_number,
-            },
-            headers: config.headers,
+          
+         data,
+            
+           config,
           }
         );
-        const newList = list.filter((todo) => todo.id !== id);
+        // const newList = list.filter((todo) => todo.id !== id);
         // setSubtest(response.data);
-        setList(newList);
+        // setList(newList);
+        alert("delete success")
         console.log(response.data);
       } catch (error) {
         setErrMsg(error);
@@ -196,8 +196,8 @@ const EditExam = ({ visible, data }) => {
     // const test = { station_Id: 2 };
     // const test2 = test.data;
 
-    const deleteSubTest = async () => {};
 
+    console.log(list)
     return (
       <div className="">
         <h1>title</h1>{" "}
@@ -227,14 +227,16 @@ const EditExam = ({ visible, data }) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-
-          <button className="btn" onClick={() => addSubTest()}>
+         <button className="btn" onClick={() => addTodo (input)}>
             Add
           </button>
+          {/* <button className="btn" onClick={() => addSubTest()}>
+            Add
+          </button> */}
         </div>
         <div
           className="flex flex-col w-full items-center "
-          onClick={() => updateStation()}
+       
         >
           <button className="btn w-full " onClick={() => updateStation()}>
             submit
@@ -260,11 +262,11 @@ const EditExam = ({ visible, data }) => {
           ></input>
         </div>
         <div className="flex mb-4">
-          <label className="mr-4">Grading method :</label>
+          {/* <label className="mr-4">Grading method :</label>
           <select className="h-5 mx-2 rounded-md">
             <option value="1">pass/fail</option>
             <option value="2">score</option>
-          </select>
+          </select> */}
         </div>
         <div className="flex mb-4">
           <label className="mr-4">Assign to :</label>

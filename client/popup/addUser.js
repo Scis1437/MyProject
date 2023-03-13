@@ -52,6 +52,7 @@ const AddUser = ({ visible }) => {
 
   if (!visible) return null;
 
+
   return (
     <div className="">
       <form className="bg-gray flex flex-col justify-between  p-2 rounded-md shadow-lg shadow-gray m-4 ">
