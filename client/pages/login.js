@@ -8,7 +8,7 @@ import useInput from "../hook/useInput";
 import useAuth from '../hook/useAuth';
 import { env } from 'process'
 // require('dotenv').config();
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 //  const errRef = useRef();
 function Redirect({ to, role }) {
   const router = useRouter();

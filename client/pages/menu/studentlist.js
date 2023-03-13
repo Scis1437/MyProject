@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const station = [
   { "History talking patient ": [1, 2, 3] },
   { "Peptic ulcer": [4, 5, 6] },
@@ -38,7 +38,7 @@ function Studentlist() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/`,
+          `${BASE_URL}/student/`,
           config
         );
   
@@ -51,7 +51,7 @@ function Studentlist() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/station/`,
+          `${BASE_URL}/station/`,
           config
         );
   
@@ -97,7 +97,7 @@ function Studentlist() {
         score: score,
       };
       try {
-        const response = await axios.put(`https://my-project-ppdr.vercel.app/test/`, data, config
+        const response = await axios.put(`${BASE_URL}/test/`, data, config
         //  {
         //   data: {
         //     tudent_id: studentId,
@@ -128,7 +128,7 @@ function Studentlist() {
         const station_Id = 1;
     
         try {
-          const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
+          const response = await axios.get(`${BASE_URL}/subtest`, {
             params: { station_Id },
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -143,7 +143,7 @@ function Studentlist() {
       };
       const fetchTest = async () => {
         try {
-          const response = await axios.get(`https://my-project-ppdr.vercel.app/test/`, {
+          const response = await axios.get(`${BASE_URL}/test/`, {
             student_id: studentId,
             headers: { Authorization: `Bearer ${token}` },
           });

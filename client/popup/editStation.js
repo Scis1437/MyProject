@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const EditExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");

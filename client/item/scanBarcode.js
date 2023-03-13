@@ -7,7 +7,7 @@ import Link from "next/link";
 import Redirect from "./Redirect";
 import { useRouter } from "next/router";
 import axios from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 function ScanBarcode() {
 
   const [results, setResults] = useState([]);
@@ -37,7 +37,7 @@ function ScanBarcode() {
       const station_Id =  stationId ;
      
       try {
-        const response = await axios.get(`http://localhost:9000/subtest`, {
+        const response = await axios.get(`${BASE_URL}/subtest`, {
           params: {station_Id},
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -59,7 +59,7 @@ function ScanBarcode() {
 
         //   );
         const response = await axios.get(
-          `http://localhost:9000/student/${studentCode}`,
+          `${BASE_URL}/student/${studentCode}`,
           config
         );
 
@@ -140,7 +140,7 @@ function ScanBarcode() {
   const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/station/`,
+        `${BASE_URL}/station/`,
         config
       );
 
@@ -152,7 +152,7 @@ function ScanBarcode() {
   const fetchStudent = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/student/`,
+        `${BASE_URL}/student/`,
         config
       );
 

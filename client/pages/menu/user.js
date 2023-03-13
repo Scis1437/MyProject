@@ -5,7 +5,7 @@ import AddUser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Teacher } from "../../../api/config/roles_list";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 // const users = [
 //   {
 //     firstname: "charnnarong",
@@ -58,7 +58,7 @@ function UserEdit() {
     const fetchTeacher = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/teacher/`,
+          `${BASE_URL}/teacher/`,
           config
         );
     
