@@ -41,7 +41,7 @@ function StudentList() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/student/`,
+          `https://my-project-ppdr.vercel.app/student/`,
           config
         );
   
@@ -54,7 +54,7 @@ function StudentList() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/station/`,
+          `https://my-project-ppdr.vercel.app/station/`,
           config
         );
   
@@ -116,7 +116,7 @@ function StudentList() {
         score: score,
       };
       try {
-        const response = await axios.put(`${BASE_URL}/test/`, data, config
+        const response = await axios.put(`https://my-project-ppdr.vercel.app/test/`, data, config
         //  {
         //   data: {
         //     tudent_id: studentId,
@@ -143,7 +143,7 @@ function StudentList() {
         const station_Id = data;
 
         try {
-          const response = await axios.get(`${BASE_URL}/subtest`, {
+          const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
             params: { station_Id },
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -158,7 +158,7 @@ function StudentList() {
       };
       const fetchTest = async () => {
         try {
-          const response = await axios.get(`${BASE_URL}/test/`, {
+          const response = await axios.get(`https://my-project-ppdr.vercel.app/test/`, {
             student_id: studentId,
             headers: { Authorization: `Bearer ${token}` },
           });

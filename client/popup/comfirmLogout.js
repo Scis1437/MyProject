@@ -24,7 +24,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
   const handleLogout = async () => {
     console.log("log out ");
     try {
-      const response = await axios.put(`http://localhost:9000/logout`, config);
+      const response = await axios.put(`http://localhost:9000/logout`);
       alert("You have been logged out.");
       <Redirect to="/" />;
     } catch (error) {
@@ -37,7 +37,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
       <p>Are you sure you want to log out?</p>
       <div className="flex justify-center items-center w-full">
         <button
-          className="border-2 border-red-500 px-4 py-2 rounded-lg hover:bg-red-500"
+          className="logout-btn"
           onClick={() => {handleLogout}}
         >
           Sure

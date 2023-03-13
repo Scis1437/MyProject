@@ -14,6 +14,7 @@ const AddUser = ({ visible }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
@@ -26,11 +27,14 @@ const AddUser = ({ visible }) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(name,username,password)
+    // const data = {
+    //   user
+    // }
     try {
+      console.log(name,username,password)
       const response = await axios.post(
-        `${BASE_URL}/register`,
-        { user: username.username, name : name.name ,password:password.password},
+        `https://my-project-ppdr.vercel.app/register`,
+        { user: username, name : name ,password:password},
         config
       );
       visible = false;
@@ -132,6 +136,7 @@ const AddUser = ({ visible }) => {
             <input
               id="firstname-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              
               onChange={(e) =>
                 setUsername({ ...username, username: e.target.value })
               }
@@ -140,13 +145,13 @@ const AddUser = ({ visible }) => {
           <div className="mb-2 space-y-4"></div>{" "}
           <div className="space-y-4">
             <label
-              htmlFor="password-input"
+            
               className="text-gray-600 font-medium"
             >
               NAME :
             </label>
             <input
-              id="password-input"
+        
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               type=""
               placeholder="Charnnarong chaoroensanongkun"

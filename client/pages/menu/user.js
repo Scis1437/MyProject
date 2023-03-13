@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Logout from '../../item/logout'
 import { Teacher } from "../../../api/config/roles_list";
-
+import EditUser from "../../popup/editUser";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 // const users = [
 //   {
@@ -26,6 +26,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
+  const [editUserPopup , setEditUserPopup] = useState("close")
   // const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
   const [teacher, setTeacher] = useState(null);
@@ -48,16 +49,22 @@ function UserEdit() {
     return null;
   }
 
-  const onNewOrderClick = (type, data) => {
+  const onNewOrderClick = (type) => {
+    // handle new order click
+    setNewOrderPostOpen(type);
+  };
+
+  const newPopup = (type, data) => {
     // handle new order click
     setData(data);
-    setNewOrderPostOpen(type);
+    setEditUserPopup(type);
   };
   console.log(newOrderPostOpen);
   let newOrderPost = null;
+  let newEditpost = null ;
   switch (newOrderPostOpen) {
     case "open":
-      newOrderPost = <AddUser data={data} visible={true} />;
+      newOrderPost = <AddUser visible={true} />;
       break;
 
     case "close":
@@ -65,11 +72,20 @@ function UserEdit() {
       break;
   }
 
+  switch (  editUserPopup ) {
+    case "open":
+      newEditpost = <EditUser visible={true} data={data} />;
+      break;
+
+    case "close":
+      newEditpost = null;
+      break;
+  }
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/teacher/`,
+          `https://my-project-ppdr.vercel.app/teacher/`,
           config
         );
         console.log(response);
@@ -87,6 +103,7 @@ function UserEdit() {
     return <Redirect to="/menu" />;
   }
   // setTeacher();
+  console.log(teacher)
   return (
     <div className="background">
       <div className="header-page">
@@ -108,11 +125,11 @@ function UserEdit() {
           <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
-                <p>name</p>
+                <p>Username</p>
               </td>
 
               <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6 text-center ">
-                <p>Station</p>
+                <p>Name</p>
               </td>
               <td className="rounded-tr-lg "></td>
             </tr>
@@ -125,20 +142,20 @@ function UserEdit() {
                 className="bg-gray-100 text-xs mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg "
               >
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
-                  {item.teacher_name}
-                </td>
-
-                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.username}
                 </td>
-                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-center">
+
+                <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 text-center ">
+                  {item.name}
+                </td>
+                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-end mr-1">
                   <button
                     className="btn "
-                    onClick={() => onNewOrderClick("open", item)}
+                    onClick={() => newPopup ("open", item)}
                   >
                     Edit
                   </button>
-                  <button className="delete-btn">Delete</button>
+                  <button className="delete-btn"  onClick={() => deleteUser()}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -153,11 +170,12 @@ function UserEdit() {
         </button>
         <div
           className={`${
-            newOrderPostOpen === "open"
+            newOrderPostOpen === "open" || editUserPopup === "open"
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
               : ""
           }`}
         >
+          {newEditpost}
           {newOrderPost}
         </div>
       </div>
@@ -166,14 +184,6 @@ function UserEdit() {
   );
 }
 
-function Redirect({ to }) {
-  const router = useRouter();
-  console.log("Redirect_work");
-  useEffect(() => {
-    router.push(to);
-  }, [router, to]);
-  // window.location("/menu")
-  return null;
-}
+
 
 export default UserEdit;

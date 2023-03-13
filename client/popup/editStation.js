@@ -34,7 +34,7 @@ const EditExam = ({ visible, data }) => {
     const station_Id = data.id;
 
     try {
-      const response = await axios.get(`${BASE_URL}/subtest`, {
+      const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
         params: { station_Id },
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -52,7 +52,7 @@ const EditExam = ({ visible, data }) => {
   const fetchTeacher = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/teacher/`,
+        `https://my-project-ppdr.vercel.app/teacher/`,
         config
       );
 
@@ -73,7 +73,7 @@ const EditExam = ({ visible, data }) => {
     try {
       console.log(dataInput);
       const response = await axios.put(
-        `${BASE_URL}/station`,
+        `https://my-project-ppdr.vercel.app/station`,
         dataInput,
         config
       );
@@ -165,7 +165,7 @@ const EditExam = ({ visible, data }) => {
       // setList(newList);
 
       try {
-        const response = await axios.delete(`${BASE_URL}/subtest/`, {
+        const response = await axios.delete(`https://my-project-ppdr.vercel.app/subtest/`, {
           data: {
             station_Id: todo.id,
             test_number: todo.test_number,

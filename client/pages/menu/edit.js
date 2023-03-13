@@ -79,7 +79,7 @@ const Edit = () => {
     const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `/station/`,
+        `https://my-project-ppdr.vercel.app/station/`,
         config
       );
 
@@ -95,7 +95,7 @@ const Edit = () => {
     const { id } = data;
     console.log(data);
     try {
-      const response = await axios.delete(`${BASE_URL}/station/`, {
+      const response = await axios.delete(`https://my-project-ppdr.vercel.app/station/`, {
         data: { id },
         headers: config.headers,
       });

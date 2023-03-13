@@ -73,3 +73,7 @@
 .logout-position {
   @apply absolute top-2 md:top-3.5 right-1/12 md:right-1/10 lg:right-3.5
 }
+
+.logout-btn {
+  @apply border-2 border-red-500 px-4 py-2 rounded-lg hover:bg-red-500
+}
