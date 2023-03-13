@@ -40,8 +40,8 @@ const EditUser = ({ visible, data }) => {
     try {
       const response = await axios.put(
         `https://my-project-ppdr.vercel.app/teacher/`,
-        data,
-        config
+    {    data,
+        config}
       );
       setDataInput(response.data)
     } catch (error) {

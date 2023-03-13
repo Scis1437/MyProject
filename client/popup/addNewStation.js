@@ -83,7 +83,7 @@ const AddExam = ({ visible }) => {
       //     config,
       // });
 
-      const response = await axios.post(`${BASE_URL}/station/`, data, config);
+      const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, data, config);
       console.log(response.data);
 
       // setDataInput(response);

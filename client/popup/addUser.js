@@ -3,7 +3,7 @@ import TodoList from "../item/todoList";
 // import Homemodule from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const AddUser = ({ visible }) => {
   const station = [
     "History talking patient ",
@@ -14,10 +14,11 @@ const AddUser = ({ visible }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  
+
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
+
   const regUser = async (e) => {
     e.preventDefault();
     let token;
@@ -31,10 +32,15 @@ const AddUser = ({ visible }) => {
     //   user
     // }
     try {
-      console.log(name,username,password)
+      const data = {
+        user: username.username,
+        name: name.name,
+        password: password.password,
+      };
+
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/register`,
-        { user: username, name : name ,password:password},
+        data,
         config
       );
       visible = false;
@@ -43,83 +49,9 @@ const AddUser = ({ visible }) => {
       setError("reg error");
     }
   };
-  // useEffect(() => {
-  //   fetchStudent();
-  // }, []);
+
   const [selectedOption, setSelectedOption] = useState("");
 
-  // const TodoList_user = () => {
-  //   const [list, setList] = useState([]);
-  //   const [input, setInput] = useState("");
-
-  //   const addTodo = (todo) => {
-  //     const newTodo = {
-  //       id: Math.random(),
-  //       todo: todo,
-  //     };
-
-  //     // add the todo to the list
-  //     setList([...list, newTodo]);
-
-  //     // clear input box
-  //     setInput("");
-  //   };
-
-  //   const deleteTodo = (id) => {
-  //     // Filter out todo with the id
-  //     const newList = list.filter((todo) => todo.id !== id);
-
-  //     setList(newList);
-  //   };
-  //   return (
-  //     <div className="">
-  //       <h1></h1>{" "}
-  //       <ul>
-  //         {list.map((todo) => (
-  //           <li key={todo.id}>
-  //             {todo.todo}
-  //             <button
-  //               className="bg-btn-red rounded-md"
-  //               onClick={() => deleteTodo(todo.id)}
-  //             >
-  //               &times;
-  //             </button>
-  //           </li>
-  //         ))}
-  //       </ul>
-  //       <div className="flex gap-1 mb-4">
-  //         {/* <input
-  //           type="text"
-  //           value={input}
-  //           onChange={(e) => setInput(e.target.value)}
-  //           className=" input"
-  //         /> */}
-
-  //         <select
-  //           id="station"
-  //           value={selectedOption}
-  //           onChange={handleOptionChange}
-  //         >
-  //           <option value="">Select an station</option>
-  //           {station.map((station) => (
-  //             <option key={station} value={station}>
-  //               {station}
-  //             </option>
-  //           ))}
-  //         </select>
-
-  //         <button className="btn" onClick={() => addTodo(selectedOption)}>
-  //           Add
-  //         </button>
-  //       </div>
-  //       <div className="flex flex-col w-full items-center ">
-  //         <button className="btn w-full  " onClick={(e) => regUser(e)}>
-  //           submit
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // };
   if (!visible) return null;
 
   return (
@@ -136,7 +68,6 @@ const AddUser = ({ visible }) => {
             <input
               id="firstname-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              
               onChange={(e) =>
                 setUsername({ ...username, username: e.target.value })
               }
@@ -144,20 +75,12 @@ const AddUser = ({ visible }) => {
           </div>
           <div className="mb-2 space-y-4"></div>{" "}
           <div className="space-y-4">
-            <label
-            
-              className="text-gray-600 font-medium"
-            >
-              NAME :
-            </label>
+            <label className="text-gray-600 font-medium">NAME :</label>
             <input
-        
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               type=""
               placeholder="Charnnarong chaoroensanongkun"
-              onChange={(e) =>
-                setName({ ...name, name: e.target.value })
-              }
+              onChange={(e) => setName({ ...name, name: e.target.value })}
             />
           </div>
           <div className="space-y-4">
@@ -179,17 +102,18 @@ const AddUser = ({ visible }) => {
           </div>
         </div>
 
-
-          <div className="flex flex-col w-full items-center ">
+        <div className="flex flex-col w-full items-center ">
           <button className="btn w-full  " onClick={(e) => regUser(e)}>
             submit
           </button>
-          <button className="delete-btn w-full  " onClick={() => visible = false}>
+          <button
+            className="delete-btn w-full  "
+            onClick={() => (visible = false)}
+          >
             cancel
           </button>
         </div>
-          {/* <TodoList_user /> */}
-
+        {/* <TodoList_user /> */}
       </form>
     </div>
   );
