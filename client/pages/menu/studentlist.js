@@ -316,9 +316,14 @@ function StudentList() {
             onClick={() => setShouldRedirect(true)}
           />
         </div>
-        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-          Student list
-        </p>
+        <div className="flex flex-row justify-between w-full">
+          <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+            Student list
+          </p>
+          <div className="logout-position">
+            <Logout />
+          </div>
+        </div>
       </div>
       <div className="container ">
         <div className="flex w-full items-center justify-start">

@@ -23,27 +23,31 @@ const EditUser = ({ visible, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  console.log(data)
-  const test= {
+
+  const test = {
     id: dataInput.id,
     name: dataInput.name,
-    username : dataInput.username
+    username: dataInput.username,
   };
-  console.log(test);
+  console.log(dataInput.username);
   const editUser = async () => {
     const data = {
-      id: parseInt( dataInput.id),   
-      name: dataInput.name ,
- 
+      id: dataInput.id,
+      name: dataInput.name,
+      username: dataInput.username,
     };
-    console.log(data);
+
     try {
       const response = await axios.put(
         `https://my-project-ppdr.vercel.app/teacher/`,
-    {    data,
-        config}
+        {
+          id: dataInput.id,
+          name: dataInput.name,
+          username: dataInput.username,
+        },
+        config
       );
-      setDataInput(response.data)
+      setDataInput(response.data);
     } catch (error) {
       setErrMsg(error);
     }

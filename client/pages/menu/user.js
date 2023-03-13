@@ -98,7 +98,21 @@ function UserEdit() {
     };
     fetchTeacher();
   }, []);
-
+  const deleteUser =async (item) => {
+    console.log(item.username)
+    
+    try {
+      const response = await axios.delete(
+        `https://my-project-ppdr.vercel.app/register/`,
+        {
+          username : item.id
+        },
+        config
+      )
+    }     catch (error) {
+      setErrMsg(error.status);
+    }
+  }
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
@@ -114,9 +128,14 @@ function UserEdit() {
             onClick={() => setShouldRedirect(true)}
           />
         </div>
-        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-          Edit user
-        </p>
+        <div className="flex flex-row justify-between w-full">
+          <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+            Edit user
+          </p>
+          <div className="logout-position">
+            <Logout />
+          </div>
+        </div>
       </div>
       {/* sticky top-0 */}
       <div className="container ">
@@ -155,7 +174,7 @@ function UserEdit() {
                   >
                     Edit
                   </button>
-                  <button className="delete-btn"  onClick={() => deleteUser()}>Delete</button>
+                  <button className="delete-btn"  onClick={() => deleteUser(item)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -179,7 +198,7 @@ function UserEdit() {
           {newOrderPost}
         </div>
       </div>
-      <div className="absolute top-3.5 right-3.5 "><Logout/></div>
+   
     </div>
   );
 }

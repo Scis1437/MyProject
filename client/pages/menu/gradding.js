@@ -23,9 +23,14 @@ const Gradding = () => {
             onClick={() => setShouldRedirect(true)}
           />
         </div>
-        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-          SCAN BARCODE
-        </p>
+        <div className="flex flex-row justify-between w-full">
+          <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+            SCAN BARCODE
+          </p>
+          <div className="logout-position">
+            <Logout />
+          </div>
+        </div>
       </div>
       <div className="container">
         <ScanBarcode />

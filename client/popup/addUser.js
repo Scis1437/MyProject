@@ -29,21 +29,16 @@ const AddUser = ({ visible }) => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-   
     try {
       const data = {
         user: username,
         teacher_name: name,
-        pwd : password,
+        pwd: password,
       };
-      console.log(data)
+      console.log(data);
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/register`,
-        {
-          user: username,
-          teacher_name: name,
-          pwd : password,
-        },
+        { user: username, teacher_name: name, pwd: password },
         config
       );
       visible = false;
@@ -58,10 +53,10 @@ const AddUser = ({ visible }) => {
   if (!visible) return null;
 
   return (
-    <div>
-      <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
-        <div className="flex flex-col space-y-4">
-          <div className="space-y-4">
+    <div className="">
+      <form className="bg-gray flex flex-col justify-between  p-2 rounded-md shadow-lg shadow-gray m-4 ">
+        <div className="flex flex-col  justify-between space-y-4">
+          <div className="space-y-4 flex justify-between mb-4">
             <label
               htmlFor="firstname-input"
               className="text-gray-600 font-medium "
@@ -71,22 +66,19 @@ const AddUser = ({ visible }) => {
             <input
               id="firstname-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              onChange={(e) =>
-                setUsername({ ...username, username: e.target.value })
-              }
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="mb-2 space-y-4"></div>{" "}
-          <div className="space-y-4">
+          <div className="space-y-4 flex justify-between mb-4">
             <label className="text-gray-600 font-medium">NAME :</label>
             <input
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               type=""
               placeholder="Charnnarong chaoroensanongkun"
-              onChange={(e) => setName({ ...name, name: e.target.value })}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4  flex justify-between mb-4">
             <label
               htmlFor="password-input"
               className="text-gray-600 font-medium"
@@ -98,23 +90,23 @@ const AddUser = ({ visible }) => {
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               type="password"
               placeholder=""
-              onChange={(e) =>
-                setPassword({ ...password, password: e.target.value })
-              }
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full  " onClick={(e) => regUser(e)}>
-            submit
-          </button>
-          <button
-            className="delete-btn w-full  "
-            onClick={() => (visible = false)}
-          >
-            cancel
-          </button>
+        <div className="flex  w-full items-center gap-1 ">
+        
+            <button className="btn w-full mr-1 ml-1 " onClick={(e) => regUser(e)}>
+              submit
+            </button>
+            <button
+              className="delete-btn w-full  mr-1 ml-1"
+              onClick={() => (visible = false)}
+            >
+              cancel
+            </button>
+      
         </div>
         {/* <TodoList_user /> */}
       </form>
