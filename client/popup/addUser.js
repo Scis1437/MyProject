@@ -33,16 +33,8 @@ const AddUser = ({ visible }) => {
     try {
       console.log(name,username,password)
       const response = await axios.post(
-<<<<<<< HEAD
         `https://my-project-ppdr.vercel.app/register`,
         { user: username, name : name ,password:password},
-=======
-        `${BASE_URL}/register`,
-        { username: username,
-          
-          name: name,
-          password:password,},
->>>>>>> e9e8a6a0c86496c096d5c390f53826b649051aa3
         config
       );
       visible = false;
@@ -56,78 +48,78 @@ const AddUser = ({ visible }) => {
   // }, []);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const TodoList_user = () => {
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState("");
+  // const TodoList_user = () => {
+  //   const [list, setList] = useState([]);
+  //   const [input, setInput] = useState("");
 
-    const addTodo = (todo) => {
-      const newTodo = {
-        id: Math.random(),
-        todo: todo,
-      };
+  //   const addTodo = (todo) => {
+  //     const newTodo = {
+  //       id: Math.random(),
+  //       todo: todo,
+  //     };
 
-      // add the todo to the list
-      setList([...list, newTodo]);
+  //     // add the todo to the list
+  //     setList([...list, newTodo]);
 
-      // clear input box
-      setInput("");
-    };
+  //     // clear input box
+  //     setInput("");
+  //   };
 
-    const deleteTodo = (id) => {
-      // Filter out todo with the id
-      const newList = list.filter((todo) => todo.id !== id);
+  //   const deleteTodo = (id) => {
+  //     // Filter out todo with the id
+  //     const newList = list.filter((todo) => todo.id !== id);
 
-      setList(newList);
-    };
-    return (
-      <div className="">
-        <h1></h1>{" "}
-        <ul>
-          {list.map((todo) => (
-            <li key={todo.id}>
-              {todo.todo}
-              <button
-                className="bg-btn-red rounded-md"
-                onClick={() => deleteTodo(todo.id)}
-              >
-                &times;
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="flex gap-1 mb-4">
-          {/* <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className=" input"
-          /> */}
+  //     setList(newList);
+  //   };
+  //   return (
+  //     <div className="">
+  //       <h1></h1>{" "}
+  //       <ul>
+  //         {list.map((todo) => (
+  //           <li key={todo.id}>
+  //             {todo.todo}
+  //             <button
+  //               className="bg-btn-red rounded-md"
+  //               onClick={() => deleteTodo(todo.id)}
+  //             >
+  //               &times;
+  //             </button>
+  //           </li>
+  //         ))}
+  //       </ul>
+  //       <div className="flex gap-1 mb-4">
+  //         {/* <input
+  //           type="text"
+  //           value={input}
+  //           onChange={(e) => setInput(e.target.value)}
+  //           className=" input"
+  //         /> */}
 
-          <select
-            id="station"
-            value={selectedOption}
-            onChange={handleOptionChange}
-          >
-            <option value="">Select an station</option>
-            {station.map((station) => (
-              <option key={station} value={station}>
-                {station}
-              </option>
-            ))}
-          </select>
+  //         <select
+  //           id="station"
+  //           value={selectedOption}
+  //           onChange={handleOptionChange}
+  //         >
+  //           <option value="">Select an station</option>
+  //           {station.map((station) => (
+  //             <option key={station} value={station}>
+  //               {station}
+  //             </option>
+  //           ))}
+  //         </select>
 
-          <button className="btn" onClick={() => addTodo(selectedOption)}>
-            Add
-          </button>
-        </div>
-        <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full  " onClick={(e) => regUser(e)}>
-            submit
-          </button>
-        </div>
-      </div>
-    );
-  };
+  //         <button className="btn" onClick={() => addTodo(selectedOption)}>
+  //           Add
+  //         </button>
+  //       </div>
+  //       <div className="flex flex-col w-full items-center ">
+  //         <button className="btn w-full  " onClick={(e) => regUser(e)}>
+  //           submit
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // };
   if (!visible) return null;
 
   return (

@@ -14,7 +14,7 @@ const EditExam = ({ visible, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  console.log(data);
+  console.log(dataInput);
   function generateId(data) {
     let maxId = Math.max(...data?.map((item) => item.test_number));
     if (!isFinite(maxId) || maxId <= 0) {
