@@ -4,6 +4,7 @@ import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import AddUser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Logout from '../../item/logout'
 import { Teacher } from "../../../api/config/roles_list";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 // const users = [

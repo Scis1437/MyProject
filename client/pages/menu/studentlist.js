@@ -20,7 +20,7 @@ function Redirect({ to }) {
   return null;
 }
 
-function studentlist() {
+function StudentList() {
   const [error, setError] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [studentCode, setStudentCode] = useState("");
@@ -364,8 +364,8 @@ function studentlist() {
               
             : data.map((list) => {
                 return (
-                  <div>
-                        <List key={list.id} {...list} />
+                  <div key={list.id}>
+                        <List  {...list} />
                   </div>
             );
               })}
@@ -382,4 +382,4 @@ function studentlist() {
   );
 }
 
-export default studentlist;
+export default StudentList;
