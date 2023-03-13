@@ -27,7 +27,7 @@ model Station {
   updatedAt       DateTime @updatedAt
   station_name    String
   station_teacher Int? @unique 
-  teacher_owner   User?     @relation(fields: [station_teacher], references: [id], onUpdate: SetNull)
+  teacher_owner   User?     @relation(fields: [station_teacher], references: [id], onUpdate: SetNull,onDelete: SetNull)
 
   tests Test[]
 }

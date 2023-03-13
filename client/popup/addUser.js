@@ -33,8 +33,16 @@ const AddUser = ({ visible }) => {
     try {
       console.log(name,username,password)
       const response = await axios.post(
+<<<<<<< HEAD
         `https://my-project-ppdr.vercel.app/register`,
         { user: username, name : name ,password:password},
+=======
+        `${BASE_URL}/register`,
+        { username: username,
+          
+          name: name,
+          password:password,},
+>>>>>>> e9e8a6a0c86496c096d5c390f53826b649051aa3
         config
       );
       visible = false;
