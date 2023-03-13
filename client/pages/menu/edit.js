@@ -10,7 +10,6 @@ import Logout from "../../item/logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import Logout from "../../item/logout";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const subject = [
   {
