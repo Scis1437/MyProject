@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Logout from "../../item/logout";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const subject = [
   {
@@ -109,9 +110,7 @@ const Edit = () => {
   const List = (dataSet) => {
     const [dropdown, setDropdown] = useState(false);
 
-    if (shouldRedirect) {
-      return <Redirect to="/menu" />;
-    }
+   
 
     return (
       <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
@@ -135,7 +134,10 @@ const Edit = () => {
         </td>
       </tr>
     );
-  };
+  }; 
+  if (shouldRedirect) {
+      return <Redirect to="/menu" />;
+    }
   return (
     <div className="background ">
       <div className="header-page">

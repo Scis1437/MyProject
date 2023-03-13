@@ -68,16 +68,16 @@ function studentlist() {
     // } catch (error) {
     //   setError("Error searching for student data");
     // }
-    
+      fetchStation();
+    fetchStudent();
   }, []);
+
   // useEffect(() => {
 
   // }, []);
 
-  useEffect(() => {
-    fetchStation();
-    fetchStudent();
-  }, []);
+
+  
 
   // console.log(station);
   // console.log(data);
