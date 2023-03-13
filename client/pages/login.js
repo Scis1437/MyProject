@@ -24,28 +24,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
      
-  // const users = [
-  //   {
-  //     id: "test",
-  //     password: "1234",
-  //   },
-  // ];
 
-//   if (shouldRedirect) {
-//     if(
-//       document.getElementById("username").value === users[0].id &&
-//       document.getElementById("password").value === users[0].password
-//     ) {    
-//       console.log("user");
-//       return <Redirect to="/menu" role="user" />;
-    
-  
-//    }  else if(document.getElementById("username").value ==="admin"){
-//     console.log("admin");
-//     return <Redirect to="/menu" role="admin" />;
-  
-//   }
-// }
 
 const { setAuth } = useAuth();
  const [user, resetUser, userAttribs] = useInput('user', '')
@@ -67,7 +46,7 @@ const handleSubmit = async (e) => {
     // window.location = "/menu";
   try {
     const response = await axios.post(
-      "http://localhost:9000/auth",
+      `https://my-project-ppdr.vercel.app/auth`,
       {
        user: username.username,
        pwd: password.password,
@@ -152,10 +131,10 @@ const handleSubmit = async (e) => {
             placeholder="******************"
             className=" rounded-md w-60 bg-input-green pl-3 "
           />{" "}
-          {error && (
+          {errMsg && (
             <div id="invalid_Login">
               <p className="text-xs text-red-600"> Invalid username or password</p> 
-              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+              {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p> */}
             </div>
           )}
           <div className="text-center my-5">

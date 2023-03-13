@@ -51,7 +51,7 @@ module.exports = {
       'yellow': '#ffc82c',
       'gray-dark': '#273444',
       'gray': '#8492a6',
-      'gray-light': '#D9D9D9',
+      'gray-light': '#c0c0c0',
       'light-petite-pink': '#f0d8d8' ,
       'sefid-white' : '#fff0f0' ,
       'uproar-red' : '#f01800' ,
@@ -63,7 +63,7 @@ module.exports = {
       'click-green' : '#166666' ,
       'input-green' : '#C9EAEA',
       'light-green' : '#239fa0',
-      'btn-red' : '#d11a2a' ,
+      'btn-red' : '#dc605f' ,
       'table-odd' : '#D8EBEB' 
       
     }),
@@ -136,6 +136,9 @@ module.exports = {
             '5%' : '5%',
             '1/6': '16.666667%',
             '1/12': '8.333333%',
+            '1/10' : '10%' ,
+            '11/12' : '91.667',
+           
     },
     animation: {
       none: 'none',

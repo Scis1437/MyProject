@@ -6,7 +6,7 @@ import Redirect from "../../item/Redirect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-
+import Logout from "../../item/logout";
 
 const Gradding = () => {
     const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -31,6 +31,7 @@ const Gradding = () => {
         <ScanBarcode />
         
       </div>
+      <div className="absolute top-3.5 right-3.5 "><Logout/></div>
     </div>
   );
 };

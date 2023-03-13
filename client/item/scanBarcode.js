@@ -1,15 +1,14 @@
 import useScanDetection from "use-scan-detection";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import Scanner from "./Scanner";
 import { Fab, TextareaAutosize, Paper } from "@material-ui/core";
-import { ArrowBack } from "@material-ui/icons";
 import Link from "next/link";
 import Redirect from "./Redirect";
 import { useRouter } from "next/router";
 import axios from "axios";
 
 function ScanBarcode() {
-
+  const saveStudentname = useRef();
   const [results, setResults] = useState([]);
   const [studentCode, setStudentCode] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -110,7 +109,7 @@ function ScanBarcode() {
 
         router.push({
           pathname: "/menu/gradding/gradding",
-          query: {studentCode , stationId },
+          query: {studentCode , stationId  },
         });
    
       return null;
@@ -137,6 +136,7 @@ function ScanBarcode() {
   const [studentData, setStudentData] = useState([]);
   const [data, setData] = useState();
   const [station, setStation] = useState();
+  saveStudentname.current = data?.name;
   const fetchStation = async () => {
     try {
       const response = await axios.get(

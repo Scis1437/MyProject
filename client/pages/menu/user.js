@@ -1,11 +1,11 @@
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Adduser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Teacher } from "../../../api/config/roles_list";
-
+import Logout from "../../item/logout";
 // const users = [
 //   {
 //     firstname: "charnnarong",
@@ -20,31 +20,29 @@ import { Teacher } from "../../../api/config/roles_list";
 // ]
 
 function UserEdit() {
-
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
   const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
-  const [teacher , setTeacher] = useState (null) ;
-  const [errorMsg, setErrMsg] = useState (null)
-    let token;
+  const [teacher, setTeacher] = useState(null);
+  const [errorMsg, setErrMsg] = useState(null);
+  let token;
 
-    if (typeof localStorage !== "undefined") {
-      token = localStorage.getItem("access");
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
   function Redirect({ to }) {
     const router = useRouter();
     console.log("Redirect_work");
     useEffect(() => {
       router.push(to);
-    }, [to]);
+    }, [to, router]);
     // window.location("/menu")
     return null;
   }
-  
 
   const onNewOrderClick = (type, data) => {
     // handle new order click
@@ -63,32 +61,25 @@ function UserEdit() {
       break;
   }
 
- 
+  useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        console.log(response);
 
-  useEffect(() => {    
+        setTeacher(response.data);
+        // return(response.data)
+      } catch (error) {
+        // setErrMsg(error);
+      }
+    };
+    fetchTeacher();
+  }, []);
 
-        fetchTeacher()
-        if(teacher != null){
-          
-        }
-  }, []); 
-  const fetchTeacher = async () => {
-
-
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/teacher/`,
-        config
-      );
-      console.log(response)
-
-      setTeacher(response.data);
-            // return(response.data)
-    } catch (error) {
-      // setErrMsg(error);
-    }
-  };   
- if (shouldRedirect) {
+  if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
   // setTeacher();
@@ -109,20 +100,20 @@ function UserEdit() {
       {/* sticky top-0 */}
       <div className="container ">
         {/* <div><p>Search for user</p></div> */}
-        <table className="table-auto w-full " >
+        <table className="table-auto w-full ">
           <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
                 <p>name</p>
               </td>
-         
+
               <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6 text-center ">
                 <p>Station</p>
-              </td >
+              </td>
               <td className="rounded-tr-lg "></td>
             </tr>
           </thead>
-          
+
           <tbody className="w-full  h-auto overflow-y-auto">
             {teacher?.map((item) => (
               <tr
@@ -132,7 +123,7 @@ function UserEdit() {
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.teacher_name}
                 </td>
-            
+
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.username}
                 </td>
@@ -143,17 +134,17 @@ function UserEdit() {
                   >
                     Edit
                   </button>
-                  <button className="delete-btn">
-                    Delete
-                  </button>
+                  <button className="delete-btn">Delete</button>
                 </td>
               </tr>
             ))}
-
           </tbody>
         </table>
 
-        <button className="btn bg-main-green" onClick={() => onNewOrderClick("open", null)}>
+        <button
+          className="btn bg-main-green"
+          onClick={() => onNewOrderClick("open", null)}
+        >
           Add new
         </button>
         <div
@@ -166,6 +157,7 @@ function UserEdit() {
           {newOrderPost}
         </div>
       </div>
+      <div className="absolute top-3.5 right-3.5 "><Logout/></div>
     </div>
   );
 }
