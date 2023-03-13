@@ -29,8 +29,8 @@ const AddUser = ({ visible }) => {
     console.log(name)
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/register`,
-        { user: username.username, name : name.name , pwd: password.password },
+        `${BASE_URL}/register`,
+        { user: username, name : name , pwd: password},
         config
       );
       visible = false;
