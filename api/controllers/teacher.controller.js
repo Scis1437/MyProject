@@ -1,14 +1,14 @@
 const {prisma} = require('../db')
 const logger = require('../controllers/logger.controller')
 const getAllTeacher = async (req, res) => {
-    const teacher = await prisma.teacher.findMany({})
+    const teacher = await prisma.user.findMany({})
     logger.teacherLog.log('info',req.user +' action = show ')
     res.json(teacher)
 }
 
 const addTeacher = async(req, res) => {
     const data = req.body
-    const addTeacher = await prisma.teacher.create({
+    const addTeacher = await prisma.user.create({
         select: {
             
             teacher_name: true,
@@ -23,15 +23,15 @@ const updateTeacher = async(req, res)=>{
     const data = req.body
 
 
-    const updateTeacher = await prisma.teacher.updateMany({
+    const updateTeacher = await prisma.user.updateMany({
         
         where:{
-            station_Id:data.station_Id,
-            teacher_name: data.teacher_name
-            // score:data.score,
+            OR :[{id:data.id},{name: data.name}]
+            
+            
         },
         
-        data: {teacher_name: data.teacher_name},
+        data,
 
 
     }).catch(console.error)
@@ -46,9 +46,9 @@ const updateTeacher = async(req, res)=>{
 
 const deleteTeacher = async(req, res)=>{
     const data = req.body
-    const deleteTeacher = await prisma.teacher.deleteMany({
+    const deleteTeacher = await prisma.user.deleteMany({
         where:{
-            OR :[{station_Id:data.station_Id},{teacher_name: data.teacher_name}]
+            OR :[{station_Id:data.station_Id},{name: data.teacher_name}]
             ,
         },data,
 

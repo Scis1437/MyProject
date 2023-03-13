@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import Logout from "../../item/logout";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const subject = [
   {
     title: "Histrory taking patient",
@@ -78,7 +78,7 @@ const Edit = () => {
     const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/station/`,
+        `/station/`,
         config
       );
 
@@ -94,7 +94,7 @@ const Edit = () => {
     const { id } = data;
     console.log(data);
     try {
-      const response = await axios.delete(`http://localhost:9000/station/`, {
+      const response = await axios.delete(`${BASE_URL}/station/`, {
         data: { id },
         headers: config.headers,
       });

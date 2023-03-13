@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
 const AddExam = ({ visible }) => {
   const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
@@ -26,7 +26,7 @@ const AddExam = ({ visible }) => {
   const fetchTeacher = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/teacher/`,
+        `${BASE_URL}/teacher/`,
         config
       );
 
@@ -49,7 +49,7 @@ const AddExam = ({ visible }) => {
   const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/station/`,
+        `${BASE_URL}/station/`,
         config
       );
       await generateId(response.data);
@@ -83,7 +83,7 @@ const AddExam = ({ visible }) => {
       //     config,
       // });
 
-      const response = await axios.post(`http://localhost:9000/station/`, data, config);
+      const response = await axios.post(`${BASE_URL}/station/`, data, config);
       console.log(response.data);
 
       // setDataInput(response);

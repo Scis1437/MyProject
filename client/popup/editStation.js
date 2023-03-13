@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const EditExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");
@@ -34,7 +34,7 @@ const EditExam = ({ visible, data }) => {
     const station_Id = data.id;
 
     try {
-      const response = await axios.get(`http://localhost:9000/subtest`, {
+      const response = await axios.get(`${BASE_URL}/subtest`, {
         params: { station_Id },
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -52,7 +52,7 @@ const EditExam = ({ visible, data }) => {
   const fetchTeacher = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/teacher/`,
+        `${BASE_URL}/teacher/`,
         config
       );
 
@@ -73,7 +73,7 @@ const EditExam = ({ visible, data }) => {
     try {
       console.log(dataInput);
       const response = await axios.put(
-        `http://localhost:9000/station`,
+        `${BASE_URL}/station`,
         dataInput,
         config
       );
@@ -133,7 +133,7 @@ const EditExam = ({ visible, data }) => {
       };
       try {
         const response = await axios.post(
-          `http://localhost:9000/subtest/`,
+          `${BASE_URL}/subtest/`,
           dataSet,
           config
         );
@@ -165,7 +165,7 @@ const EditExam = ({ visible, data }) => {
       // setList(newList);
 
       try {
-        const response = await axios.delete(`http://localhost:9000/subtest/`, {
+        const response = await axios.delete(`${BASE_URL}/subtest/`, {
           data: {
             station_Id: todo.id,
             test_number: todo.test_number,

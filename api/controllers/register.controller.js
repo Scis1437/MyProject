@@ -52,16 +52,16 @@ const handleNewUser = async (req, res) => {
       res.status(201).json({ success: `New user ${user} created!` });
     } catch (err) {
       res.status(500).json({ message: err.message });
-      await prisma.teacher.create({
-        select: {
+    //   await prisma.teacher.create({
+    //     select: {
               
-          teacher_name: true,
-      }, 
-      data: {
-        teacher_name: teacher_name,
+    //       teacher_name: true,
+    //   }, 
+    //   data: {
+    //     teacher_name: teacher_name,
         
-      }
-    })
+    //   }
+    // })
     }
   
 };

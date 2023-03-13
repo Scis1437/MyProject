@@ -3,7 +3,7 @@ import TodoList from "../item/todoList";
 // import Homemodule from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 const AddUser = ({ visible }) => {
   const station = [
     "History talking patient ",
@@ -26,11 +26,11 @@ const AddUser = ({ visible }) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(name)
+    console.log(name,username,password)
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/register`,
-        { user: username.username, name : name.name , pwd: password.password },
+        `${BASE_URL}/register`,
+        { user: username, name : name , pwd: password},
         config
       );
       visible = false;

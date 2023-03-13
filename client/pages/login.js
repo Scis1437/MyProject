@@ -8,7 +8,7 @@ import useInput from "../hook/useInput";
 import useAuth from '../hook/useAuth';
 import { env } from 'process'
 // require('dotenv').config();
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 //  const errRef = useRef();
 function Redirect({ to, role }) {
   const router = useRouter();
@@ -91,7 +91,7 @@ const handleSubmit = async (e) => {
       <div className=" w-10/12 h-10/12 rounded-md bg-white shadow-xl md:w-80 lg:w-96 grid place-items-center py-5 my-5">
         <Link href="">
           <Image
-            className="w-48 md:w-72 max-w-full  align-middle mx-auto  "
+            className="w-48 md:w-64 max-w-full  align-middle mx-auto  "
             src={medLogo}
             alt="med"
           />
@@ -119,7 +119,7 @@ const handleSubmit = async (e) => {
           />
           <label
             htmlFor="upassword"
-            className="text-left font-bold md:font-extrabold text-xl  text-main-green"
+            className="text-left font-bold text-base md:font-extrabold text-main-green"
           >
             password{" "}
           </label>

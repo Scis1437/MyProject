@@ -6,15 +6,15 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Student {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
+  updatedAt DateTime @updatedAt
 
   name String
 
@@ -22,44 +22,50 @@ model Student {
 }
 
 model Station {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
-  station_name String 
-  station_teacher String 
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  station_name    String
+  station_teacher Int? @unique 
+  teacher_owner   User?     @relation(fields: [station_teacher], references: [id], onUpdate: SetNull)
 
   tests Test[]
 }
 
 model Test {
-  student_id String
-  student Student @relation(fields: [student_id], references: [id])
-  station_Id String 
-  station Station @relation(fields: [station_Id], references: [id])
-  station_name String
-  station_teacher String 
-  name String 
-  test_number Int
-  test_name String
-  score Int
+  student_id      String
+  student         Student @relation(fields: [student_id], references: [id])
+  station_Id      String
+  station         Station @relation(fields: [station_Id], references: [id])
+  station_name    String
+  station_teacher String
+  name            String
+  test_number     Int
+  test_name       String
+  score           Int
 
-  @@id([student_id, station_Id,test_number,test_name])
+  @@id([student_id, station_Id, test_number, test_name])
+  @@index([station_Id])
+  @@index([student_id])
 }
-model Subtest{
-  station_Id String
+
+model Subtest {
+  station_Id   String
   station_name String
-  test_number Int
-  test_name String @unique
+  test_number  Int
+  test_name    String @unique
 }
 
 model User {
   id Int @id @default(autoincrement())
-  
-  username String @unique
-  name String @unique
-  roles Role
-  password String
+
+  username      String @unique
+  name          String @unique
+  roles         Role
+  password      String
   refresh_token String @default("")
+
+  Station Station?
 }
 
 enum Role {
