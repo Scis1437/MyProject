@@ -105,25 +105,19 @@ const changePassword = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
   
-  // // const userIndex = usersDB.users.findIndex((person) => person.username === user);
-  // if (userIndex !== -1) {
-  //   try {
-  //     // encrypt the new password
-  //     const hashedPwd = await bcrypt.hash(pwd, 10);
-  //     // update the password of the existing user
-  //     usersDB.users[userIndex].password = hashedPwd;
-  //     await fsPromises.writeFile(
-  //       path.join(__dirname, "..", "model", "users.json"),
-  //       JSON.stringify(usersDB.users)
-  //     );
-  //     console.log(usersDB.users);
-  //     res.status(200).json({ success: `Password for ${user} updated!` });
-  //   } catch (err) {
-  //     res.status(500).json({ message: err.message });
-  //   }
-  // } else {
-  //   res.status(404).json({ message: `User ${user} not found!` });
-  // }
 };
+const deleteUser = async (req, res) => {
+  try{
+    const data = req.body;
+    
+    const deleteUser = await prisma.user.delete({
+          where:{
+          username: req.body.user}
+      })
+      console.log(deleteUser)
+      res.status(200).json({ success: `User for ${req.body.user} deleted` });
+  } catch(err){
+    res.status(500).json({ message: err.message });
+  }};
 
-module.exports = {handleNewUser,changePassword,};
+module.exports = {handleNewUser,changePassword,deleteUser,};
