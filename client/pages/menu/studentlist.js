@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Logout from "../../item/logout";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const station = [
   { "History talking patient ": [1, 2, 3] },
   { "Peptic ulcer": [4, 5, 6] },
@@ -44,20 +44,20 @@ function StudentList() {
           `https://my-project-ppdr.vercel.app/student/`,
           config
         );
-  
+
         setData(response.data);
       } catch (error) {
         setError("Error searching for student data");
       }
     };
-  
+
     const fetchStation = async () => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
         );
-  
+
         setStation(response.data);
       } catch (error) {
         setError("Error searching for student data");
@@ -68,16 +68,13 @@ function StudentList() {
     // } catch (error) {
     //   setError("Error searching for student data");
     // }
-      fetchStation();
+    fetchStation();
     fetchStudent();
   }, []);
 
   // useEffect(() => {
 
   // }, []);
-
-
-  
 
   // console.log(station);
   // console.log(data);
@@ -88,7 +85,7 @@ function StudentList() {
     const student = data?.find((student) => student.id === studentId);
     if (student != null) {
       setSearch([student]);
-      setStatus(false)
+      setStatus(false);
     } else {
       setSearch(null);
       setStatus(true);
@@ -116,16 +113,19 @@ function StudentList() {
         score: score,
       };
       try {
-        const response = await axios.put(`https://my-project-ppdr.vercel.app/test/`, data, config
-        //  {
-        //   data: {
-        //     tudent_id: studentId,
-        //     station_Id: stationId,
-        //     test_number: testNumber,
-        //     score: score,
-        //   },
-        //   headers: { Authorization: `Bearer ${token}` },
-        // }
+        const response = await axios.put(
+          `https://my-project-ppdr.vercel.app/test/`,
+          data,
+          config
+          //  {
+          //   data: {
+          //     tudent_id: studentId,
+          //     station_Id: stationId,
+          //     test_number: testNumber,
+          //     score: score,
+          //   },
+          //   headers: { Authorization: `Bearer ${token}` },
+          // }
         );
         // console.log(response.data);
         alert("Test data saved successfully");
@@ -143,11 +143,14 @@ function StudentList() {
         const station_Id = data;
 
         try {
-          const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
-            params: { station_Id },
-            headers: { Authorization: `Bearer ${token}` },
-          });
-       
+          const response = await axios.get(
+            `https://my-project-ppdr.vercel.app/subtest`,
+            {
+              params: { station_Id },
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
           await setSubtest(response.data);
           console.log(response.data);
           {
@@ -158,32 +161,35 @@ function StudentList() {
       };
       const fetchTest = async () => {
         try {
-          const response = await axios.get(`https://my-project-ppdr.vercel.app/test/`, {
-            student_id: studentId,
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const response = await axios.get(
+            `https://my-project-ppdr.vercel.app/test/`,
+            {
+              student_id: studentId,
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
           const filterData = response.data.filter(
             (item) => item.student_id === studentId
           );
           const filterStation = filterData.filter(
             (item) => item.station_Id === props.id
           );
-      
+
           setTest(filterStation);
           // useEffect(() => {
           //   fetchSubtest (filterStation.station_Id) ;
           // }, []);
-          console.log(response.data);    
-          console.log(subTest)
+          console.log(response.data);
+          console.log(subTest);
           console.log(filterStation);
         } catch (error) {
           setError("Error fetch test ");
         }
       };
-      // useEffect()
-      //   fetchTest();
-      // }, []);
-
+      useEffect(() => {   
+        fetchTest()
+      }, []);
+   
       // console.log(test);
       const [dropdownTitle, setDropdownTitle] = useState(false);
 
@@ -348,19 +354,18 @@ function StudentList() {
           </button>
         </div>
         <p>{error}</p>
-        {status ? <p>No data found</p> : null }
+        {status ? <p>No data found</p> : null}
         <div className="overflow-y-scroll">
           {search && search.length > 0
             ? search.map((list) => {
                 return <List key={list.id} {...list} />;
-              }) 
-              
+              })
             : data.map((list) => {
                 return (
                   <div key={list.id}>
-                        <List  {...list} />
+                    <List {...list} />
                   </div>
-            );
+                );
               })}
           {/* {data.map((list) => {
             console.log(studentCode);

@@ -4,10 +4,10 @@ import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import AddUser from "../../popup/addUser";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Logout from '../../item/logout'
+import Logout from "../../item/logout";
 import { Teacher } from "../../../api/config/roles_list";
 import EditUser from "../../popup/editUser";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 // const users = [
 //   {
 //     firstname: "charnnarong",
@@ -21,12 +21,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 //   },
 // ]
 
-
-
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
-  const [editUserPopup , setEditUserPopup] = useState("close")
+  const [editUserPopup, setEditUserPopup] = useState("close");
   // const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
   const [teacher, setTeacher] = useState(null);
@@ -61,7 +59,7 @@ function UserEdit() {
   };
   console.log(newOrderPostOpen);
   let newOrderPost = null;
-  let newEditpost = null ;
+  let newEditpost = null;
   switch (newOrderPostOpen) {
     case "open":
       newOrderPost = <AddUser visible={true} />;
@@ -72,7 +70,7 @@ function UserEdit() {
       break;
   }
 
-  switch (  editUserPopup ) {
+  switch (editUserPopup) {
     case "open":
       newEditpost = <EditUser visible={true} data={data} />;
       break;
@@ -98,26 +96,30 @@ function UserEdit() {
     };
     fetchTeacher();
   }, []);
-  const deleteUser =async (item) => {
-    console.log(item.username)
-    
+
+  const deleteUser = async (item) => {
+    console.log(item.username);
+    const data = {
+      user: item.username,
+    };
+
     try {
       const response = await axios.delete(
         `https://my-project-ppdr.vercel.app/register/`,
-        {
-          username : item.id
-        },
+        data,
         config
-      )
-    }     catch (error) {
+      );
+      console.log(response.data);
+      setData(response.data);
+    } catch (error) {
       setErrMsg(error.status);
     }
-  }
+  };
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
   // setTeacher();
-  console.log(teacher)
+  console.log(teacher);
   return (
     <div className="background">
       <div className="header-page">
@@ -170,11 +172,16 @@ function UserEdit() {
                 <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-end mr-1">
                   <button
                     className="btn "
-                    onClick={() => newPopup ("open", item)}
+                    onClick={() => newPopup("open", item)}
                   >
                     Edit
                   </button>
-                  <button className="delete-btn"  onClick={() => deleteUser(item)}>Delete</button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteUser(item)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -198,11 +205,8 @@ function UserEdit() {
           {newOrderPost}
         </div>
       </div>
-   
     </div>
   );
 }
-
-
 
 export default UserEdit;

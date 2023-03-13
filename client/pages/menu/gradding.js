@@ -36,8 +36,7 @@ const Gradding = () => {
         <ScanBarcode />
         
       </div>
-      <div className="absolute top-3.5 right-3.5 "><Logout/></div>
-    </div>
+        </div>
   );
 };
 export default Gradding;

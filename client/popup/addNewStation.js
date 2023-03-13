@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL;
 const AddExam = ({ visible }) => {
   const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
@@ -14,8 +15,6 @@ const AddExam = ({ visible }) => {
     event.preventDefault();
     addStation();
   };
-
-
 
   const token = localStorage.getItem("access");
 
@@ -62,29 +61,31 @@ const AddExam = ({ visible }) => {
   useEffect(() => {
     fetchStation();
   }, []);
- 
-  const addStation = async () => { 
-    
+
+  const addStation = async () => {
     const data = {
-    id:maxId,
-    station_name: dataInput?.station_name,
-    station_teacher: selectedTeacher,
-  };
+      id: maxId,
+      station_name: dataInput?.station_name,
+      station_teacher: selectedTeacher,
+    };
 
     console.log(data);
     try {
-      const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, 
+      const response = await axios.post(
+        `https://my-project-ppdr.vercel.app/station/`,
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-    data,
-          // data ,
+       { data : { id: maxId,
+          station_name: dataInput?.station_name,
+          station_teacher: selectedTeacher}},
+        // data ,
 
-          config,
+        config
       );
 
-      // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, 
-      // data, 
+      // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
+      // data,
       // config);
       // console.log(response.data);
 
@@ -164,7 +165,7 @@ const AddExam = ({ visible }) => {
   };
 
   if (!visible) return null;
-  console.log(teacher)
+  console.log(teacher);
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form
