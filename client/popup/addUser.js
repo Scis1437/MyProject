@@ -26,7 +26,7 @@ const AddUser = ({ visible }) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log(name)
+    console.log(name,username,password)
     try {
       const response = await axios.post(
         `${BASE_URL}/register`,
