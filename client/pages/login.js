@@ -27,28 +27,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
      
-  // const users = [
-  //   {
-  //     id: "test",
-  //     password: "1234",
-  //   },
-  // ];
 
-//   if (shouldRedirect) {
-//     if(
-//       document.getElementById("username").value === users[0].id &&
-//       document.getElementById("password").value === users[0].password
-//     ) {    
-//       console.log("user");
-//       return <Redirect to="/menu" role="user" />;
-    
-  
-//    }  else if(document.getElementById("username").value ==="admin"){
-//     console.log("admin");
-//     return <Redirect to="/menu" role="admin" />;
-  
-//   }
-// }
 
 const { setAuth } = useAuth();
  const [user, resetUser, userAttribs] = useInput('user', '')
@@ -70,8 +49,7 @@ const handleSubmit = async (e) => {
     // window.location = "/menu";
   try {
     const response = await axios.post(
-      `${BASE_URL}/auth`,
-      // `https://my-project-ppdr.vercel.app/auth`,
+      `https://my-project-ppdr.vercel.app/auth`,
       {
        user: username.username,
        pwd: password.password,
@@ -113,7 +91,7 @@ const handleSubmit = async (e) => {
       <div className=" w-10/12 h-10/12 rounded-md bg-white shadow-xl md:w-80 lg:w-96 grid place-items-center py-5 my-5">
         <Link href="">
           <Image
-            className="w-48 md:w-72 max-w-full  align-middle mx-auto  "
+            className="w-48 md:w-64 max-w-full  align-middle mx-auto  "
             src={medLogo}
             alt="med"
           />
@@ -141,7 +119,7 @@ const handleSubmit = async (e) => {
           />
           <label
             htmlFor="upassword"
-            className="text-left font-bold md:font-extrabold text-xl  text-main-green"
+            className="text-left font-bold text-base md:font-extrabold text-main-green"
           >
             password{" "}
           </label>
@@ -156,10 +134,10 @@ const handleSubmit = async (e) => {
             placeholder="******************"
             className=" rounded-md w-60 bg-input-green pl-3 "
           />{" "}
-          {error && (
+          {errMsg && (
             <div id="invalid_Login">
               <p className="text-xs text-red-600"> Invalid username or password</p> 
-              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+              {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p> */}
             </div>
           )}
           <div className="text-center my-5">

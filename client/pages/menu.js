@@ -5,7 +5,7 @@ import axios from "axios";
 import MenuItem from "../item/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-
+import Logout from "../item/logout";
 import {
   faCoffee,
   faGraduationCap,
@@ -109,64 +109,17 @@ export default function Menu() {
   //   return a;
   // };
 
-  // console.log(printAddress()) 
-
-  // const Admin = () => {
-  //   return (
-  //     <div className="flex h-screen bg-main-green ">
-  //       <div className="p-5 m-auto items-center justify-center md:w-auto">
-  //         <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-3 ">
-  //           {menuName_admin.map((menus, index) => {
-  //             console.log(menus);
-  //             return (
-  //               <MenuItem
-  //                 key={index}
-  //                 title={menus.title}
-  //                 url={menus.url}
-  //                 link={menus.link}
-  //               />
-  //             );
-  //           })}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  // const Teacher = () => {
-  //   return(
-  //     <div className="flex h-screen bg-main-green ">
-  //     <div className="p-5 m-auto items-center justify-center md:w-auto">
-  //       <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-3 ">
-  //         {menuName.map((menus, index) => {
-  //           console.log(menus);
-  //           return (
-  //             <MenuItem
-  //               key={index}
-  //               title={menus.title}
-  //               url={menus.url}
-  //               link={menus.link}
-  //             />
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   </div>
-  //   )
-  // }
-  // console.log(role === 1)
-  // if(role == 1 ){
-  //   <Admin/>
+  // }, []);
 
   // }else {
   //   <Teacher/>
   // }
 
   return (
-    <div className="flex h-screen bg-main-green ">
-      <div className="p-5 m-auto items-center justify-center md:w-auto">
+    <div className="flex h-screen bg-main-green relative">
+      <div className="p-5 m-auto items-center justify-center md:w-auto ">
         <div className="grid gap-7 grid-cols-1 place-items-center w-full md:grid-cols-3 ">
-          {menu.map((menus, index) => {
+          {menu?.map((menus, index) => {
             console.log(menus);
             return (
               <MenuItem
@@ -179,6 +132,8 @@ export default function Menu() {
           })}
         </div>
       </div>
+      <div className="logout-position "><Logout/></div>
+   
     </div>
   );
 }

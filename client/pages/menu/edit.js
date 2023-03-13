@@ -72,6 +72,9 @@ const Edit = () => {
 
  
   useEffect(() => { 
+  
+  
+   
     const fetchStation = async () => {
     try {
       const response = await axios.get(
@@ -190,7 +193,7 @@ const Edit = () => {
 
         {/* <div className="fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm flex justify-center items-center"><EditExam data={data} visible={true}/></div> */}
       </div>
-
+      <div className="logout-position "><Logout/></div>
       {/* <EditExam visible={true}/> */}
     </div>
   );

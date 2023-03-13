@@ -13,13 +13,14 @@ function Studentpage() {
   const [rows, setRows] = useState();
   const [studentCode, setStudentCode] = useState("");
   const [error, setError] = useState("");
+  const [student,setStudent] = useState() ;
   if (shouldRedirect) {
     return <Redirect to="/" />;
   }
+  
   const Table = (props) => {
     const { data } = props;
 
-    console.log(data)
     // let results = data?.filter(function async(el) {
     //   return el.id == studentCode.studentCode;
     // });
@@ -66,21 +67,60 @@ function Studentpage() {
       </table>
     );
   };
+ 
+  
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+   
+  //   const fetchStation = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:9000/station/`,
+  //       config
+  //     );
+
+  //     setStation(response.data);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+  //   fetchStation();
+
+   const fetchStudent = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/student/${studentCode.studentCode}`,
+        config
+      );
+      console.log(response.data)
+      setStudent(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+
+
   const handleSearch = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
-    const token = localStorage.getItem("access");
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
+   
     try {
       const response = await axios.get(`${BASE_URL}/check-station`, {
         student_id: studentId, 
       });
       setRows(response.data[0].tests);
-      console.log(response.data[0].tests);
+      console.log(response.data[0]);
+      // const filterData = await response.data.filter(
+      //   (item) => item.station_Id === stationId
+      // );
+      fetchStudent();
     } catch (error) {
       setError("Error searching for student data");
     }
