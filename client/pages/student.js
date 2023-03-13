@@ -7,7 +7,7 @@ import Redirect from "../item/Redirect";
 import useQuery from "use-query";
 import axios from "axios";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
 function Studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState();
@@ -76,7 +76,7 @@ function Studentpage() {
     };
 
     try {
-      const response = await axios.get("http://localhost:9000/check-station", {
+      const response = await axios.get(`${BASE_URL}/check-station`, {
         student_id: studentId, 
       });
       setRows(response.data[0].tests);
