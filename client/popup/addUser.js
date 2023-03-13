@@ -28,19 +28,22 @@ const AddUser = ({ visible }) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    // const data = {
-    //   user
-    // }
+
+   
     try {
       const data = {
         user: username,
         teacher_name: name,
         pwd : password,
       };
-
+      console.log(data)
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/register`,
-        data,
+        {
+          user: username,
+          teacher_name: name,
+          pwd : password,
+        },
         config
       );
       visible = false;
