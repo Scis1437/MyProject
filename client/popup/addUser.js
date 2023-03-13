@@ -33,9 +33,9 @@ const AddUser = ({ visible }) => {
     // }
     try {
       const data = {
-        user: username.username,
-        name: name.name,
-        password: password.password,
+        user: username,
+        teacher_name: name,
+        pwd : password,
       };
 
       const response = await axios.post(
@@ -44,7 +44,7 @@ const AddUser = ({ visible }) => {
         config
       );
       visible = false;
-      console.log(response.status);
+      console.log(response.data);
     } catch (error) {
       setError("reg error");
     }
