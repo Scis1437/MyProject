@@ -65,33 +65,31 @@ const AddExam = ({ visible }) => {
  
   const addStation = async () => { 
     
-  //   const data = {
-  //   id:maxId,
-  //   station_name: dataInput?.station_name,
-  //   station_teacher: selectedTeacher,
-  // };
+    const data = {
+    id:maxId,
+    station_name: dataInput?.station_name,
+    station_teacher: selectedTeacher,
+  };
 
-  //   console.log(data);
+    console.log(data);
     try {
-      const response = await axios.post(`http://localhost:9000/station/`, {
+      const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, 
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-        id: maxId,
-        station_name: dataInput?.station_name,
-        station_teacher: selectedTeacher,
+    data,
           // data ,
 
           config,
-      });
+      );
 
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, 
       // data, 
       // config);
       // console.log(response.data);
 
-      // setDataInput(response);
-      // setError("");
+      setDataInput(response);
+      setError("");
     } catch (error) {
       setErrMsg("fetch error");
     }

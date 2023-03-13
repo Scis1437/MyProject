@@ -52,9 +52,9 @@ const addStation = async(req, res) => {
 
     const createStation = await prisma.station.create({
         select: {
-            id: true,
-            station_name:true,
-            station_teacher:true,
+            // id: true,
+            // station_name:true,
+            // station_teacher:true,
             
         },  
         data,
