@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "push:db": "npx prisma db push && npm install @prisma/client"
+    "push:db": "npx prisma db push",
+    "prisma:gen": "npx prisma generate"
   },
   "author": "",
   "license": "ISC",
