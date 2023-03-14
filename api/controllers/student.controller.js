@@ -89,28 +89,11 @@ const updateStudent = async(req, res) => {
     res.json(updateStudent)
 }
 
-const addAllStudent = async(req, res) => {
-    const data = req.body
-    const addAllStudent = await prisma.student.create({
-        select: {
-            id: true,
-            name: true,
-        }, 
-        data,
-    })
-    const createLog = await prisma.logEntry.create({
-        data: {
-          message: `${req.user} add all  student with  `,
-          level: "info",
-          timestamp: new Date(),
-        }
-      })
-    res.json(addAllStudent)
-}
+
 module.exports = {
     getAllStudent,
     getStudent,
-    
+   
     addStudent,
     updateStudent,
     deleteStudent,

@@ -6,7 +6,7 @@ const logRouter = require('./routes/log.route');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const fs = require('fs');
-
+const excelRouter = require('./routes/exportexcel.route');
 const studentRouter = require('./routes/student.route');
 const nonLoginRouter = require('./routes/nonLogin.route');
 const stationRouter = require('./routes/station.route');
@@ -54,6 +54,7 @@ app.use('/logout', logoutRouter);
 const useJWTRouter = express.Router();
 useJWTRouter.use(useJWT)
 // router
+useJWTRouter.use('/import-student',excelRouter)
 useJWTRouter.use('/register', registerRouter)
 useJWTRouter.use('/teacher-log', logRouter);
 useJWTRouter.use('/export',exportRouter)
