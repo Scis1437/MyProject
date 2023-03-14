@@ -32,7 +32,7 @@ const updateTeacher = async(req, res)=>{
     const updateTeacher = await prisma.user.updateMany({
         
         where:{
-            OR :[{id:data.id},{name: data.name}]
+            OR :[{id:data.query.id},{name: data.query.name}]
             
             
         },
@@ -60,7 +60,7 @@ const deleteTeacher = async(req, res)=>{
     const data = req.body
     const deleteTeacher = await prisma.user.deleteMany({
         where:{
-            OR :[{station_Id:data.station_Id},{name: data.teacher_name}]
+            OR :[{station_Id:data.query.station_Id},{name: data.query.teacher_name}]
             ,
         },data,
 
