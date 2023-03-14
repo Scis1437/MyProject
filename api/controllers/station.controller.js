@@ -59,7 +59,8 @@ const addStation = async(req, res) => {
         // },  
         data,
     })
-    logger.teacherLog.log('info',[req.user,data.id,data.student_name+' action = add score'])
+    logger.teacherLog.info(`Station ${createStation.id} (${createStation.station_name}) was added by ${req.user}`);
+    //logger.addLog()
     res.json(createStation)
 }
 

@@ -73,3 +73,10 @@ enum Role {
   TEACHER
   STUDENT
 }
+
+model LogEntry {
+  id          Int     @id @default(autoincrement())
+  message     String
+  level       String
+  timestamp   DateTime
+}
