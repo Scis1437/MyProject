@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Logout from "../../item/logout";
-import ImportExcelPage from "../../item/importExcel";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const station = [
   { "History talking patient ": [1, 2, 3] },
@@ -49,15 +49,12 @@ function StudentList() {
     const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
     // dataRef.current = data;
     setRole(data.UserInfo.role)
-    
+ 
   }, [role]);
 
 
-const deleteUser =async () => {
-  
-}
 
- console.log(role)
+
 
   useEffect(() => {
     const fetchStudent = async () => {
@@ -376,14 +373,14 @@ const deleteUser =async () => {
           >
             SUBMIT
           </button>
-          {role === 1 &&(
+          {/* {role === 1 &&(
             <div className="ml-auto">
                 <ImportExcelPage/>
             </div>
           
           )
                 
-          }
+          } */}
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}

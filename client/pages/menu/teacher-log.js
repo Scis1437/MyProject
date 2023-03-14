@@ -13,6 +13,7 @@ function TeacherLog() {
   const [logs, setLogs] = useState(null);
   const [errMsg, setErrMsg] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");

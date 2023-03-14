@@ -10,6 +10,7 @@ const EditUser = ({ visible, data }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [errMsg, setErrMsg] = useState(null);
   const [dataInput, setDataInput] = useState(data);
+  const [updated, setUpdated] = useState(false);
   console.log(dataInput);
   let token;
   if (typeof localStorage !== "undefined") {
@@ -30,8 +31,10 @@ const EditUser = ({ visible, data }) => {
       name : dataInput.name,
       
     }
+    console.log(dataInput)
+    console.log(data)
     try {
-      const response = await axios.put("https://my-project-ppdr.vercel.app/teacher", dataInput , config);
+      const response = await axios.put("https://my-project-ppdr.vercel.app/teacher", data , config);
       console.log(response.data);
       // reset input fields after successful update
       // setDataInput({ id: "", name: "", password: "" });
@@ -52,14 +55,17 @@ const EditUser = ({ visible, data }) => {
         }
       
       }
+   
     } catch (err) {
       console.error(err);
       setErrMsg("Error updating teacher.");
-    }
-  };
-  if (!visible){
-    return null
-  }
+    }   
+  //  setUpdated(true)
+  };   
+
+  // if (!visible || updated) {
+  //   return null;
+  // }
   return (
     <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
