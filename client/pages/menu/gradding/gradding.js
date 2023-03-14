@@ -7,7 +7,7 @@ import axios from "axios";
 import Logout from "../../../item/logout";
 function Gradding() {
   const router = useRouter();
-  const { stationId, studentCode, method, data } = router.query;
+  const { stationId, studentCode, method, data, station_name } = router.query;
   const [points, setPoints] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState();
@@ -33,10 +33,13 @@ function Gradding() {
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
-        const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
-          params: { stationId },
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/subtest`,
+          {
+            params: { stationId },
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const filterData = await response.data.filter(
           (item) => item.station_Id === stationId
         );
@@ -55,16 +58,16 @@ function Gradding() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/${stationId}`,
+          `https://my-project-ppdr.vercel.app/station/${stationId}`,
           config
         );
         const filterData = await response.data.filter(
           (item) => item.id === stationId
         );
 
-        // console.log(response.data);
+        console.log(response.data);
         // console.log(filterData);
-        setStation(filterData);
+        setStation(filterData[0]);
 
         {
         }
@@ -76,7 +79,7 @@ function Gradding() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/${studentCode}`,
+          `https://my-project-ppdr.vercel.app/student?id=${studentCode}`,
           config
         );
 
@@ -84,9 +87,9 @@ function Gradding() {
           (item) => item.id === studentCode
         );
 
-        console.log(response.data);
+        // console.log(response.data);
 
-        setName(filterData);
+        setName(filterData[0]);
 
         {
         }
@@ -101,6 +104,7 @@ function Gradding() {
     // fetchStation();
     // fetchSubtest();
   }, []);
+  console.log(name);
   function MethodCheck(data) {
     // const {method} = query.method;
     // console.log(method)
@@ -148,16 +152,16 @@ function Gradding() {
   }
 
   const addScore = async (data) => {
-    console.log(data);
+
     try {
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/test`,
         data,
         config,
-        {}
+
       );
       alert("Test data saved successfully");
-      //  return <Redirect to="/menu/gradding"/>
+      return <Redirect to="/menu/gradding"/>
     } catch (error) {
       setErrMsg(error);
     }
@@ -169,10 +173,11 @@ function Gradding() {
         student_id: studentCode,
         test_number: testData.test_number,
         score: parseInt(testData.score),
-        station_name: station[0].station_name,
-        station_teacher: station[0].station_teacher,
+        station_name: station_name,
+        // station_teacher: station[0]?.station_teacher,
+        station_teacher: "Michel Jackson",
         test_name: testData.test_name,
-        name: name[0].name,
+        name: name?.name,
       })
     );
     // if (selectedTestId) {
@@ -207,7 +212,8 @@ function Gradding() {
     setSubtest(updatedSubTests);
     // console.log(subTest)
   };
-
+  
+  console.log(station)
   return (
     <div className="background">
       <div className="header-page">
@@ -220,7 +226,7 @@ function Gradding() {
         </div>{" "}
         <div className="flex flex-row justify-between w-full">
           <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-            {stationId}
+            {station_name}
           </p>
           <div className="logout-position">
             <Logout />
@@ -254,11 +260,12 @@ function Gradding() {
                   {/* <MethodCheck data = {testData}/> */}
                   <select
                     className="h-5"
-                    value={testData.score}
+                    value={testData.score || null}
                     onChange={(e) =>
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
+                      <option value={null}>Select Score</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -287,7 +294,6 @@ function Gradding() {
           </button>
         </div>
       </div>
-     
     </div>
   );
 }

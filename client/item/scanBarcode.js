@@ -30,7 +30,7 @@ function ScanBarcode() {
     const [data , setData ] = useState({}) ;
     const [redirectData , setRedirectData] = useState() ;
     const [name , setName] = useState()
-
+    const station_name = station
     const fetchSubtest = async () => {
       const station_Id =  stationId ;
      
@@ -108,7 +108,7 @@ function ScanBarcode() {
 
         router.push({
           pathname: "/menu/gradding/gradding",
-          query: {studentCode , stationId  },
+          query: {studentCode , stationId , station_name  },
         });
    
       return null;
