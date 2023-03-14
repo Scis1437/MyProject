@@ -103,12 +103,19 @@ function UserEdit() {
     console.log(username);
     try {
       const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/register/${username}`,
-        { username : {user : username}},{headers : config.headers}
+        `https://my-project-ppdr.vercel.app/register/`,
+        
+     {   data: { teacher_name: item.id },
+        
+          config,}
+        
       );
-      console.log(response.data); 
+      setTeacher((prevTeachers) =>
+      prevTeachers.filter((teacher) => teacher.teacher_name !== teacherName)
+    );
+      alert("delete success");
+      console.log(response.data);
       return response.data;
-   
     } catch (error) {
       setErrMsg(error.status);
     }
@@ -195,7 +202,7 @@ function UserEdit() {
         <div
           className={`${
             newOrderPostOpen === "open" || editUserPopup === "open"
-              ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
+              ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-10 "
               : ""
           }`}
         >

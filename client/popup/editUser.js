@@ -11,7 +11,7 @@ const EditUser = ({ visible, data }) => {
   const [errMsg, setErrMsg] = useState(null);
   const [dataInput, setDataInput] = useState(data);
   const [updated, setUpdated] = useState(false);
-  console.log(dataInput);
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -20,48 +20,54 @@ const EditUser = ({ visible, data }) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  
-
-
   const handleUpdate = async (e) => {
     e.preventDefault();
     const data = {
-      id : dataInput.id ,
-      username : dataInput.username,
-      name : dataInput.name,
-      
-    }
-    console.log(dataInput)
-    console.log(data)
+      id: dataInput.id,
+      username: dataInput.username,
+      name: dataInput.name,
+    };
+    console.log(dataInput);
+    console.log(data);
+
     try {
-      const response = await axios.put("https://my-project-ppdr.vercel.app/teacher", data , config);
+      const response = await axios.put(
+        "https://my-project-ppdr.vercel.app/teacher",
+        {
+          query: {
+            id: dataInput.id,
+            username: dataInput.username,
+            name: dataInput.name,
+          },
+        },
+        config
+      );
       console.log(response.data);
       // reset input fields after successful update
-      // setDataInput({ id: "", name: "", password: "" });
-      console.log(data)
-      if (dataInput.password !== "" ||  dataInput.password !== null) {
-        const data = {
-          username: dataInput.username,
-          pwd: dataInput.password,
-        };
-        try {
-          const response = await axios.put(
-            `https://my-project-ppdr.vercel.app/register/`,
-            data,
-            config
-          );
-        } catch (error) {
-          setErrMsg(error.status);
-        }
-      
-      }
-   
+      setDataInput(null)
+      console.log(data);
+      // if (dataInput.password !== "" ||  dataInput.password !== null) {
+      //   const data = {
+      //     username: dataInput.username,
+      //     pwd: dataInput.password,
+      //   };
+      //   try {
+      //     const response = await axios.put(
+      //       `https://my-project-ppdr.vercel.app/register/`,
+      //       data,
+      //       config
+      //     );
+      //   } catch (error) {
+      //     setErrMsg(error.status);
+      //   }
+
+      // }
     } catch (err) {
       console.error(err);
       setErrMsg("Error updating teacher.");
-    }   
-  //  setUpdated(true)
-  };   
+    }
+    //  setUpdated(true)
+  };
 
   // if (!visible || updated) {
   //   return null;
@@ -71,10 +77,7 @@ const EditUser = ({ visible, data }) => {
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
         <div className="flex flex-col space-y-4">
           <div className="space-y-4">
-            <label
-              htmlFor="id-input"
-              className="text-gray-600 font-medium "
-            >
+            <label htmlFor="id-input" className="text-gray-600 font-medium ">
               username:
             </label>
             <input
@@ -87,10 +90,7 @@ const EditUser = ({ visible, data }) => {
             />
           </div>
           <div className="mb-2 space-y-4">
-            <label
-              htmlFor="name-input"
-              className="text-gray-600 font-medium"
-            >
+            <label htmlFor="name-input" className="text-gray-600 font-medium">
               name:
             </label>
             <input
@@ -123,7 +123,7 @@ const EditUser = ({ visible, data }) => {
         <button className="btn" onClick={handleUpdate}>
           Update Teacher
         </button>
-        {errMsg && <div className="text-red-500">{errMsg}</div>}
+        {errMsg && <div className="text-red-500 text-center">{errMsg}</div>}
       </form>
     </div>
   );
