@@ -54,7 +54,7 @@ const deleteStudent = async(req, res) => {
     const deleteStudent = await prisma.student.deleteMany({
         where: {
             // OR :[{id:data.id},{name:data.name}]
-            id:data.id
+            id:data.query.id
             
         }, 
         

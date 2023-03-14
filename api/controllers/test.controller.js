@@ -64,13 +64,13 @@ const updateTest = async(req, res)=>{
     const updateScore = await prisma.test.updateMany({
         
         where:{
-            station_Id:data.station_Id,
-            student_id:data.student_id,
-            test_number:data.test_number,
+            station_Id:data.query.station_Id,
+            student_id:data.query.student_id,
+            test_number:data.query.test_number,
             // score:data.score,
         },
         
-        data: {score: data.score},
+        data: {score: data.query.score},
 
 
     }).catch(console.error)
@@ -91,12 +91,13 @@ const deleteTest = async(req, res)=>{
     const data = req.body
     const deleteScore = await prisma.test.deleteMany({
         where:{
-            station_Id:data.station_Id,
-            student_id:data.student_id,
-            test_number:data.test_number,
-            test_name:data.test_name,
-            score:data.score,
-        },
+
+             station_Id:req.query.station_Id,
+             student_id:req.query.student_id,
+             test_number:Number(req.query.test_number),
+            // test_name:data.test_name,
+            // score:data.score,
+        }
 
 
         // }

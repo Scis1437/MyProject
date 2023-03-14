@@ -43,8 +43,8 @@ const deleteSubTest = async(req, res)=>{
     const data = req.body
     const deleteSubTest = await prisma.subtest.deleteMany({
         where:{
-            station_Id: data.station_Id,
-            test_number:data.test_number,
+            station_Id: data.query.station_Id,
+            test_number:data.query.test_number,
         },
         
 
