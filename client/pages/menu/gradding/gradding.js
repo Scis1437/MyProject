@@ -251,7 +251,8 @@ function Gradding() {
             {subTest?.map((testData) => (
               <tr
                 key={testData.test_number}
-                className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
+                // className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
+                className = "bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
               >
                 <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {testData.test_name}
@@ -265,7 +266,7 @@ function Gradding() {
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
-                      <option value={null}>Select Score</option>
+                      <option value={null}>Score</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

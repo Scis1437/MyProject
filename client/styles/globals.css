@@ -77,3 +77,11 @@
 .logout-btn {
   @apply border-2 text-red-600 bg-white hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
 }
+
+.fit {
+  @apply w-fit
+}
+
+.tr-table {
+  @apply flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50
+}

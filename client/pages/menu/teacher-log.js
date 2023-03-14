@@ -9,8 +9,33 @@ import { Teacher } from "../../../api/config/roles_list";
 import EditUser from "../../popup/editUser";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
+function TeacherLog() {
+  const [logs, setLogs] = useState(null);
+  const [errMsg, setErrMsg] = useState(null);
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  async function fetchLogs() {
+    try {
+      const response = await axios.get(
+        `https://my-project-ppdr.vercel.app/teacher-log`,
+        config
+      );
+      setLogs(response.data);
+      console.log(response.data)
+    } catch (error) {
+      setErrMsg("Error searching for student data");
+    }
+  }
 
-function UserEdit() {
+  useEffect(() => {
+    fetchLogs();
+  }, []);
+
   return (
     <div className="background">
       <div className="header-page">
@@ -23,7 +48,7 @@ function UserEdit() {
         </div>
         <div className="flex flex-row justify-between w-full">
           <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-            Edit user
+            Teacher log
           </p>
           <div className="logout-position">
             <Logout />
@@ -32,10 +57,25 @@ function UserEdit() {
       </div>
       {/* sticky top-0 */}
       <div className="container ">
+        <div>
+          <ul>
+            {logs ? (
+              <ul>
+                {logs.map((log) => (
+                  <li key={log.id}>
+                    <strong>{log.timestamp}</strong> {log.message}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div>Loading...</div>
+            )}
+          </ul>
+        </div>
         {/* <div><p>Search for user</p></div> */}
       </div>
     </div>
   );
 }
 
-export default UserEdit;
+export default TeacherLog;

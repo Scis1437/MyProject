@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Logout from "../../item/logout";
+import ImportExcelPage from "../../item/importExcel";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const station = [
   { "History talking patient ": [1, 2, 3] },
@@ -21,7 +22,7 @@ function Redirect({ to }) {
 }
 
 function StudentList() {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [studentCode, setStudentCode] = useState("");
   const [data, setData] = useState([]);
@@ -29,6 +30,9 @@ function StudentList() {
   const [subTest, setSubtest] = useState();
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
+  const [role, setRole] = useState(0)
+
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -36,6 +40,24 @@ function StudentList() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
+  };
+  useEffect(() => {
+    const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
+    // dataRef.current = data;
+    setRole(data.UserInfo.role)
+ 
+  }, [role]);
+
+
+
+
+  const showImportExcel = () => {
+    <ImportExcelPage/>
+  }
 
   useEffect(() => {
     const fetchStudent = async () => {
@@ -93,6 +115,7 @@ function StudentList() {
   };
   const List = (dataSet) => {
     const handleSaveTest = async (studentId, stationId, testNumber, score) => {
+      
       console.log(`studentId : ${studentId}`);
       console.log(`stationId : ${stationId}`);
       console.log(` testNumber : ${testNumber}`);
@@ -201,7 +224,8 @@ function StudentList() {
       // console.log(props);
       //  console.log(station)
       console.log(test);
-      const handleScoreSave = () => {
+      const handleScoreSave = (e) => {
+        e.preventDefault();
         test.forEach((testData) => {
           handleSaveTest(
             student.id,
@@ -264,7 +288,7 @@ function StudentList() {
                   );
                 })}
               </form>
-              <button className="btn" onClick={handleScoreSave}>
+              <button className="btn" onClick={(event) => handleScoreSave(event)}>
                 Save
               </button>
             </div>
@@ -352,6 +376,14 @@ function StudentList() {
           >
             SUBMIT
           </button>
+          {role === 1 &&(
+            <div className="ml-auto">
+                <ImportExcelPage/>
+            </div>
+          
+          )
+                
+          }
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}

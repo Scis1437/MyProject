@@ -208,13 +208,17 @@ function ScanBarcode() {
         </div>
         <div>
           <div>
-            <div className="flex">
-              <p>student code :</p>{" "}
+            <div className="flex w-20">
+           
+                 <p className="whitespace-nowrap">student code :</p>
               <input
                 id="student_code"
                 value={studentCode}
+                className = "fit "
                 onChange={(e) => setStudentCode(e.target.value)}
               />
+         
+             
               <button className="btn" onClick={(e) => searchStudent(e)}>
                 confirm
               </button>

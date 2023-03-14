@@ -55,11 +55,7 @@ const menuName_admin = [
 ];
 
 export default function Menu() {
-  // const router = useRouter();
-  // const dataRef = useRef(null);
-  const [role, setRole] = useState(0)
-  // const [error, setError] = useState("");
-  // const [role, setRole] = useState(null);
+
   const [menu, setMenu] = useState([])
   
   const parseJwt = (bearerToken) => {
@@ -67,7 +63,8 @@ export default function Menu() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
-  
+
+   const [role, setRole] = useState(0)
   useEffect(() => {
     const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
     // dataRef.current = data;
