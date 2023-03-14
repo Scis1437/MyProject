@@ -8,11 +8,14 @@ import axios from "axios";
 
 const ConfrimLogout = ({ visible, onCancel }) => {
   const [popup, setPopup] = useState(false);
-
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
   if (popup) {
     <Logout visible={false} />;
     return null;
+  }
+  if (shouldRedirect) {
+    return <Redirect to="/" />;
   }
   let token;
   if (typeof localStorage !== "undefined") {
@@ -24,9 +27,10 @@ const ConfrimLogout = ({ visible, onCancel }) => {
   const handleLogout = async () => {
     console.log("log out ");
     try {
-      const response = await axios.put(`http://localhost:9000/logout`);
+      const response = await axios.post(`https://my-project-ppdr.vercel.app/logout`,config);
       alert("You have been logged out.");
-      <Redirect to="/" />;
+      
+      setShouldRedirect(true)
     } catch (error) {
       setErrMsg("Error searching for student data");
     }
@@ -38,7 +42,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
       <div className="flex justify-center items-center w-full">
         <button
           className="logout-btn"
-          onClick={() => {handleLogout}}
+          onClick= {handleLogout}
         >
           Sure
         </button>

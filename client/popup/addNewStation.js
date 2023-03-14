@@ -42,7 +42,6 @@ const AddExam = ({ visible }) => {
   };
   function generateId(e) {
     let maxId = Math.max(...e?.map((item) => item.id));
-    console.log(maxId);
     setMaxId(maxId + 1);
   }
   const fetchStation = async () => {
@@ -66,7 +65,7 @@ const AddExam = ({ visible }) => {
     const data = {
       id: maxId,
       station_name: dataInput?.station_name,
-      station_teacher: selectedTeacher,
+      station_teacher: parseInt(selectedTeacher),
     };
 
     console.log(data);
@@ -76,15 +75,15 @@ const AddExam = ({ visible }) => {
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-       data,
-      
+        data,
+
         config
       );
 
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
       // data,
       // config);
-      // console.log(response.data);
+       console.log(response.data);
 
       setDataInput(response);
       setError("");
@@ -151,18 +150,17 @@ const AddExam = ({ visible }) => {
             Add
           </button>
         </div>
-        <div
-          className="flex flex-col w-full items-center "
-          onClick={() => addStation()}
-        >
-          <button className="btn w-full ">submit</button>
+        <div className="flex flex-col w-full items-center ">
+          <button className="btn w-full " onClick={() => addStation()}>
+            submit
+          </button>
         </div>
       </div>
     );
   };
 
   if (!visible) return null;
-  console.log(teacher);
+  
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form
@@ -195,7 +193,7 @@ const AddExam = ({ visible }) => {
           >
             <option value="">Select a teacher</option>
             {teacher?.map((teacher) => (
-              <option key={teacher.value} value={teacher.value}>
+              <option key={teacher.id} value={teacher.id}>
                 {teacher.name}
               </option>
             ))}

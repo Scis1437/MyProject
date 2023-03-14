@@ -26,9 +26,9 @@ const menuName = [
   },
 
   {
-    title: "edit",
+    title: "Station",
     url: faGraduationCap,
-    link: "menu/edit",
+    link: "menu/station",
   },
 ];
 const menuName_admin = [
@@ -38,9 +38,9 @@ const menuName_admin = [
     link: "menu/studentlist",
   },
   {
-    title: "edit",
+    title: "Station",
     url: faGraduationCap,
-    link: "menu/edit",
+    link: "menu/station",
   },
   {
     title: "Edit user",
