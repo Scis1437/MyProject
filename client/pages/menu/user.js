@@ -98,10 +98,11 @@ function UserEdit() {
   }, []);
 
   const deleteUser = async (item) => {
-    console.log(item.username);
-    const data = {
-      user: item.username,
-    };
+    console.log(item);
+    const data = 
+      item.id
+    ;
+    console.log(data)
 
     try {
       const response = await axios.delete(

@@ -66,7 +66,7 @@ const AddExam = ({ visible }) => {
     const data = {
       id: maxId,
       station_name: dataInput?.station_name,
-      station_teacher: selectedTeacher,
+      station_teacher: parseInt(selectedTeacher),
     };
 
     console.log(data);
@@ -76,8 +76,8 @@ const AddExam = ({ visible }) => {
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-       data,
-      
+        {data},
+
         config
       );
 
@@ -151,11 +151,10 @@ const AddExam = ({ visible }) => {
             Add
           </button>
         </div>
-        <div
-          className="flex flex-col w-full items-center "
-          onClick={() => addStation()}
-        >
-          <button className="btn w-full ">submit</button>
+        <div className="flex flex-col w-full items-center ">
+          <button className="btn w-full " onClick={() => addStation()}>
+            submit
+          </button>
         </div>
       </div>
     );
@@ -195,7 +194,7 @@ const AddExam = ({ visible }) => {
           >
             <option value="">Select a teacher</option>
             {teacher?.map((teacher) => (
-              <option key={teacher.value} value={teacher.value}>
+              <option key={teacher.id} value={teacher.id}>
                 {teacher.name}
               </option>
             ))}
