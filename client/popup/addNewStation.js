@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL;
 const AddExam = ({ visible }) => {
   const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
@@ -15,8 +16,6 @@ const AddExam = ({ visible }) => {
     addStation();
   };
 
-
-
   const token = localStorage.getItem("access");
 
   const config = {
@@ -26,7 +25,7 @@ const AddExam = ({ visible }) => {
   const fetchTeacher = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/teacher/`,
+        `https://my-project-ppdr.vercel.app/teacher/`,
         config
       );
 
@@ -49,7 +48,7 @@ const AddExam = ({ visible }) => {
   const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/station/`,
+        `https://my-project-ppdr.vercel.app/station/`,
         config
       );
       await generateId(response.data);
@@ -62,32 +61,33 @@ const AddExam = ({ visible }) => {
   useEffect(() => {
     fetchStation();
   }, []);
-  const data = {
-    id: String(maxId),
-    station_name: dataInput?.station_name,
-    station_teacher: selectedTeacher,
-  };
 
   const addStation = async () => {
+    const data = {
+      id: maxId,
+      station_name: dataInput?.station_name,
+      station_teacher: selectedTeacher,
+    };
+
     console.log(data);
     try {
-      // const response = await axios.post(`http://localhost:9000/station/`, {
-      //   //   id: true,
-      //   //   station_name:true,
-      //   //   station_teacher:true,
-      //   id: maxId,
-      //   station_name: dataInput?.station_name,
-      //   station_teacher: selectedTeacher,
-      //     // data ,
+      const response = await axios.post(
+        `https://my-project-ppdr.vercel.app/station/`,
+        //   id: true,
+        //   station_name:true,
+        //   station_teacher:true,
+       data,
+      
+        config
+      );
 
-      //     config,
-      // });
+      // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
+      // data,
+      // config);
+      // console.log(response.data);
 
-      const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`, data, config);
-      console.log(response.data);
-
-      // setDataInput(response);
-      // setError("");
+      setDataInput(response);
+      setError("");
     } catch (error) {
       setErrMsg("fetch error");
     }
@@ -162,7 +162,7 @@ const AddExam = ({ visible }) => {
   };
 
   if (!visible) return null;
-
+  console.log(teacher);
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form
@@ -196,7 +196,7 @@ const AddExam = ({ visible }) => {
             <option value="">Select a teacher</option>
             {teacher?.map((teacher) => (
               <option key={teacher.value} value={teacher.value}>
-                {teacher.teacher_name}
+                {teacher.name}
               </option>
             ))}
           </select>

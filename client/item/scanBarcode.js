@@ -35,7 +35,7 @@ function ScanBarcode() {
       const station_Id =  stationId ;
      
       try {
-        const response = await axios.get(`${BASE_URL}/subtest`, {
+        const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
           params: {station_Id},
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -57,7 +57,7 @@ function ScanBarcode() {
 
         //   );
         const response = await axios.get(
-          `${BASE_URL}/student/${studentCode}`,
+          `https://my-project-ppdr.vercel.app/student/${studentCode}`,
           config
         );
 
@@ -139,7 +139,7 @@ function ScanBarcode() {
   const fetchStation = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/station/`,
+        `https://my-project-ppdr.vercel.app/station/`,
         config
       );
 
@@ -151,7 +151,7 @@ function ScanBarcode() {
   const fetchStudent = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/student/`,
+        `https://my-project-ppdr.vercel.app/student/`,
         config
       );
 

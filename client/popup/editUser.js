@@ -23,27 +23,54 @@ const EditUser = ({ visible, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  console.log(data)
-  const test= {
+
+ console.log(dataInput)
+  console.log(dataInput.username);
+  const changePassword =async (props) => {
+    const data = {
+      username : props.username ,
+      pwd : props.password
+    }
+    try {
+      const response = await axios.put(
+        `https://my-project-ppdr.vercel.app/register/`,
+        data,
+        config
+      )
+    }     catch (error) {
+      setErrMsg(error.status);
+    }
+  }
+  const datas = {
     id: dataInput.id,
     name: dataInput.name,
-    username : dataInput.username
+    username: dataInput.username,
   };
-  console.log(test);
+  console.log(datas)
   const editUser = async () => {
     const data = {
-      id: parseInt( dataInput.id),   
-      name: dataInput.name ,
- 
+      id: dataInput.id,
+      name: dataInput.name,
+      username: dataInput.username,
     };
-    console.log(data);
+    console.log(data)
+  
     try {
       const response = await axios.put(
         `https://my-project-ppdr.vercel.app/teacher/`,
-    {    data,
-        config}
+        {
+          id: dataInput.id,
+          name: dataInput.name,
+          username: dataInput.username,
+        },
+        config
       );
-      setDataInput(response.data)
+      if(dataInput.password != null && (dataInput.password).length == 0){
+      
+        changePassword(dataInput)
+     }
+     console.log(response.data)
+      setDataInput(response.data);
     } catch (error) {
       setErrMsg(error);
     }

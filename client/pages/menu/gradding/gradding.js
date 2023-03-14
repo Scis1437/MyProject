@@ -15,8 +15,8 @@ function Gradding() {
   // const [stationId, setStationId] = useState();
   const [selectedTestId, setSelectedTestId] = useState(null);
   const [test, setTest] = useState();
-  const [station , setStation] = useState() ;
-  const [name , setName ]= useState()
+  const [station, setStation] = useState();
+  const [name, setName] = useState();
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
   };
@@ -54,13 +54,15 @@ function Gradding() {
 
     const fetchStation = async () => {
       try {
-        const response = await axios.get(`http://localhost:9000/station/${stationId}`, config );
+        const response = await axios.get(
+          `http://localhost:9000/station/${stationId}`,
+          config
+        );
         const filterData = await response.data.filter(
-          (item) => item.id=== stationId
+          (item) => item.id === stationId
         );
 
-      
-        // console.log(response.data);  
+        // console.log(response.data);
         // console.log(filterData);
         setStation(filterData);
 
@@ -72,24 +74,19 @@ function Gradding() {
     };
 
     const fetchStudent = async () => {
- 
-        try {
-          const response = await axios.get(
-            `http://localhost:9000/student/${studentCode}`,
-            config
-          );
-  
-     
-
-         
-        const filterData = await response.data.filter(
-          (item) => item.id=== studentCode
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/student/${studentCode}`,
+          config
         );
 
-      
-        console.log(response.data);  
+        const filterData = await response.data.filter(
+          (item) => item.id === studentCode
+        );
 
-        setName (filterData);
+        console.log(response.data);
+
+        setName(filterData);
 
         {
         }
@@ -121,7 +118,7 @@ function Gradding() {
                 };
               } else {
                 // return item;
-              } 
+              }
             });
             setTest(newData);
             // setSelectedTestId(data.station_Id);
@@ -149,9 +146,9 @@ function Gradding() {
       );
     }
   }
-  
+
   const addScore = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
       const response = await axios.post(
         `http://localhost:9000/test`,
@@ -161,39 +158,38 @@ function Gradding() {
       );
       alert("Test data saved successfully");
       //  return <Redirect to="/menu/gradding"/>
- 
     } catch (error) {
       setErrMsg(error);
     }
   };
-  const handleScoreSave = () => {   
-
-    subTest?.forEach((testData) => 
-     addScore({
+  const handleScoreSave = () => {
+    subTest?.forEach((testData) =>
+      addScore({
         station_Id: testData.station_Id,
         student_id: studentCode,
         test_number: testData.test_number,
-        score: parseInt(testData.score) ,
-        station_name : station[0].station_name ,
-        station_teacher : station[0].station_teacher ,
-        test_name : testData.test_name,
-        name : name[0].name 
-      }))
+        score: parseInt(testData.score),
+        station_name: station[0].station_name,
+        station_teacher: station[0].station_teacher,
+        test_name: testData.test_name,
+        name: name[0].name,
+      })
+    );
     // if (selectedTestId) {
-   
-      // const testData = test.find((item) => item.station_Id === selectedTestId);
-      // console.log(testData);
-      // addScore({
-      //   station_Id: testData.station_Id,
-      //   student_id: studentCode,
-      //   test_number: testData.test_number,
-      //   score: testData.score,
-      //   station_name : station[0].station_name ,
-      //   station_teacher : station[0].station_teacher ,
-      //   test_name : testData.test_name,
-      //   name : name[0].name 
-      // });
-    
+
+    // const testData = test.find((item) => item.station_Id === selectedTestId);
+    // console.log(testData);
+    // addScore({
+    //   station_Id: testData.station_Id,
+    //   student_id: studentCode,
+    //   test_number: testData.test_number,
+    //   score: testData.score,
+    //   station_name : station[0].station_name ,
+    //   station_teacher : station[0].station_teacher ,
+    //   test_name : testData.test_name,
+    //   name : name[0].name
+    // });
+
     // }
   };
   if (shouldRedirect) {
@@ -201,19 +197,17 @@ function Gradding() {
   }
 
   const handleScoreChange = (testNumber, score) => {
-    console.log(`test number and score: ${testNumber} , ${score}`)
+    console.log(`test number and score: ${testNumber} , ${score}`);
     const updatedSubTests = subTest.map((subTest) => {
       if (subTest.test_number === testNumber) {
         return { ...subTest, score };
       }
-      return subTest;   
+      return subTest;
     });
     setSubtest(updatedSubTests);
     // console.log(subTest)
   };
 
-
-  
   return (
     <div className="background">
       <div className="header-page">
@@ -224,7 +218,14 @@ function Gradding() {
             onClick={() => setShouldRedirect(true)}
           />
         </div>{" "}
-        <p className="text-header">{stationId}</p>
+        <div className="flex flex-row justify-between w-full">
+          <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+            {stationId}
+          </p>
+          <div className="logout-position">
+            <Logout />
+          </div>
+        </div>
       </div>
 
       <div className="container ">
@@ -251,10 +252,13 @@ function Gradding() {
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
                   {/* <MethodCheck data = {testData}/> */}
-                  <select className="h-5"
-            value={testData.score}
-            onChange={(e) => handleScoreChange(testData.test_number, e.target.value)}
-          >
+                  <select
+                    className="h-5"
+                    value={testData.score}
+                    onChange={(e) =>
+                      handleScoreChange(testData.test_number, e.target.value)
+                    }
+                  >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -278,15 +282,14 @@ function Gradding() {
             <input></input>
           </div>
 
-          <button className="btn"
-            onClick={handleScoreSave}
-           >
-
+          <button className="btn" onClick={handleScoreSave}>
             SUBMIT
           </button>
         </div>
       </div>
-      <div className="absolute top-3.5 right-3.5 "><Logout/></div>
+      <div className="absolute top-3.5 right-3.5 ">
+        <Logout />
+      </div>
     </div>
   );
 }

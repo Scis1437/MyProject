@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const EditExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");
@@ -34,10 +34,13 @@ const EditExam = ({ visible, data }) => {
     const station_Id = data.id;
 
     try {
-      const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
-        params: { station_Id },
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `https://my-project-ppdr.vercel.app/subtest`,
+        {
+          params: { station_Id },
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log(response.data);
       await setSubtest(response.data);
       await generateId(response.data);
@@ -69,15 +72,22 @@ const EditExam = ({ visible, data }) => {
   // console.log(teacher);
   // console.log(subTest);
   // console.log(errMsg);
-  const editStation = async () => {
+  console.log(dataInput);
+  const updateStation = async () => {  
     try {
       console.log(dataInput);
       const response = await axios.put(
         `https://my-project-ppdr.vercel.app/station`,
-        dataInput,
-        config
+        {
+          data: {
+            id: parseInt(dataInput.id),
+            station_name: dataInput.station_Id,
+            station_teacher: station_teacher,
+          },
+          config,
+        }
       );
-      alert("Station data saved successfully");
+    alert("Station data saved successfully");
       setDataInput(response.data);
     } catch (error) {
       setErrMsg("Error searching for student data");
@@ -133,7 +143,7 @@ const EditExam = ({ visible, data }) => {
       };
       try {
         const response = await axios.post(
-          `${BASE_URL}/subtest/`,
+          `https://my-project-ppdr.vercel.app/subtest/`,
           dataSet,
           config
         );
@@ -158,23 +168,26 @@ const EditExam = ({ visible, data }) => {
       // Filter out todo with the id
       // const newList = list.filter((todo) => todo.id !== id);
       const data = {
-        station_Id: todo.id,
+        station_Id:todo.id,
         test_number: todo.test_number,
       };
       console.log(data);
       // setList(newList);
 
       try {
-        const response = await axios.delete(`https://my-project-ppdr.vercel.app/subtest/`, {
-          data: {
-            station_Id: todo.id,
-            test_number: todo.test_number,
-          },
-          headers: config.headers,
-        });
-        const newList = list.filter((todo) => todo.id !== id);
+        const response = await axios.delete(
+          `https://my-project-ppdr.vercel.app/subtest/`,
+          {
+          
+         data,
+            
+           config,
+          }
+        );
+        // const newList = list.filter((todo) => todo.id !== id);
         // setSubtest(response.data);
-        setList(newList);
+        // setList(newList);
+        alert("delete success")
         console.log(response.data);
       } catch (error) {
         setErrMsg(error);
@@ -183,8 +196,8 @@ const EditExam = ({ visible, data }) => {
     // const test = { station_Id: 2 };
     // const test2 = test.data;
 
-    const deleteSubTest = async () => {};
 
+    console.log(list)
     return (
       <div className="">
         <h1>title</h1>{" "}
@@ -214,23 +227,27 @@ const EditExam = ({ visible, data }) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-
-          <button className="btn" onClick={() => addSubTest()}>
+         <button className="btn" onClick={() => addTodo (input)}>
             Add
           </button>
+          {/* <button className="btn" onClick={() => addSubTest()}>
+            Add
+          </button> */}
         </div>
         <div
           className="flex flex-col w-full items-center "
-          onClick={() => editStation()}
+       
         >
-          <button className="btn w-full ">submit</button>
+          <button className="btn w-full " onClick={() => updateStation()}>
+            submit
+          </button>
         </div>
       </div>
     );
   };
 
   // if (!visible) return null;
-
+  console.log(teacher);
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray">
@@ -245,11 +262,11 @@ const EditExam = ({ visible, data }) => {
           ></input>
         </div>
         <div className="flex mb-4">
-          <label className="mr-4">Grading method :</label>
+          {/* <label className="mr-4">Grading method :</label>
           <select className="h-5 mx-2 rounded-md">
             <option value="1">pass/fail</option>
             <option value="2">score</option>
-          </select>
+          </select> */}
         </div>
         <div className="flex mb-4">
           <label className="mr-4">Assign to :</label>
@@ -258,8 +275,8 @@ const EditExam = ({ visible, data }) => {
             // value={this.state.selectValue}
           >
             {teacher?.map((obj) => (
-              <option key={obj.teacher_name} value={obj.value}>
-                {obj.teacher_name}
+              <option key={obj.id} value={obj.name}>
+                {obj.name}
               </option>
             ))}
           </select>

@@ -10,7 +10,7 @@ import Logout from "../../item/logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const subject = [
   {
     title: "Histrory taking patient",
@@ -24,7 +24,7 @@ function Redirect({ to }) {
   console.log("Redirect_work");
   useEffect(() => {
     router.push(to);
-  }, [to ,  router]);
+  }, [to, router]);
 
   return null;
 }
@@ -71,23 +71,19 @@ const Edit = () => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
- 
-  useEffect(() => { 
-  
-  
-   
+  useEffect(() => {
     const fetchStation = async () => {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/station/`,
-        config
-      );
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/station/`,
+          config
+        );
 
-      setData(response.data);
-    } catch (error) {
-      setErrMsg("Error searching for student data");
-    }
-  };
+        setData(response.data);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
     fetchStation();
   }, []);
   console.log(data);
@@ -95,10 +91,13 @@ const Edit = () => {
     const { id } = data;
     console.log(data);
     try {
-      const response = await axios.delete(`https://my-project-ppdr.vercel.app/station/`, {
-        data: { id },
-        headers: config.headers,
-      });
+      const response = await axios.delete(
+        `https://my-project-ppdr.vercel.app/station/`,
+        {
+          data: { id },
+          headers: config.headers,
+        }
+      );
       //setData(response)
       console.log(data);
     } catch (error) {
@@ -109,8 +108,6 @@ const Edit = () => {
 
   const List = (dataSet) => {
     const [dropdown, setDropdown] = useState(false);
-
-   
 
     return (
       <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
@@ -134,13 +131,13 @@ const Edit = () => {
         </td>
       </tr>
     );
-  }; 
+  };
   if (shouldRedirect) {
-      return <Redirect to="/menu" />;
-    }
+    return <Redirect to="/menu" />;
+  }
   return (
     <div className="background ">
-      <div className="header-page">
+      <div className="header-page ">
         <div className="flex items-center">
           <FontAwesomeIcon
             className="text-white mr-2 text-2xl"
@@ -148,9 +145,14 @@ const Edit = () => {
             onClick={() => setShouldRedirect(true)}
           />
         </div>
-        <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-          Edit station
-        </p>
+        <div className="flex flex-row justify-between w-full">
+          <p className="text-white font-extrabold text-xl w-full md:text-2xl">
+            Edit station
+          </p>
+          <div className="logout-position">
+            <Logout />
+          </div>
+        </div>
       </div>
 
       {/* <p className="text-white font-extrabold text-xl text-left w-full pl-10% md:text-2xl   ">
@@ -186,7 +188,7 @@ const Edit = () => {
         <div
           className={`${
             newOrderPostOpen === "open" || createPostOpen === "open"
-              ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm "
+              ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
               : ""
           }`}
         >
@@ -195,7 +197,7 @@ const Edit = () => {
 
         {/* <div className="fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm flex justify-center items-center"><EditExam data={data} visible={true}/></div> */}
       </div>
-      <div className="logout-position "><Logout/></div>
+
       {/* <EditExam visible={true}/> */}
     </div>
   );
