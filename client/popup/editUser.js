@@ -19,23 +19,24 @@ const EditUser = ({ visible, data }) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const editUser = async () => {
+  
+
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     const data = {
-      id: dataInput.id,
-      name: dataInput.name,
-      username: dataInput.username,
-    };
-    console.log(data);
-
+      id : dataInput.id ,
+      username : dataInput.username,
+      name : dataInput.name,
+      
+    }
     try {
-      const response = await axios.put(
-        `https://my-project-ppdr.vercel.app/teacher/`, 
-        {
-           data, config
-        }
-      );
-
-      if (dataInput.password !== "") {
+      const response = await axios.put("https://my-project-ppdr.vercel.app/teacher", dataInput , config);
+      console.log(response.data);
+      // reset input fields after successful update
+      // setDataInput({ id: "", name: "", password: "" });
+      console.log(data)
+      if (dataInput.password !== "" ||  dataInput.password !== null) {
         const data = {
           username: dataInput.username,
           pwd: dataInput.password,
@@ -49,29 +50,29 @@ const EditUser = ({ visible, data }) => {
         } catch (error) {
           setErrMsg(error.status);
         }
-
-       
+      
       }
-
-      // setDataInput(response.data);
-    } catch (error) {
-      setErrMsg(error.message);
+    } catch (err) {
+      console.error(err);
+      setErrMsg("Error updating teacher.");
     }
   };
-
+  if (!visible){
+    return null
+  }
   return (
     <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
         <div className="flex flex-col space-y-4">
           <div className="space-y-4">
             <label
-              htmlFor="firstname-input"
+              htmlFor="id-input"
               className="text-gray-600 font-medium "
             >
               username:
             </label>
             <input
-              id="firstname-input"
+              id="id-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               value={dataInput.username}
               onChange={(e) =>
@@ -81,13 +82,13 @@ const EditUser = ({ visible, data }) => {
           </div>
           <div className="mb-2 space-y-4">
             <label
-              htmlFor="lastname-input"
+              htmlFor="name-input"
               className="text-gray-600 font-medium"
             >
               name:
             </label>
             <input
-              id="lastname-input"
+              id="name-input"
               className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
               value={dataInput.name}
               onChange={(e) =>
@@ -113,8 +114,8 @@ const EditUser = ({ visible, data }) => {
             />
           </div>
         </div>
-        <button className="btn" onClick={editUser}>
-          submit
+        <button className="btn" onClick={handleUpdate}>
+          Update Teacher
         </button>
         {errMsg && <div className="text-red-500">{errMsg}</div>}
       </form>

@@ -49,15 +49,15 @@ function StudentList() {
     const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
     // dataRef.current = data;
     setRole(data.UserInfo.role)
- 
+    
   }, [role]);
 
 
+const deleteUser =async () => {
+  
+}
 
-
-  const showImportExcel = () => {
-    <ImportExcelPage/>
-  }
+ console.log(role)
 
   useEffect(() => {
     const fetchStudent = async () => {
