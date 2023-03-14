@@ -84,15 +84,13 @@ const Edit = () => {
     const  id  = data.id;
     console.log(data);
     try {
-      const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/station/`,
-        {
-          data : {
-            id : id
-          },
-          headers: config.headers,
-        }
-      );
+      // const response = await axios.delete(
+      //   `https://my-project-ppdr.vercel.app/station/${id}`,
+      //   {
+      //     id,
+      //     headers: config.headers,
+      //   }
+      // );
       //setData(response)
       console.log(data);
     } catch (error) {
