@@ -33,7 +33,7 @@ function Gradding() {
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
-        const response = await axios.get(`http://localhost:9000/subtest`, {
+        const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
           params: { stationId },
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -55,7 +55,7 @@ function Gradding() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/station/${stationId}`,
+          `https://my-project-ppdr.vercel.app/${stationId}`,
           config
         );
         const filterData = await response.data.filter(
@@ -76,7 +76,7 @@ function Gradding() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/student/${studentCode}`,
+          `https://my-project-ppdr.vercel.app/${studentCode}`,
           config
         );
 
@@ -151,7 +151,7 @@ function Gradding() {
     console.log(data);
     try {
       const response = await axios.post(
-        `http://localhost:9000/test`,
+        `https://my-project-ppdr.vercel.app/test`,
         data,
         config,
         {}
@@ -287,9 +287,7 @@ function Gradding() {
           </button>
         </div>
       </div>
-      <div className="absolute top-3.5 right-3.5 ">
-        <Logout />
-      </div>
+     
     </div>
   );
 }

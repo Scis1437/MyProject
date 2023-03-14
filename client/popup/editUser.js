@@ -2,13 +2,8 @@ import React from "react";
 import TodoList from "../item/todoList";
 import Homemodule from "../styles/Home.module.css";
 import { useState } from "react";
+import axios from "axios";
 const EditUser = ({ visible, data }) => {
-  const station = [
-    "History talking patient ",
-    "Peptic ulcer ",
-    "Palpation of the thyroid",
-  ];
-
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
@@ -24,128 +19,46 @@ const EditUser = ({ visible, data }) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
- console.log(dataInput)
-  console.log(dataInput.username);
-  const changePassword =async (props) => {
-    const data = {
-      username : props.username ,
-      pwd : props.password
-    }
-    try {
-      const response = await axios.put(
-        `https://my-project-ppdr.vercel.app/register/`,
-        data,
-        config
-      )
-    }     catch (error) {
-      setErrMsg(error.status);
-    }
-  }
-  const datas = {
-    id: dataInput.id,
-    name: dataInput.name,
-    username: dataInput.username,
-  };
-  console.log(datas)
   const editUser = async () => {
     const data = {
       id: dataInput.id,
       name: dataInput.name,
       username: dataInput.username,
     };
-    console.log(data)
-  
+    console.log(data);
+
     try {
       const response = await axios.put(
-        `https://my-project-ppdr.vercel.app/teacher/`,
+        `https://my-project-ppdr.vercel.app/teacher/`, 
         {
-          id: dataInput.id,
-          name: dataInput.name,
-          username: dataInput.username,
-        },
-        config
+           data, config
+        }
       );
-      if(dataInput.password != null && (dataInput.password).length == 0){
-      
-        changePassword(dataInput)
-     }
-     console.log(response.data)
-      setDataInput(response.data);
+
+      if (dataInput.password !== "") {
+        const data = {
+          username: dataInput.username,
+          pwd: dataInput.password,
+        };
+        try {
+          const response = await axios.put(
+            `https://my-project-ppdr.vercel.app/register/`,
+            data,
+            config
+          );
+        } catch (error) {
+          setErrMsg(error.status);
+        }
+
+       
+      }
+
+      // setDataInput(response.data);
     } catch (error) {
-      setErrMsg(error);
+      setErrMsg(error.message);
     }
   };
-  const TodoList_user = () => {
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState("");
 
-    const addTodo = (todo) => {
-      const newTodo = {
-        id: Math.random(),
-        todo: todo,
-      };
-
-      // add the todo to the list
-      setList([...list, newTodo]);
-
-      // clear input box
-      setInput("");
-    };
-
-    const deleteTodo = (id) => {
-      // Filter out todo with the id
-      const newList = list.filter((todo) => todo.id !== id);
-
-      setList(newList);
-    };
-
-    return (
-      <div className="">
-        <h1></h1>{" "}
-        <ul>
-          {list.map((todo) => (
-            <li key={todo.id}>
-              {todo.todo}
-              <button
-                className="bg-btn-red rounded-md"
-                onClick={() => deleteTodo(todo.id)}
-              >
-                &times;
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="flex gap-1 mb-4">
-          {/* <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className=" input"
-          /> */}
-
-          <select
-            id="station"
-            value={selectedOption}
-            onChange={handleOptionChange}
-          >
-            <option value="">Select an station</option>
-            {station.map((station) => (
-              <option key={station} value={station}>
-                {station}
-              </option>
-            ))}
-          </select>
-
-          <button className="btn" onClick={() => addTodo(selectedOption)}>
-            Add
-          </button>
-        </div>
-        <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full ">submit</button>
-        </div>
-      </div>
-    );
-  };
   return (
     <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
@@ -200,13 +113,10 @@ const EditUser = ({ visible, data }) => {
             />
           </div>
         </div>
-        <button className="btn" onClick={() => editUser()}>
+        <button className="btn" onClick={editUser}>
           submit
         </button>
-        <div>
-          {/* <label>Station</label> */}
-          {/* <TodoList_user /> */}
-        </div>
+        {errMsg && <div className="text-red-500">{errMsg}</div>}
       </form>
     </div>
   );

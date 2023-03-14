@@ -29,7 +29,7 @@ function ScanBarcode() {
     const [stationId , setStationId]  = useState(station_Id)
     const [data , setData ] = useState({}) ;
     const [redirectData , setRedirectData] = useState() ;
-
+    const [name , setName] = useState()
 
     const fetchSubtest = async () => {
       const station_Id =  stationId ;

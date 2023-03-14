@@ -11,14 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const subject = [
-  {
-    title: "Histrory taking patient",
-  },
-  {
-    title: "peptuc ulcer",
-  },
-];
+
 function Redirect({ to }) {
   const router = useRouter();
   console.log("Redirect_work");
@@ -88,13 +81,15 @@ const Edit = () => {
   }, []);
   console.log(data);
   const deleteStation = async (data) => {
-    const { id } = data;
+    const  id  = data.id;
     console.log(data);
     try {
       const response = await axios.delete(
         `https://my-project-ppdr.vercel.app/station/`,
         {
-          data: { id },
+          data : {
+            id : id
+          },
           headers: config.headers,
         }
       );

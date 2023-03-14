@@ -47,6 +47,11 @@ const menuName_admin = [
     url: faCircleCheck,
     link: "menu/user",
   },
+  {
+    title : "show log" ,
+    url : faCircleCheck ,
+    link : "menu/teacher-log"
+  }
 ];
 
 export default function Menu() {
