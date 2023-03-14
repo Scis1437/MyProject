@@ -132,13 +132,13 @@ const updateStation = async(req, res) => {
 const deleteStation = async(req, res) => {
     const data = req.body
 
-    const deleteStation = await prisma.station.deleteMany({
+    const stationDelete = await prisma.station.deleteMany({
         where: {
             id:data.id,
         }, 
         
     }); 
-    if (deleteStation) {
+    if (stationDelete) {
         const createLog = await prisma.logEntry.create({
             data: {
               message: `${req.user} delete a  station with id ${data.id} and name ${data.station_name}`,
