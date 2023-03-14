@@ -72,34 +72,6 @@ const EditExam = ({ visible, data }) => {
   // console.log(teacher);
   // console.log(subTest);
   // console.log(errMsg);
-  const dataTest = {
-    id: dataInput.id,
-    station_name: dataInput.station_name,
-    station_teacher: dataInput.station_teacher,
-  };
-  console.log(dataTest);
-  const updateStation = async () => {
-    const dataTest = {
-      id: dataInput.id,
-      station_name: dataInput.station_name,
-      station_teacher: dataInput.station_teacher,
-    };
-    try {
-      console.log(data);
-      // const response = await axios.put(
-      //   `https://my-project-ppdr.vercel.app/station`,
-      //   {
-      //     data,
-
-      //     config,
-      //   }
-      // );
-      // alert("Station data saved successfully");
-      // setDataInput(response.data);
-    } catch (error) {
-      setErrMsg("Error searching for student data");
-    }
-  };
 
   const TodoList = ({ data, test }) => {
     const [list, setList] = useState(
@@ -126,6 +98,33 @@ const EditExam = ({ visible, data }) => {
     //   );
     // }, []);
     console.log(list);
+  
+
+    const updateStation = async (e) => {
+      e.preventDefault();
+      const data = {
+        id: parseInt(dataInput.id),
+        station_name: dataInput.station_name,
+        station_teacher: dataInput.station_teacher,
+      };
+      try {
+        console.log(data);
+        const response = await axios.put(
+          `https://my-project-ppdr.vercel.app/station`,
+          {
+            data,
+  
+            config,
+          }
+        );
+        alert("Station data saved successfully");
+        setDataInput(response.data);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+
+    
     const addTodo = (todo) => {
       const newTodo = {
         id: Math.random(),
@@ -140,14 +139,22 @@ const EditExam = ({ visible, data }) => {
       // clear input box
       setInput("");
     };
-
-    const addSubTest = async () => {
-      const dataSet = {
-        station_Id: station_Id,
-        test_name: input,
-        test_number: maxId,
-        station_name: data.station_name,
-      };
+    // const datatest = {
+    //   station_Id: station_Id,
+    //   test_name: input,
+    //   test_number: maxId,
+    //   station_name: data.station_name,
+    // };
+    // console.log(datatest)
+ 
+    const addSubTest = async (e) => {
+      e.preventDefault();
+     const dataSet = {
+      station_Id: station_Id,
+      test_name: input,
+       test_number:maxId,
+      station_name : data.station_name ,
+    }; 
       try {
         const response = await axios.post(
           `https://my-project-ppdr.vercel.app/subtest/`,
@@ -156,8 +163,7 @@ const EditExam = ({ visible, data }) => {
         );
         const newSubtest = {
           id: maxId,
-          test_name: dataInput,
-          test_number: maxId,
+          todo: dataInput,
         };
         setList([...list, newSubtest]);
         setSubtest(response);
@@ -171,21 +177,55 @@ const EditExam = ({ visible, data }) => {
         setErrMsg(error);
       }
     };
+    // const addSubTest = async () => {
+    //   const dataSet = {
+    //     station_Id: station_Id,
+    //     test_name: input,
+    //     test_number: maxId,
+    //     station_name: data.station_name,
+    //   };
+    //   console.log(dataSet);
+    //   try {
+    //     const response = await axios.post(
+    //       `https://my-project-ppdr.vercel.app/subtest/`,
+    //       dataSet,
+    //       config
+    //     );
+    //     const newSubtest = {
+    //       id: maxId,
+    //       test_name: dataInput,
+    //       test_number: maxId,
+    //     };
+    //     setList([...list, newSubtest]);
+    //     setSubtest(response);
+    //     console.log(response.data);
+    //     setList(
+    //       subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
+    //     );
+    //     {
+    //     }
+    //   } catch (error) {
+    //     setErrMsg(error);
+    //   }
+    // };
     const deleteTodo = async (todo) => {
       // Filter out todo with the id
       // const newList = list.filter((todo) => todo.id !== id);
-      const data = {
-        station_Id: todo.id,
-        test_number: todo.test_number,
-      };
-      console.log(data);
+      // const data = {
+      //   station_Id: todo.id,
+      //   test_number: todo.test_number,
+      // };
+      // console.log(data);
       // setList(newList);
 
       try {
         const response = await axios.delete(
           `https://my-project-ppdr.vercel.app/subtest/`,
           {
-            data,
+            data : {
+              station_Id: todo.id,
+              test_number: todo.test_number,
+            },
 
             config,
           }
@@ -215,7 +255,7 @@ const EditExam = ({ visible, data }) => {
             >
               {todo.test_name}
               <button className="delete-btn" onClick={() => deleteTodo(todo)}>
-                x{/* &times; */}
+                x
               </button>
             </li>
           ))}
@@ -232,7 +272,7 @@ const EditExam = ({ visible, data }) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-          <button className="btn" onClick={() => addTodo(input)}>
+          <button className="btn" onClick={(e) => addSubTest(e)}>
             Add
           </button>
           {/* <button className="btn" onClick={() => addSubTest()}>
@@ -240,7 +280,7 @@ const EditExam = ({ visible, data }) => {
           </button> */}
         </div>
         <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full " onClick={() => updateStation()}>
+          <button className="btn w-full " onClick={(e) => updateStation(e)}>
             submit
           </button>
         </div>

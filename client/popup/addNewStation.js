@@ -42,7 +42,6 @@ const AddExam = ({ visible }) => {
   };
   function generateId(e) {
     let maxId = Math.max(...e?.map((item) => item.id));
-    console.log(maxId);
     setMaxId(maxId + 1);
   }
   const fetchStation = async () => {
@@ -76,7 +75,7 @@ const AddExam = ({ visible }) => {
         //   id: true,
         //   station_name:true,
         //   station_teacher:true,
-        {data},
+        data,
 
         config
       );
@@ -84,7 +83,7 @@ const AddExam = ({ visible }) => {
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
       // data,
       // config);
-      // console.log(response.data);
+       console.log(response.data);
 
       setDataInput(response);
       setError("");
@@ -161,7 +160,7 @@ const AddExam = ({ visible }) => {
   };
 
   if (!visible) return null;
-  console.log(teacher);
+  
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form
