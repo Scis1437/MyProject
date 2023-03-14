@@ -1,4 +1,6 @@
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
+import XLSX from 'xlsx';
+
 import React, { useState, useEffect } from "react";
 function ImportExcelPage() {
   const [excelData, setExcelData] = useState(null);
