@@ -36,7 +36,7 @@ model Test {
   student_id      String
   student         Student @relation(fields: [student_id], references: [id],onDelete: NoAction)
   station_Id      String
-  station         Station @relation(fields: [station_Id], references: [id],onDelete:NoAction)
+  station         Station @relation(fields: [station_Id], references: [id],onDelete: Cascade)
   station_name    String
   station_teacher String
   name            String

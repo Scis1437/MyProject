@@ -51,12 +51,12 @@ const addStation = async(req, res) => {
     const data = req.body
 
     const createStation = await prisma.station.create({
-        select: {
-            // id: true,
-            // station_name:true,
-            // station_teacher:true,
+        // select: {
+        //     id: true,
+        //     station_name:true,
+        //     station_teacher:true,
             
-        },  
+        // },  
         data,
     })
     logger.teacherLog.log('info',[req.user,data.id,data.student_name+' action = add score'])
@@ -81,17 +81,23 @@ const updateStation = async(req, res) => {
 const deleteStation = async(req, res) => {
     const data = req.body
     console.log("delete " + data.station_name);
+    // const deleteScore = await prisma.test.deleteMany({
+    //     where:{
+    //         OR :[{id:data.id},{station_Id:data.station_Id}]
+    //     },
+
+
+    //     // }
+    // }).catch(console.error)
+    // res.json(console.error)
     const deleteStation = await prisma.station.deleteMany({
         where: {
             id:data.id,
-            
-            
-            
         }, 
         
-    })
+    }).catch(console.error)
     logger.teacherLog.log('info',[req.user,data.id,data.station_name+' action = delete station'])
-    res.json(deleteStation)
+    res.json(console.error)
 }
 
 module.exports = {
