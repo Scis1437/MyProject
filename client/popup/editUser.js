@@ -34,17 +34,19 @@ const EditUser = ({ visible, data }) => {
       const response = await axios.put(
         "https://my-project-ppdr.vercel.app/teacher",
         {
-          query: {
-            id: dataInput.id,
-            username: dataInput.username,
-            name: dataInput.name,
+          data: {
+            query: {
+              id: dataInput.id,
+              username: dataInput.username,
+              name: dataInput.name,
+            },
           },
         },
         config
       );
       console.log(response.data);
       // reset input fields after successful update
-      setDataInput(null)
+      setDataInput(null);
       console.log(data);
       // if (dataInput.password !== "" ||  dataInput.password !== null) {
       //   const data = {

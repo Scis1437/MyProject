@@ -101,18 +101,19 @@ function UserEdit() {
     console.log(item);
     const username = item.username;
     console.log(username);
+    
     try {
       const response = await axios.delete(
         `https://my-project-ppdr.vercel.app/register/`,
-        
-     {   data: { teacher_name: item.id },
-        
-          config,}
+
+        { data: { user: username } } ,
+
+          config,
         
       );
       setTeacher((prevTeachers) =>
-      prevTeachers.filter((teacher) => teacher.teacher_name !== teacherName)
-    );
+        prevTeachers.filter((teacher) => teacher.teacher_name !== teacherName)
+      );
       alert("delete success");
       console.log(response.data);
       return response.data;

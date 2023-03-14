@@ -7,6 +7,7 @@ import axios from "axios";
 import Logout from "../../item/logout";
 import { Teacher } from "../../../api/config/roles_list";
 import EditUser from "../../popup/editUser";
+import Redirect from "../../item/Redirect";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function TeacherLog() {
@@ -37,7 +38,9 @@ function TeacherLog() {
   useEffect(() => {
     fetchLogs();
   }, []);
-
+  if(shouldRedirect){
+    return <Redirect to="/menu"/>
+  }
   return (
     <div className="background">
       <div className="header-page">
