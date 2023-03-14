@@ -40,7 +40,7 @@ const handleLogin = async (req, res) => {
   // evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
-    logger.teacherLog.log("info", user + " action = login ");
+    
     const roles = getRoleId(foundUser.roles)
     // create JWTs
     const accessToken = jwt.sign(

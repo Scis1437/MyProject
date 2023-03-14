@@ -14,7 +14,7 @@ const getAllSubTest = async (req, res) => {
             station_Id:req.query.station_Id,
         }
     })
-    logger.teacherLog.log('info',req.user+'show success')
+    
     res.json(getAllSubTest)
 }
 const addSubTest = async(req, res)=>{

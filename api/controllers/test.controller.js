@@ -3,7 +3,7 @@ const user = require("../model/users.json")
 const logger = require('../controllers/logger.controller')
 const getAllTest = async (req, res) => {
     const tests = await prisma.test.findMany({})
-    logger.teacherLog.log('info',req.user+'show success')
+    
     res.json(tests)
 }
 
@@ -24,7 +24,7 @@ const getStudenttest = async (req, res) => {
  
     })
     res.json(req.params.student_id)
-    logger.teacherLog.log('info',req.user +' action = show ')
+    
     //res.json(studentCheck);
     //logger.teacherLog.log('info','show success')  
 }

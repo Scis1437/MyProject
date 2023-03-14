@@ -39,7 +39,7 @@ const { info } = require('console');
 const getAllStation = async (req, res) => {
 
     const station = await prisma.station.findMany({})
-    logger.teacherLog.log('info',req.user +' action = show ')
+    
     res.json(station)
 }
 

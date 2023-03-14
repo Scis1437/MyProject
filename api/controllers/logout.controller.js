@@ -7,7 +7,7 @@ const path = require('path');
 const logger = require('../controllers/logger.controller')
 const handleLogout = async (req, res) => {
     // On client, also delete the accessToken
-    logger.teacherLog.log('info', ' action = logout ')
+
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204); //No content
     const refreshToken = cookies.jwt;
