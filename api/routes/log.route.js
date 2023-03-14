@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const loggerController = require('../controllers/logger.controller');
 
-router.get('/', loggerController.readLog);
+router.get('/', loggerController.getLog);
 
 module.exports = router;
 

@@ -28,7 +28,13 @@ const addSubTest = async(req, res)=>{
         },
         data,
     })
-    logger.teacherLog.log('info',[req.name,data.station_Id,data.student_id+' action = add score'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} add a  subtest with station_id ${data.station_Id} , name ${data.test_name} and test_number ${data.test_number}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(addSubTest)
 
     //logger.teacherLog.log('info','add score success')
@@ -45,7 +51,13 @@ const deleteSubTest = async(req, res)=>{
 
         // }
     })
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete deleteSubTest'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} delete a  subtest with station_id ${data.station_Id}  and test_number ${data.test_number}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(deleteSubTest)}
 module.exports = {
     addSubTest,

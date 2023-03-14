@@ -15,7 +15,13 @@ const addTeacher = async(req, res) => {
         }, 
         data,
     })
-    logger.teacherLog.log('info',[req.user,data.id,data.name+' action = add teacher'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} add a  teacher with name ${data.teacher_name}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(addTeacher)
 }
 
@@ -35,7 +41,13 @@ const updateTeacher = async(req, res)=>{
 
 
     }).catch(console.error)
-    logger.teacherLog.log('info',[req.user,data.student_teacher,data.station_Id,data.student_id+' action = update teacher'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} update a  teacher with id ${data.id} and name ${data.name}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(updateTeacher)
 
 
@@ -55,7 +67,13 @@ const deleteTeacher = async(req, res)=>{
 
         // }
     })
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete teacher'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} delete a  teacher with  name ${data.teacher_name}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(deleteTeacher)}
    
 

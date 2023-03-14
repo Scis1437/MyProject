@@ -45,7 +45,13 @@ const addScore = async(req, res)=>{
         //     student_id: "clbhmthk20000v4s4f4yu874a",
         // }
     })
-    logger.teacherLog.log('info',[req.name,data.station_Id,data.student_id+' action = add score'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} add a  test score with id ${data.student_id} at station ${data.station_Id}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
     res.json(addScore)
 
     //logger.teacherLog.log('info','add score success')
@@ -68,7 +74,14 @@ const updateTest = async(req, res)=>{
 
 
     }).catch(console.error)
-    logger.teacherLog.log('info',[req.user,data.student_teacher,data.station_Id,data.student_id+' action = update score'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} updated a  test score with id ${data.student_id} at station ${data.station_Id} test_number ${data.test_number} with score ${data.score}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
+    res.json(addScore)
     res.json(updateScore)
 
 
@@ -88,7 +101,17 @@ const deleteTest = async(req, res)=>{
 
         // }
     })
-    logger.teacherLog.log('info',[req.user,data.station_Id,data.student_id,data.test_number,data.score+' action = delete score'])
+
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} delete a  test score with id ${data.student_id} at station ${data.station_Id} test_number:${data.test_number},
+          test_name:${data.test_name},
+          score:${data.score}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
+    res.json(addScore)
     res.json(deleteScore)
 
     //logger.teacherLog.log('info','add score success')
@@ -116,7 +139,13 @@ const errorTest = async(req, res)=>{
         //     student_id: "clbhmthk20000v4s4f4yu874a",
         // }
     }).catch(console.error)
-    logger.teacherLog.log('error',[req.user,data.station_Id,data.student_id+'This Student is Cheat'])
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} find cheated user  test score with id ${data.student_id} at station ${data.station_Id}`,
+          level: "error",
+          timestamp: new Date(),
+        }
+      })
     res.json(cheatedScore)
 
     //logger.teacherLog.log('info','add score success')
