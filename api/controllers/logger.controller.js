@@ -159,4 +159,4 @@ const readLog = async(req, res) => { fs.readFile('teacher_log', 'utf-8', (err, d
   }
 });}
 
-module.exports={createLog,teacherLog,readLog,}
+module.exports={teacherLog,readLog,}
