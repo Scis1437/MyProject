@@ -143,25 +143,23 @@ function ScanBarcode() {
     return decoded;
   };
 
-  const [exam, setExam] = useState(null);
+  const [exam, setExam] = useState();
 
   useEffect(() => {
- 
-    const fetchTeacher = async () => {   
-      const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-    // dataRef.current = data;
-    await setExam(data.UserInfo.username);
+    const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+    console.log(user.UserInfo.username);
+    const fetchTeacher = async () => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/teacher/`,
           config
         );
         const filterData = await response.data.filter(
-          (item) => item.username === exam
+          (item) => item.username === user.UserInfo.username
         );
-        console.log(response.data)
-        await setTeacher(filterData[0].username);
-        
+
+        console.log(filterData);
+        await setTeacher(filterData);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
@@ -173,12 +171,13 @@ function ScanBarcode() {
           config
         );
         const filterData = await response.data.filter(
-          (item) => item.station_teacher === teacher
+          (item) => item.station_teacher === teacher[0].id
         );
+        console.log(teacher);
         console.log(filterData);
         console.log(response.data);
 
-       await setStation(response.data);
+        await setStation(filterData);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
@@ -197,7 +196,6 @@ function ScanBarcode() {
       }
     };
 
-  
     fetchTeacher();
     fetchStation();
     fetchStudent();
@@ -206,9 +204,7 @@ function ScanBarcode() {
   const searchStudent = async (e) => {
     e.preventDefault();
 
-    const studentId = studentCode;
-    console.log(studentId);
-    const student = studentData.find((student) => student.id === studentId);
+    const student = studentData.find((student) => student.id === studentCode);
     setData(student);
   };
 

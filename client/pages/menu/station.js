@@ -30,6 +30,8 @@ const Edit = () => {
   const [popupData, setPopupData] = useState();
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
+  const [teacher, setTeacher] = useState();
+  const [allStation, setAllStation] = useState();
   function onNewOrderClick(x, data) {
     setPopupData(data);
     setNewOrderPostOpen(x);
@@ -63,25 +65,65 @@ const Edit = () => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
+  };
 
   useEffect(() => {
+    const fetchTeacher = async () => {
+      const user = await parseJwt(`Bearer ${localStorage.getItem("access")}`);
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        const filterData = response.data.filter(
+          (item) => item.username === user.UserInfo.username
+        );
+        console.log(filterData[0]);
+        await setTeacher(filterData[0]);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+
+    console.log(teacher);
     const fetchStation = async () => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
         );
-
-        setData(response.data);
+        setAllStation(response.data);
+        console.log(teacher?.roles === "ADMIN");
+        if (teacher?.roles === "ADMIN") {
+          setData(response.data);
+        } else {
+          const filterData = response.data.filter(
+            (item) => item.station_teacher === teacher?.id
+          );
+          await setData(filterData);
+        }
+        // console.log(response.data)
+        // console.log( teacher.id)
+        // const filterData = await response.data.filter(
+        //   (item) => item.station_teacher === teacher.id
+        // );
+        // setData(filterData)
+        // setAllStation(response.data);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
+    fetchTeacher();
     fetchStation();
   }, []);
   console.log(data);
+  console.log(allStation);
   const deleteStation = async (data) => {
-    const  id  = data.id;
+    const id = data.id;
     console.log(data);
     try {
       // const response = await axios.delete(
@@ -128,6 +170,8 @@ const Edit = () => {
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
+
+  // console.log(teacher.roles === "ADMIN")
   return (
     <div className="background ">
       <div className="header-page ">
@@ -168,6 +212,18 @@ const Edit = () => {
             </tr>
           </thead>
           <tbody className="">
+            {/* {teacher[0]?.role === "admin" && (
+              <div>
+                {allStation?.map((list) => {
+                  return <List key={list.id} {...list} />;
+                })}
+              </div>
+            )} */}
+
+            {/* {teacher?.roles === "ADMIN"
+              ? allStation?.map((list) => <List key={list.id} {...list} />)
+              : data?.map((list) => <List key={list.id} {...list} />)} */}
+
             {data?.map((list) => {
               return <List key={list.id} {...list} />;
             })}

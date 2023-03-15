@@ -152,7 +152,7 @@ function Gradding() {
   }
 
   const addScore = async (data) => {
-
+    console.log(data)
     try {
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/test`,

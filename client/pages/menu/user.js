@@ -98,18 +98,27 @@ function UserEdit() {
   }, []);
 
   const deleteUser = async (item) => {
+    console.log(item);
+    const teacher_name = item.username;
+    const data = {
+      query: {
+        teacher_name: item.id,
+      },
+    };
     try {
       const response = await axios.delete(
-        'https://my-project-ppdr.vercel.app/deleteUser',
-       { user: item.username } ,
+        "https://my-project-ppdr.vercel.app/teacher/",
+       { data},
         config
       );
-      setTeacher((prevTeachers) =>
-        prevTeachers.filter((teacher) => teacher.teacher_name !== item.teacher_name)
-      );
-      alert(`User for ${item.username} deleted`);
-      console.log(response.data);
-      return response.data;
+      // setTeacher((prevTeachers) =>
+      //   prevTeachers.filter(
+      //     (teacher) => teacher.teacher_name !== item.teacher_name
+      //   )
+      // );
+      // alert(`User for ${item.username} deleted`);
+      // console.log(response.data);
+      // return response.data;
     } catch (error) {
       setErrMsg(error.message);
     }

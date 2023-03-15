@@ -182,30 +182,6 @@ const EditExam = ({ visible, data }) => {
       }
     };
 
-    const deleteTodo = async (todo) => {
-      console;
-      try {
-        const response = await axios.delete(
-          `https://my-project-ppdr.vercel.app/subtest/`,
-          {
-            data: {
-              station_Id: todo.id,
-              test_number: todo.test_number,
-            },
-
-            config,
-          }
-        );
-        // const newList = list.filter((todo) => todo.id !== id);
-        // setSubtest(response.data);
-        // setList(newList);
-        alert("delete success");
-        console.log(response.data);
-      } catch (error) {
-        setErrMsg(error);
-      }
-    };
-
     const deleteSubTest = async (data) => {
       const dataSet = {
         station_Id: data.id,
@@ -216,14 +192,11 @@ const EditExam = ({ visible, data }) => {
         const response = await axios.delete(
           `https://my-project-ppdr.vercel.app/subtest/`,
 
-       
-          {   
-            // data: {
-          //   station_Id: data.id,
-          //   test_number: data.test_number,
-          // },
-            dataSet,
-         
+          {
+            query : {
+                dataSet
+            }
+,
             config,
           }
         );
