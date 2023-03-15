@@ -111,9 +111,9 @@ const deleteUser = async (req, res) => {
   try{
     const data = req.body;
     
-    const deleteUser = await prisma.user.delete({
-          where:{
-          username: req.body.user}
+    const deleteUser = await prisma.user.deleteMany({
+          where:{username: req.params.username}
+
       })
       console.log(deleteUser)
       res.status(200).json({ success: `User for ${req.body.user} deleted` });
