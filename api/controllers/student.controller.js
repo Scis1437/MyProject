@@ -10,7 +10,7 @@ const getAllStudent = async (req, res) => {
 const getStudent = async (req, res) => {
 
     const data = req.body
-    const studentCheck = await prisma.student.findMany({
+    const studentCheck = await prisma.student.findUnique({
         where: {
             
             id: req.query.id,
