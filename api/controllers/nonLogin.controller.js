@@ -3,14 +3,15 @@ const logger = require('../controllers/logger.controller')
 const getNonLoginStudent = async (req, res) => {
 
     const data = req.body
-    const studentCheck = await prisma.student.findMany({
+    const studentCheck = await prisma.test.findMany({
         where: {
-            id: req.query.student_id,
+            student_id: req.query.student_id,
         },
         select:{
-            id:true,
+            student_id:true,
             name:true,
-            tests:true
+            station_name:true,
+            score:true
         }
         
     })
