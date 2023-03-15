@@ -631,6 +631,10 @@
   dependencies:
     "anymatch" "~3.1.2"
     "braces" "~3.0.2"
+<<<<<<< HEAD
+=======
+    
+>>>>>>> bd0e54b1f27f17409aca5964c377969bd4b25f7f
     "glob-parent" "~5.1.2"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
