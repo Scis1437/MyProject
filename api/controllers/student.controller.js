@@ -73,7 +73,7 @@ const updateStudent = async(req, res) => {
     const data = req.body
     const updateStudent = await prisma.student.updateMany({
         where: {
-            OR :[{id:data.id},{name:data.name}]
+            OR :[{id:req.body.id},{name:req.body.name}]
             
             
         }, 

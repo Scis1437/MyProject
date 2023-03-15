@@ -29,14 +29,13 @@ const updateTeacher = async(req, res)=>{
     const data = req.body
 
 
-    const updateTeacher = await prisma.user.updateMany({
+    const updateTeacher = await prisma.station.updateMany({
         
         where:{
-            OR :[{id:data.query.id},{name: data.query.name}]
+            OR :[{id:req.body.id},{name: req.body.station_teacher}]
             
             
         },
-        
         data,
 
 

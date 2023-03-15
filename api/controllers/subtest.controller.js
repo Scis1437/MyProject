@@ -39,6 +39,34 @@ const addSubTest = async(req, res)=>{
 
     //logger.teacherLog.log('info','add score success')
 }
+
+const updateSubtest = async(req, res)=>{
+    const data = req.body
+
+
+    const updateSubtest = await prisma.user.updateMany({
+        
+        where:{
+            OR :[{id:req.body.station_id},{name: req.body.test_number}]
+            
+            
+        },
+        
+        data,
+
+
+    }).catch(console.error)
+    const createLog = await prisma.logEntry.create({
+        data: {
+          message: `${req.user} update a  teacher with id ${data.id} and name ${data.name}`,
+          level: "info",
+          timestamp: new Date(),
+        }
+      })
+    res.json(updateTeacher)
+
+
+}
 const deleteSubTest = async(req, res)=>{
     const data = req.body
     const deleteSubTest = await prisma.subtest.deleteMany({
@@ -63,4 +91,5 @@ module.exports = {
     addSubTest,
     getAllSubTest,
     deleteSubTest,
+    updateSubtest,
 }

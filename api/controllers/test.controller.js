@@ -64,13 +64,13 @@ const updateTest = async(req, res)=>{
     const updateScore = await prisma.test.updateMany({
         
         where:{
-            station_Id:data.query.station_Id,
-            student_id:data.query.student_id,
-            test_number:data.query.test_number,
+            station_Id:req.body.station_Id,
+            student_id:req.body.student_id,
+            test_number:req.body.test_number,
             // score:data.score,
         },
         
-        data: {score: data.query.score},
+        data,
 
 
     }).catch(console.error)
@@ -81,8 +81,7 @@ const updateTest = async(req, res)=>{
           timestamp: new Date(),
         }
       })
-    res.json(addScore)
-    res.json(updateScore)
+     res.json(updateScore)
 
 
 }
