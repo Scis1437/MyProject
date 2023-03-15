@@ -1,4 +1,4 @@
-import useScanDetection from "use-scan-detection";
+
 import React, { useState, useEffect, useRef } from "react";
 import Scanner from "./Scanner";
 import Link from "next/link";
@@ -30,6 +30,8 @@ function ScanBarcode() {
     const [data, setData] = useState({});
     const [redirectData, setRedirectData] = useState();
     const station_name = station;
+
+    
     const fetchSubtest = async () => {
       const station_Id = stationId;
 
