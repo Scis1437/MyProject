@@ -90,13 +90,14 @@ const handleNewUser = async (req, res) => {
 const changePassword = async (req, res) => {
   try{
     const {username,pwd} = req.body;
-    const hashedPwd = await bcrypt.hash(pwd, 10);
+    const hashedPwd = await bcrypt.hash(req.body.password, 10);
     const newUserPassword = await prisma.user.update({
           where:{
           username: req.body.user,},    
           data: {
             username:req.body.user,
             password: hashedPwd,
+            name:req.body.name
           },
       })
       console.log(newUserPassword)
