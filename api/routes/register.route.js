@@ -6,7 +6,7 @@ const verifyRoles = require("../middleware/verifyRoles");
 const { Role } = require('@prisma/client');
 const router = express.Router();
 router.put('/', verifyRoles(Role.ADMIN),changePassword);
-router.post('/', verifyRoles(Role.ADMIN) ,handleNewUser);
+router.post('/',  verifyRoles(Role.ADMIN),handleNewUser);
 router.delete('/', verifyRoles(Role.ADMIN),deleteUser);
-
+// verifyRoles(Role.ADMIN)
 module.exports = router;
