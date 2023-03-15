@@ -69,10 +69,10 @@ const updateSubtest = async(req, res)=>{
 }
 const deleteSubTest = async(req, res)=>{
     const data = req.body
-    const deleteSubTest = await prisma.subtest.deleteMany({
+    const deleteSubTest = await prisma.subtest.delete({
         where:{
-            station_Id: data.query.station_Id,
-            test_number:data.query.test_number,
+            
+            test_name:req.query.test_name,
         },
         
 
@@ -81,7 +81,7 @@ const deleteSubTest = async(req, res)=>{
     })
     const createLog = await prisma.logEntry.create({
         data: {
-          message: `${req.user} delete a  subtest with station_id ${data.station_Id}  and test_number ${data.test_number}`,
+          message: `${req.user} delete a  subtest with  subtest_name ${req.query.test_name}`,
           level: "info",
           timestamp: new Date(),
         }
