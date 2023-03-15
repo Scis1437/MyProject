@@ -7,12 +7,14 @@ import axios from "axios";
 import Logout from "../../item/logout";
 import { Teacher } from "../../../api/config/roles_list";
 import EditUser from "../../popup/editUser";
+import Redirect from "../../item/Redirect";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function TeacherLog() {
   const [logs, setLogs] = useState(null);
   const [errMsg, setErrMsg] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -36,7 +38,9 @@ function TeacherLog() {
   useEffect(() => {
     fetchLogs();
   }, []);
-
+  if(shouldRedirect){
+    return <Redirect to="/menu"/>
+  }
   return (
     <div className="background">
       <div className="header-page">

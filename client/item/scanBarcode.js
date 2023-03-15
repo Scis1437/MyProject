@@ -1,11 +1,11 @@
 import useScanDetection from "use-scan-detection";
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Scanner from "./Scanner";
 import Link from "next/link";
 import Redirect from "./Redirect";
 import { useRouter } from "next/router";
 import axios from "axios";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 function ScanBarcode() {
   const saveStudentname = useRef();
   const [results, setResults] = useState([]);
@@ -21,24 +21,26 @@ function ScanBarcode() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  function Gradding({ station_Id , station, studentCode }) {
+  function Gradding({ station_Id, station, studentCode }) {
     const router = useRouter();
     const [redirecting, setRedirecting] = useState(false);
     const [subTest, setSubtest] = useState();
     const [studentStatus, setStudentStatus] = useState("Complete");
-    const [stationId , setStationId]  = useState(station_Id)
-    const [data , setData ] = useState({}) ;
-    const [redirectData , setRedirectData] = useState() ;
-    const [name , setName] = useState()
-    const station_name = station
+    const [stationId, setStationId] = useState(station_Id);
+    const [data, setData] = useState({});
+    const [redirectData, setRedirectData] = useState();
+    const station_name = station;
     const fetchSubtest = async () => {
-      const station_Id =  stationId ;
-     
+      const station_Id = stationId;
+
       try {
-        const response = await axios.get(`https://my-project-ppdr.vercel.app/subtest`, {
-          params: {station_Id},
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/subtest`,
+          {
+            params: { station_Id },
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         console.log(response.data);
         setSubtest(response.data);
         // setStudentStatus(data?.map(test => test.test_number))
@@ -61,31 +63,31 @@ function ScanBarcode() {
           config
         );
 
-       const filterData =  await response.data.filter(
-       (item) =>  item.id === studentCode  
+        const filterData = await response.data.filter(
+          (item) => item.id === studentCode
         );
         // const filterData2 =  await filterData[0].test.filter(
         //   (item) =>  item.station_Id === studentId
-        //    );     
-         console.log(filterData[0].tests)
-        const statusCheck = (filterData[0].tests.filter(
-          (item) =>  item.station_Id === station_Id
-           ))
-        console.log(statusCheck)
-        
-        console.log(statusCheck.length === 0)
-        if(statusCheck.length === 0) { 
-            setRedirectData(statusCheck)
-            setStudentStatus("Incomplete")
+        //    );
+        console.log(filterData[0].tests);
+        const statusCheck = filterData[0].tests.filter(
+          (item) => item.station_Id === station_Id
+        );
+        console.log(statusCheck);
+
+        console.log(statusCheck.length === 0);
+        if (statusCheck.length === 0) {
+          setRedirectData(statusCheck);
+          setStudentStatus("Incomplete");
         }
         // && item.station_Id === studentId
         // useEffect(() => {
         //   fetchSubtest(filterData.id)
         // }, []);
-        
+
         // await fetchSubtest();
-   
-      setData(filterData[0].tests);
+
+        setData(filterData[0].tests);
       } catch (error) {
         setErrMsg("Error fetch test");
       }
@@ -101,16 +103,15 @@ function ScanBarcode() {
         setRedirecting(true);
       }
     };
-    
-    if (redirecting) {
-      // console.log(redirectData) 
-   
 
-        router.push({
-          pathname: "/menu/gradding/gradding",
-          query: {studentCode , stationId , station_name  },
-        });
-   
+    if (redirecting) {
+      // console.log(redirectData)
+
+      router.push({
+        pathname: "/menu/gradding/gradding",
+        query: { studentCode, stationId, station_name },
+      });
+
       return null;
     }
 
@@ -135,33 +136,69 @@ function ScanBarcode() {
   const [studentData, setStudentData] = useState([]);
   const [data, setData] = useState();
   const [station, setStation] = useState();
-  saveStudentname.current = data?.name;
-  const fetchStation = async () => {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/station/`,
-        config
-      );
-
-      setStation(response.data);
-    } catch (error) {
-      setErrMsg("Error searching for student data");
-    }
+  const [teacher, setTeacher] = useState();
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
   };
-  const fetchStudent = async () => {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/student/`,
-        config
-      );
 
-      setStudentData(response.data);
-      console.log(studentData);
-    } catch (error) {
-      setErrMsg("Error searching for student data");
-    }
-  };
+  const [exam, setExam] = useState(null);
+
   useEffect(() => {
+ 
+    const fetchTeacher = async () => {   
+      const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+    // dataRef.current = data;
+    await setExam(data.UserInfo.username);
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        const filterData = await response.data.filter(
+          (item) => item.username === exam
+        );
+        console.log(response.data)
+        await setTeacher(filterData[0].username);
+        
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+    const fetchStation = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/station/`,
+          config
+        );
+        const filterData = await response.data.filter(
+          (item) => item.station_teacher === teacher
+        );
+        console.log(filterData);
+        console.log(response.data);
+
+       await setStation(response.data);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+    const fetchStudent = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/student/`,
+          config
+        );
+
+        setStudentData(response.data);
+        console.log(studentData);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+
+  
+    fetchTeacher();
     fetchStation();
     fetchStudent();
   }, []);
@@ -184,7 +221,9 @@ function ScanBarcode() {
   // if (shouldRedirect) {
   //   return <Redirect to="/menu/gradding/gradding" />;
   // }
-
+  // console.log(role)
+  // console.log(teacher)
+  // console.log(station);
   return (
     <div className="h-10 flex flex-col justify-center">
       <Scanner onDetected={handleScan} />
@@ -209,16 +248,14 @@ function ScanBarcode() {
         <div>
           <div>
             <div className="flex w-20">
-           
-                 <p className="whitespace-nowrap">student code :</p>
+              <p className="whitespace-nowrap">student code :</p>
               <input
                 id="student_code"
                 value={studentCode}
-                className = "fit "
+                className="fit "
                 onChange={(e) => setStudentCode(e.target.value)}
               />
-         
-             
+
               <button className="btn" onClick={(e) => searchStudent(e)}>
                 confirm
               </button>
@@ -243,7 +280,7 @@ function ScanBarcode() {
                   key={item.id}
                   station={item.station_name}
                   studentCode={studentCode}
-                  station_Id = {item.id}
+                  station_Id={item.id}
                   // method={item.method}
                 />
               ))}
