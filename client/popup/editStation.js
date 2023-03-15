@@ -15,7 +15,7 @@ const EditExam = ({ visible, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-
+  console.log(data);
   function generateId(data) {
     let maxId = Math.max(...data?.map((item) => item.test_number));
     if (!isFinite(maxId) || maxId <= 0) {
@@ -24,7 +24,7 @@ const EditExam = ({ visible, data }) => {
     } else {
       setMaxId(maxId + 1);
     }
-
+    console.log(maxId);
     // if (isFinite(maxId) || maxId <= 0) {
     //   setMaxId(1)
     // } else {
@@ -211,19 +211,23 @@ const EditExam = ({ visible, data }) => {
         station_Id: data.id,
         test_number: data.test_number,
       };
+      console.log(data);
       try {
         const response = await axios.delete(
           `https://my-project-ppdr.vercel.app/subtest/`,
-          {
-            data: {
-              station_Id: data.id,
-              test_number: data.test_number,
-            }
-          },
-          //dataSet
-          config
+
+       
+          {   
+            // data: {
+          //   station_Id: data.id,
+          //   test_number: data.test_number,
+          // },
+            dataSet,
+         
+            config,
+          }
         );
-        
+
         //   {
         //     data: {
         //       station_Id:data.id,
@@ -258,7 +262,7 @@ const EditExam = ({ visible, data }) => {
               {todo.test_name}
               <button
                 className="delete-btn"
-                onClick={() => deleteSubTest(todo)}
+                onClick={(e) => deleteSubTest(todo)}
               >
                 x
               </button>
@@ -325,9 +329,9 @@ const EditExam = ({ visible, data }) => {
             value={selectedTeacher}
             onChange={handleSelectChange}
           >
-            <option value="">Select a teacher</option>
+            <option value="null">Select a teacher</option>
             {teacher?.map((teacher) => (
-              <option key={teacher.id} value={teacher.id}>
+              <option key={teacher.id} value={teacher.name}>
                 {teacher.name}
               </option>
             ))}

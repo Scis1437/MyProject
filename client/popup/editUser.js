@@ -23,57 +23,42 @@ const EditUser = ({ visible, data }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     const data = {
-      id: dataInput.id,
-      username: dataInput.username,
-      name: dataInput.name,
-    };
-    console.log(dataInput);
-    console.log(data);
+      id : dataInput.id ,
+      username : dataInput.username,
+      name : dataInput.name,
 
+    }
+    console.log(data)
     try {
-      const response = await axios.put(
-        "https://my-project-ppdr.vercel.app/teacher",
-        {
-          data: {
-            query: {
-              id: dataInput.id,
-              username: dataInput.username,
-              name: dataInput.name,
-            },
-          },
-        },
-        config
-      );
+      const response = await axios.put("https://my-project-ppdr.vercel.app/teacher", data , config);
       console.log(response.data);
       // reset input fields after successful update
-      setDataInput(null);
-      console.log(data);
-      // if (dataInput.password !== "" ||  dataInput.password !== null) {
-      //   const data = {
-      //     username: dataInput.username,
-      //     pwd: dataInput.password,
-      //   };
-      //   try {
-      //     const response = await axios.put(
-      //       `https://my-project-ppdr.vercel.app/register/`,
-      //       data,
-      //       config
-      //     );
-      //   } catch (error) {
-      //     setErrMsg(error.status);
-      //   }
+      // setDataInput({ id: "", name: "", password: "" });
+      console.log(data)
+      if (dataInput.password !== "" ||  dataInput.password !== null) {
+        const data = {
+          username: dataInput.username,
+          pwd: dataInput.password,
+        };
+        try {
+          const response = await axios.put(
+            `https://my-project-ppdr.vercel.app/register/`,
+            data,
+            config
+          );
+        } catch (error) {
+          setErrMsg(error.status);
+        }
 
-      // }
+      }
     } catch (err) {
       console.error(err);
       setErrMsg("Error updating teacher.");
     }
-    //  setUpdated(true)
   };
-
-  // if (!visible || updated) {
-  //   return null;
-  // }
+  if (!visible){
+    return null
+  }
   return (
     <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
