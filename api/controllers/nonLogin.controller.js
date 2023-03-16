@@ -13,11 +13,13 @@ const getNonLoginStudent = async (req, res) => {
             station_name:true,
             score:true
         }
+    
         
     })
-    console.log(req.query.student_id)
     res.json(studentCheck)
 }
+
+
 
 module.exports = {
 

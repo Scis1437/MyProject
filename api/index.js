@@ -9,6 +9,7 @@ const fs = require('fs');
 const excelRouter = require('./routes/exportexcel.route');
 const studentRouter = require('./routes/student.route');
 const nonLoginRouter = require('./routes/nonLogin.route');
+const nonLoginStationRouter = require('./routes/nonLoginStation.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
 const subtestRouter = require('./routes/subTest.route');
@@ -44,7 +45,7 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cookieParser());
 
-
+app.use('/show-station',nonLoginStationRouter);
 app.use('/check-station',nonLoginRouter);
 app.use('/auth', authRouter);
 app.use('/refresh', refreshRouter);
