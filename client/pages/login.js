@@ -47,28 +47,49 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
     // window.location = "/menu";
+  // try {
+  //   const response = await axios.post(
+  //     `https://my-project-ppdr.vercel.app/auth`,
+  //     {
+  //      user: username.username,
+  //      pwd: password.password,
+  //     }
+    
+   
+  //   );
+  //   console.log(response.config);
+  //   const accessToken = response.data.accessToken;
+  //   localStorage.setItem("access" , accessToken);
+  //   // const roles = response?.data?.roles;      
+  //   // setAuth ({ username, password, roles, accessToken }); // updated
+  //   // resetUser();
+  //   // setPassword("");  
+ 
+  //   if (accessToken) {
+  //       console.log(response?.status);  
+  //        window.location = "/menu";
+  //   }
   try {
     const response = await axios.post(
       `https://my-project-ppdr.vercel.app/auth`,
       {
-       user: username.username,
-       pwd: password.password,
+        user: username.username,
+        pwd: password.password,
       }
-    
-   
     );
     console.log(response.config);
     const accessToken = response.data.accessToken;
     localStorage.setItem("access" , accessToken);
-    // const roles = response?.data?.roles;      
-    // setAuth ({ username, password, roles, accessToken }); // updated
-    // resetUser();
-    // setPassword("");  
- 
+
     if (accessToken) {
         console.log(response?.status);  
-         window.location = "/menu";
+        // invalidate previous token if exists
+        localStorage.removeItem('access');
+        // set new token in local storage
+        localStorage.setItem('access', accessToken);
+        window.location = "/menu";
     }
+  
 
   //    navigate( "/menu", { replace: true }); // imported from react-router-dom
   } catch (err) {
@@ -85,6 +106,7 @@ const handleSubmit = async (e) => {
   }
   
   }
+
 
   return (
     <div className="min-h-screen bg-main-green   flex justify-center items-center ">
