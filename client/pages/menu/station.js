@@ -123,14 +123,14 @@ const Edit = () => {
   console.log(data);
   console.log(allStation);
   const deleteStation = async (data) => {
-    const nameStation = data.station_name;
+    const idStation = data.id;
     console.log(data);
     try {
       const response = await axios.delete(
         `https://my-project-ppdr.vercel.app/station`,config,
          {
           params : {
-            station_name: nameStation
+            station_name: idStation
           },
         });  
       

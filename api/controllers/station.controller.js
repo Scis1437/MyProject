@@ -132,10 +132,10 @@ const updateStation = async(req, res) => {
 const deleteStation = async(req, res) => {
     const data = req.body
 
-    const stationDelete = await prisma.station.deleteMany({
+    const stationDelete = await prisma.station.delete({
       where: {
             
-        id:  req.query.station_name,
+        id:  req.query.id,
         
         
     }, 
