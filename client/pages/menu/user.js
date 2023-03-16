@@ -98,23 +98,20 @@ function UserEdit() {
   }, []);
 
   const deleteUser = async (item) => {
-    const data = {
-      username: item.username,
-    };
-    console.log(item);
-    console.log( item.username);
+    const username = item.username
+
+    
+    
 
     try {
       const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/teacher`,
-        {
-          params: {
-            // data,
-            username: item.username
-          } ,
-        }, config
+        
+          `https://my-project-ppdr.vercel.app/teacher?id=${username}`,config
+          ); 
+        
+   
        
-      );
+      
       // setTeacher((prevTeachers) =>
       //   prevTeachers.filter(
       //     (teacher) => teacher.teacher_name !== item.teacher_name

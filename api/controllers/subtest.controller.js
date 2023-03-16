@@ -72,7 +72,7 @@ const deleteSubTest = async(req, res)=>{
     const deleteSubTest = await prisma.subtest.delete({
         where:{
             
-            test_name:req.body.test_name,
+            test_name:req.query.test_name,
         },
         
 

@@ -195,17 +195,16 @@ const EditExam = ({ visible, data }) => {
 
     const deleteSubTest = async (data, e) => {
       e.preventDefault();
-      const dataSet = {
-        test_name: data.test_name
-      }
+      const dataSet = data.test_name
+      
       console.log(config);
       try {
         // console.log(data.test_name)
         const response = await axios.delete(
-          `https://my-project-ppdr.vercel.app/subtest/`,
-          {test_name: data.test_name},
-          config
-        );
+          `https://my-project-ppdr.vercel.app/station?id=${dataSet}`,config
+          ); 
+
+        
         // console.log(response.data)
         alert("delete success");
 
