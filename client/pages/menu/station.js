@@ -127,7 +127,7 @@ const Edit = () => {
     console.log(data);
     try {
       const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/station/id`,config,
+        `https://my-project-ppdr.vercel.app/station`,config,
          {
           params : {
             id: id
