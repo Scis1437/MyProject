@@ -12,6 +12,7 @@ const nonLoginRouter = require('./routes/nonLogin.route');
 const nonLoginStationRouter = require('./routes/nonLoginStation.route');
 const stationRouter = require('./routes/station.route');
 const testRouter = require('./routes/test.route');
+const cheatedRouter = require('./routes/cheated.route');
 const subtestRouter = require('./routes/subTest.route');
 const teacherRouter = require('./routes/teacher.route');
 const authRouter = require('./routes/auth.route');
@@ -61,6 +62,7 @@ app.use('/logout', logoutRouter);
 const useJWTRouter = express.Router();
 useJWTRouter.use(useJWT)
 // router
+useJWTRouter.use('/cheated',cheatedRouter)
 useJWTRouter.use('/import-student',excelRouter)
 useJWTRouter.use('/register', registerRouter)
 useJWTRouter.use('/teacher-log', logRouter);
