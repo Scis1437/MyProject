@@ -5,7 +5,8 @@ const showStation =async (req,res)=>{
     const stationCheck = await prisma.station.findMany({
         select:{
             station_name:true,
-        }
+        },
+        distinct: ['station_name']    
     })
     //console.log(req.query.student_id)
     res.json(stationCheck)
