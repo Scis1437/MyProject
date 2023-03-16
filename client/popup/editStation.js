@@ -201,12 +201,12 @@ const EditExam = ({ visible, data }) => {
       try {
         // console.log(data.test_name)
         const response = await axios.delete(
-          `https://my-project-ppdr.vercel.app/station?id=${dataSet}`,config
+          `https://my-project-ppdr.vercel.app/station?test_name=${dataSet}`,config
           ); 
 
         
         // console.log(response.data)
-        alert("delete success");
+        alert("delete subtest success");
 
         // setSubtest(response.data);
       } catch (error) {
