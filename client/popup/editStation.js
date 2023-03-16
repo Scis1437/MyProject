@@ -201,7 +201,7 @@ const EditExam = ({ visible, data }) => {
       try {
         // console.log(data.test_name)
         const response = await axios.delete(
-          `https://my-project-ppdr.vercel.app/station?test_name=${dataSet}`,config
+          `https://my-project-ppdr.vercel.app/subtest?test_name=${dataSet}`,config
           ); 
 
         
