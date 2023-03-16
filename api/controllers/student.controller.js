@@ -10,21 +10,18 @@ const getAllStudent = async (req, res) => {
 const getStudent = async (req, res) => {
 
     const data = req.body
-    const studentCheck = await prisma.student.findUnique({
+
+    const studentCheck = await prisma.student.findFirst({
         where: {
-            
-            id: req.query.id,
-            
-    
+            id: req.params.student_id,
         },
         select:{
-            id:true,
-            name:true,
-            tests:true
+            name:true
         }
- 
+
         
     })
+    
 
     res.json(studentCheck)
 }

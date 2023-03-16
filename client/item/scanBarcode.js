@@ -213,13 +213,7 @@ function ScanBarcode() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/`,
-          {
-            params : {
-              id : studentCode
-            }
-          },
-          config
+          `https://my-project-ppdr.vercel.app/student/${studentCode}`,config
         );
         console.log(response.data);
         // setStudentData(response.data);
