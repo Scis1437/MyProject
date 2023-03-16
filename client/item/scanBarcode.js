@@ -24,7 +24,7 @@ function ScanBarcode() {
     const router = useRouter();
     const [redirecting, setRedirecting] = useState(false);
     const [subTest, setSubtest] = useState();
-    const [studentStatus, setStudentStatus] = useState("Complete");
+    const [studentStatus, setStudentStatus] = useState("Incomplete");
     const [stationId, setStationId] = useState(station_Id);
     const [data, setData] = useState({});
     const [redirectData, setRedirectData] = useState();
@@ -61,33 +61,33 @@ function ScanBarcode() {
           // config
   
           //   );
-          const response = await axios.get(
-            `https://my-project-ppdr.vercel.app/student/`,
-            {
-              params: {
-                id: studentCode,
-              },
-              config,
-            }
-          );
+          // const response = await axios.get(
+          //   `https://my-project-ppdr.vercel.app/student/`,
+          //   {
+          //     params: {
+          //       id: studentCode,
+          //     },
+          //     config,
+          //   }
+          // );
   
-          const filterData = await response.data.filter(
-            (item) => item.id === studentCode
-          );
-          // const filterData2 =  await filterData[0].test.filter(
-          //   (item) =>  item.station_Id === studentId
-          //    );
-          console.log(filterData[0].tests);
-          const statusCheck = filterData[0].tests.filter(
-            (item) => item.station_Id === station_Id
-          );
-          console.log(statusCheck);
+          // const filterData = await response.data.filter(
+          //   (item) => item.id === studentCode
+          // );
+          // // const filterData2 =  await filterData[0].test.filter(
+          // //   (item) =>  item.station_Id === studentId
+          // //    );
+          // console.log(filterData[0].tests);
+          // const statusCheck = filterData[0].tests.filter(
+          //   (item) => item.station_Id === station_Id
+          // );
+          // console.log(statusCheck);
   
-          console.log(statusCheck.length === 0);
-          if (statusCheck.length === 0) {
-            setRedirectData(statusCheck);
-            setStudentStatus("Incomplete");
-          }
+          // console.log(statusCheck.length === 0);
+          // if (statusCheck.length === 0) {
+          //   setRedirectData(statusCheck);
+          //   setStudentStatus("Incomplete");
+          // }
           // && item.station_Id === studentId
           // useEffect(() => {
           //   fetchSubtest(filterData.id)
@@ -148,8 +148,6 @@ function ScanBarcode() {
     return decoded;
   };
 
-  const [exam, setExam] = useState();
-
   useEffect(() => {
     const fetchTeacher = async () => {
       const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
@@ -208,16 +206,31 @@ function ScanBarcode() {
   //   }
   // };
 
-  const searchStudent = async (e) => {
-    e.preventDefault();
+  const searchStudent = async () => {
+
+    console.log(config)
+    console.log(studentCode)
+
     const fetchStudent = async () => {
+      const id = studentCode ;
+      console.log(id)
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/student/${studentCode}`,config
         );
-        console.log(response.data);
+
+      
+        console.log(response);
         // setStudentData(response.data);
         setData(response.data);
+
+        // const response = await axios.get(
+        //   `https://my-project-ppdr.vercel.app/student/`,
+     
+        //   config
+        
+        // );
+
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
@@ -265,7 +278,7 @@ function ScanBarcode() {
                 onChange={(e) => setStudentCode(e.target.value)}
               />
 
-              <button className="btn" onClick={(e) => searchStudent(e)}>
+              <button className="btn" onClick={() => searchStudent()}>
                 confirm
               </button>
             </div>
