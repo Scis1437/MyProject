@@ -52,53 +52,54 @@ function ScanBarcode() {
         setErrMsg(error);
       }
     };
-    const fetchTest = async () => {
-      try {
-        //   const response = await axios.get(
-        //     `http://localhost:9000/Test/620719000`,
-        // config
-
-        //   );
-        const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/`,
-          {
-            params: {
-              id: studentCode,
-            },
-            config,
-          }
-        );
-
-        const filterData = await response.data.filter(
-          (item) => item.id === studentCode
-        );
-        // const filterData2 =  await filterData[0].test.filter(
-        //   (item) =>  item.station_Id === studentId
-        //    );
-        console.log(filterData[0].tests);
-        const statusCheck = filterData[0].tests.filter(
-          (item) => item.station_Id === station_Id
-        );
-        console.log(statusCheck);
-
-        console.log(statusCheck.length === 0);
-        if (statusCheck.length === 0) {
-          setRedirectData(statusCheck);
-          setStudentStatus("Incomplete");
-        }
-        // && item.station_Id === studentId
-        // useEffect(() => {
-        //   fetchSubtest(filterData.id)
-        // }, []);
-
-        // await fetchSubtest();
-
-        setData(filterData[0].tests);
-      } catch (error) {
-        setErrMsg("Error fetch test");
-      }
-    };
+ 
     useEffect(() => {
+      const fetchTest = async () => {
+        try {
+          //   const response = await axios.get(
+          //     `http://localhost:9000/Test/620719000`,
+          // config
+  
+          //   );
+          const response = await axios.get(
+            `https://my-project-ppdr.vercel.app/student/`,
+            {
+              params: {
+                id: studentCode,
+              },
+              config,
+            }
+          );
+  
+          const filterData = await response.data.filter(
+            (item) => item.id === studentCode
+          );
+          // const filterData2 =  await filterData[0].test.filter(
+          //   (item) =>  item.station_Id === studentId
+          //    );
+          console.log(filterData[0].tests);
+          const statusCheck = filterData[0].tests.filter(
+            (item) => item.station_Id === station_Id
+          );
+          console.log(statusCheck);
+  
+          console.log(statusCheck.length === 0);
+          if (statusCheck.length === 0) {
+            setRedirectData(statusCheck);
+            setStudentStatus("Incomplete");
+          }
+          // && item.station_Id === studentId
+          // useEffect(() => {
+          //   fetchSubtest(filterData.id)
+          // }, []);
+  
+          // await fetchSubtest();
+  
+          setData(filterData[0].tests);
+        } catch (error) {
+          setErrMsg("Error fetch test");
+        }
+      };
       fetchTest();
     }, []);
 
@@ -179,6 +180,9 @@ function ScanBarcode() {
         const filterData = await response.data.filter(
           (item) => item.station_teacher === teacher[0].id
         );
+
+        console.log(filterData);
+        console.log(response.data);
 
         setStation(filterData);
       } catch (error) {
