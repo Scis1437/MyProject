@@ -57,7 +57,7 @@ const updateTeacher = async(req, res)=>{
 
 const deleteTeacher = async(req, res)=>{
     const data = req.body
-    const deleteTeacher = await prisma.user.deleteMany({
+    const deleteTeacher = await prisma.user.delete({
         where:{
             username: req.query.username
 ,
