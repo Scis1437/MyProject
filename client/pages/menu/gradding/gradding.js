@@ -154,14 +154,17 @@ function Gradding() {
   const addScore = async (data) => {
     console.log(data)
     try {
-      const response = await axios.post(
-        `https://my-project-ppdr.vercel.app/test`,
-        data,
-        config,
+      // const response = await axios.post(
+      //   `https://my-project-ppdr.vercel.app/test`,
+      //   data,
+      //   config,
 
-      );
-      alert("Test data saved successfully");
-      return <Redirect to="/menu/gradding"/>
+      // );
+      // alert("Test data saved successfully");
+      // router.push({
+      //   pathname: "/menu/gradding/",
+        
+      // });
     } catch (error) {
       setErrMsg(error);
     }
@@ -174,7 +177,7 @@ function Gradding() {
         test_number: testData.test_number,
         score: parseInt(testData.score),
         station_name: station_name,
-        // station_teacher: station[0]?.station_teacher,
+         station_teacher: station[0]?.station_teacher,
         station_teacher: "Michel Jackson",
         test_name: testData.test_name,
         name: name?.name,

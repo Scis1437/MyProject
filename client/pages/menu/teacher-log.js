@@ -27,7 +27,8 @@ function TeacherLog() {
     const fetchLogs = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/teacher-log` , config
+          `https://my-project-ppdr.vercel.app/teacher-log`,
+          config
           // `http://localhost:9000/teacher-log` , config
         );
         setLogs(response.data);
@@ -63,13 +64,47 @@ function TeacherLog() {
       </div>
       {/* sticky top-0 */}
       <div className="container ">
-        <div>
-          <ul>
+        <table className="w-full">
+          <thead className="rounded-xl bg-gray border-radius-table">
+            <tr>
+              <th
+                scope="col"
+                className="rounded-tl-lg text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
+                <p>Data</p>
+              </th>
+              <th
+                scope="col"
+                className="rounded-tr-lg text-sm font-medium text-gray-900 px-6 py-4 text-right"
+              >
+                <p>Action</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody className="w-full">
+          {/* flex  justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50 w-full */}
+            {logs?.map((log) => (
+              <tr
+                key={log.id}
+                className="odd:bg-table-odd even:bg-slate-50 "
+              >
+                <th className="text-sm ">
+                  <p>{log.timestamp}</p>
+                </th>
+                <td className="flex gap-1  w-full">
+                  <p> {log.message}</p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* <ul>
             {logs ? (
               <ul>
                 {logs?.map((log) => (
                   <li key={log.id}>
-                    <p className="bg-main-green">{log.timestamp}</p> 
+                    <p className="bg-main-green">{log.timestamp}</p>
                     <p>{log.message}</p>
                   </li>
                 ))}
@@ -77,8 +112,8 @@ function TeacherLog() {
             ) : (
               <div>Loading...</div>
             )}
-          </ul>
-        </div>
+          </ul> */}
+
         {/* <div><p>Search for user</p></div> */}
       </div>
     </div>

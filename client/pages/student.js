@@ -14,6 +14,7 @@ function Studentpage() {
   const [studentCode, setStudentCode] = useState("");
   const [error, setError] = useState("");
   const [student,setStudent] = useState() ;
+  const [station , setStation] = useState() ;
   if (shouldRedirect) {
     return <Redirect to="/" />;
   }
@@ -21,13 +22,8 @@ function Studentpage() {
   const Table = (props) => {
     const { data } = props;
 
-    // let results = data?.filter(function async(el) {
-    //   return el.id == studentCode.studentCode;
-    // });
-    //  results = results.tests
-    // console.log(results);
-    //   const set = {results}
-    // console.log(set[0])
+    //  let results = data?.filter(function async(el) {
+
     return (
       <table className="w-full">
         <thead className=" ">
@@ -106,6 +102,23 @@ function Studentpage() {
       });   
       console.log(response.data)
       setRows(response.data.map(item => item.station_name));
+      // setRows(response.data);
+   
+      // const filterData = await response.data.filter(
+      //   (item) => item.station_Id === stationId
+      // );
+  
+    } catch (error) {
+      setError("Error searching for student data");
+    }
+
+    try {
+      const response = await axios.get(`https://my-project-ppdr.vercel.app/show-station`, {
+      
+      });    
+  
+      console.log(response.data)
+      setStation(response.data)
       //setRows(response.data[0].tests);
    
       // const filterData = await response.data.filter(
@@ -116,7 +129,7 @@ function Studentpage() {
       setError("Error searching for student data");
     }
   };
-
+ 
   return (
     <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
