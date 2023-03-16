@@ -105,8 +105,8 @@ function Studentpage() {
         }
       });   
       console.log(response.data)
-     
-      setRows(response.data[0].tests);
+      setRows(response.data.map(item => item.station_name));
+      //setRows(response.data[0].tests);
    
       // const filterData = await response.data.filter(
       //   (item) => item.station_Id === stationId
