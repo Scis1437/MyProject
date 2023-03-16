@@ -127,16 +127,12 @@ const Edit = () => {
     console.log(data);
     try {
       const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/station`,config,
-         {withCredentials: true,
-          params : {
-            station_name: idStation
-          },
-        });  
+        `https://my-project-ppdr.vercel.app/station?id=${idStation}`,config
+        );  
       
       setData(response)
       console.log(data);
-    } catch (error) {
+    }  catch (error) {
       setErrMsg("");
       console.log(error);
     }
