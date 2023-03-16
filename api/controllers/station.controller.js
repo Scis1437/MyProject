@@ -135,7 +135,7 @@ const deleteStation = async(req, res) => {
     const stationDelete = await prisma.station.deleteMany({
       where: {
             
-        id:  req.query.id,
+        id:  req.query.station_name,
         
         
     }, 
