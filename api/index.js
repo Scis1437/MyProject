@@ -20,7 +20,7 @@ const exportStationRouter = require('./routes/export_stationscore.route');
 const refreshRouter = require('./routes/refresh.route');
 const logoutRouter = require('./routes/logout.route');
 const registerRouter = require('./routes/register.route');
-
+const allowedOrigins = require('./config/allowedOrigins');
 const useJWT = require('./middleware/verifyJWT');
 
 
@@ -39,7 +39,13 @@ const app = express()
 app.use(morgan('combined'));
 // use middleware
 //app.use(useJWT)
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true, // allow cookies to be sent in CORS requests
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // allow these HTTP methods in CORS requests
+    allowedHeaders: ['Content-Type', 'Authorization'], // allow these headers in CORS requests
+  }));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bodyParser.json())
