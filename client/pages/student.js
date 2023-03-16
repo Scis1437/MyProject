@@ -92,19 +92,6 @@ function Studentpage() {
   // };
   //   fetchStation();
 
-   const fetchStudent = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/student/${studentCode.studentCode}`,
-        config
-      );
-      console.log(response.data)
-      setStudent(response.data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
 
 
   const handleSearch = async (e) => {
@@ -112,15 +99,19 @@ function Studentpage() {
     const studentId = studentCode.studentCode;
    
     try {
-      const response = await axios.get(`${BASE_URL}/check-station`, {
-        student_id: studentId, 
-      });
+      const response = await axios.get(`https://my-project-ppdr.vercel.app/check-station`, {
+        params : {
+          student_id : studentId
+        }
+      });   
+      console.log(response.data)
+     
       setRows(response.data[0].tests);
-      console.log(response.data[0]);
+   
       // const filterData = await response.data.filter(
       //   (item) => item.station_Id === stationId
       // );
-      fetchStudent();
+  
     } catch (error) {
       setError("Error searching for student data");
     }

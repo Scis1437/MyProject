@@ -8,10 +8,11 @@ const EditExam = ({ visible, data }) => {
   const [subTest, setSubtest] = useState();
   const [maxId, setMaxId] = useState();
   const [selectedTeacher, setSelectedTeacher] = useState();
-  let token;
-  if (typeof localStorage !== "undefined") {
-    token = localStorage.getItem("access");
-  }
+  // let token;
+  // if (typeof localStorage !== "undefined") {
+  //   token = localStorage.getItem("access");
+  // }
+  const token = localStorage.getItem("access");
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -24,7 +25,7 @@ const EditExam = ({ visible, data }) => {
     } else {
       setMaxId(maxId + 1);
     }
-    console.log(maxId);
+
     // if (isFinite(maxId) || maxId <= 0) {
     //   setMaxId(1)
     // } else {
@@ -42,9 +43,9 @@ const EditExam = ({ visible, data }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      generateId(response.data);
       console.log(response.data);
-      await setSubtest(response.data);
-      await generateId(response.data);
+      setSubtest(response.data);
 
       {
       }
@@ -58,9 +59,13 @@ const EditExam = ({ visible, data }) => {
       const response = await axios.get(
         `https://my-project-ppdr.vercel.app/teacher/`,
         config
-      );
-
+      );   
       setTeacher(response.data);
+      const filterData = response.data.filter(
+        (item) => item.id === dataInput.station_teacher
+      );
+      setSelectedTeacher(filterData[0].username)
+   
     } catch (error) {
       setErrMsg(error);
     }
@@ -98,14 +103,19 @@ const EditExam = ({ visible, data }) => {
     //     subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
     //   );
     // }, []);
-    console.log(list);
 
+    const test2 = {
+      id: dataInput.id,
+      station_name: dataInput.station_name,
+      station_teacher: dataInput.station_teacher,
+    };
+    console.log(dataInput);
     const updateStation = async (e) => {
       e.preventDefault();
       const data = {
         id: dataInput.id,
         station_name: dataInput.station_name,
-        station_teacher: parseInt(selectedTeacher),
+        // station_teacher: dataInput.station_teacher,
       };
       try {
         console.log(data);
@@ -160,17 +170,18 @@ const EditExam = ({ visible, data }) => {
         test_number: maxId,
         station_name: data.station_name,
       };
+      console.log(dataSet);
       try {
         const response = await axios.post(
           `https://my-project-ppdr.vercel.app/subtest/`,
           dataSet,
           config
         );
-        const newSubtest = {
-          id: maxId,
-          todo: input,
-        };
-        setList([...list, newSubtest]);
+        // const newSubtest = {
+        //   id: maxId,
+        //   todo: input,
+        // };
+        // setList([...list, newSubtest]);
         // setSubtest(response);
         // console.log(response.data);
         // setList(
@@ -182,38 +193,23 @@ const EditExam = ({ visible, data }) => {
       }
     };
 
-    const deleteSubTest = async (data) => {
+    const deleteSubTest = async (data, e) => {
+      e.preventDefault();
       const dataSet = {
-        station_Id: data.id,
-        test_number: data.test_number,
-      };
-      console.log(data);
+        test_name: data.test_name
+      }
+      console.log(config);
       try {
+        // console.log(data.test_name)
         const response = await axios.delete(
           `https://my-project-ppdr.vercel.app/subtest/`,
-
-          {
-            query : {
-                dataSet
-            }
-,
-            config,
-          }
+          {test_name: data.test_name},
+          config
         );
-
-        //   {
-        //     data: {
-        //       station_Id:data.id,
-        //       test_number: data.test_number,
-        //     },
-
-        //     config,
-        //   }
-        // );
+        // console.log(response.data)
+        alert("delete success");
 
         // setSubtest(response.data);
-        console.log(dataSet);
-        alert("delete success");
       } catch (error) {
         setErrMsg(error);
       }
@@ -235,7 +231,7 @@ const EditExam = ({ visible, data }) => {
               {todo.test_name}
               <button
                 className="delete-btn"
-                onClick={(e) => deleteSubTest(todo)}
+                onClick={(e) => deleteSubTest(todo, e)}
               >
                 x
               </button>
@@ -271,10 +267,12 @@ const EditExam = ({ visible, data }) => {
   };
 
   // if (!visible) return null;
+
   console.log(teacher);
   const handleSelectChange = (event) => {
     setSelectedTeacher(event.target.value);
   };
+  console.log(selectedTeacher)
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray">
@@ -290,25 +288,28 @@ const EditExam = ({ visible, data }) => {
         </div>
         <div className="flex mb-4">
           {/* <label className="mr-4">Grading method :</label>
-          <select className="h-5 mx-2 rounded-md">
-            <option value="1">pass/fail</option>
-            <option value="2">score</option>
-          </select> */}
+      <select className="h-5 mx-2 rounded-md">
+        <option value="1">pass/fail</option>
+        <option value="2">score</option>
+      </select> */}
         </div>
         <div className="flex mb-4">
           <label className="mr-4">Assign to :</label>
           <select
-            className="h-5"
-            value={selectedTeacher}
-            onChange={handleSelectChange}
-          >
-            <option value="null">Select a teacher</option>
-            {teacher?.map((teacher) => (
-              <option key={teacher.id} value={teacher.name}>
-                {teacher.name}
-              </option>
-            ))}
-          </select>
+        className="h-5"
+        value={selectedTeacher}
+        onChange={(e) => {
+          setSelectedTeacher(e.target.value);
+          setDataInput({ ...dataInput, station_teacher: e.target.value });
+        }}
+      >
+        <option value="null">Select a teacher</option>
+        {teacher?.map((teacher) => (
+          <option key={teacher.id} value={teacher.username}>
+            {teacher.username}
+          </option>
+        ))}
+      </select>
         </div>
         <TodoList data={data} test={subTest} />
       </form>

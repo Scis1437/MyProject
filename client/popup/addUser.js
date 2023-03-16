@@ -41,7 +41,7 @@ const AddUser = ({ visible }) => {
         { user: username, teacher_name: name, pwd: password },
         config
       );
-      visible = false;
+      // visible = false;
       console.log(response.data);
     } catch (error) {
       setError("reg error");

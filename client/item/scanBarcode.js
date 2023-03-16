@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import Scanner from "./Scanner";
 import Link from "next/link";
 import Redirect from "./Redirect";
 import { useRouter } from "next/router";
-import axios from "axios";
+import axios, { all } from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 function ScanBarcode() {
   const saveStudentname = useRef();
@@ -29,9 +28,9 @@ function ScanBarcode() {
     const [stationId, setStationId] = useState(station_Id);
     const [data, setData] = useState({});
     const [redirectData, setRedirectData] = useState();
+
     const station_name = station;
 
-    
     const fetchSubtest = async () => {
       const station_Id = stationId;
 
@@ -61,8 +60,13 @@ function ScanBarcode() {
 
         //   );
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/${studentCode}`,
-          config
+          `https://my-project-ppdr.vercel.app/student/`,
+          {
+            params: {
+              id: studentCode,
+            },
+            config,
+          }
         );
 
         const filterData = await response.data.filter(
@@ -131,14 +135,12 @@ function ScanBarcode() {
       </tr>
     );
   }
-  // if (shouldRedirect) {
-  //   return <Redirect to="/menu/gradding/selectStation" studentCode={data} />;
-  // }
 
   const [studentData, setStudentData] = useState([]);
   const [data, setData] = useState();
   const [station, setStation] = useState();
   const [teacher, setTeacher] = useState();
+  const [allStation, setAllStation] = useState();
   const parseJwt = (bearerToken) => {
     const token = bearerToken.split(" ")[1];
     const decoded = JSON.parse(atob(token.split(".")[1]));
@@ -148,9 +150,8 @@ function ScanBarcode() {
   const [exam, setExam] = useState();
 
   useEffect(() => {
-    const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-    console.log(user.UserInfo.username);
     const fetchTeacher = async () => {
+      const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/teacher/`,
@@ -160,54 +161,72 @@ function ScanBarcode() {
           (item) => item.username === user.UserInfo.username
         );
 
-        console.log(filterData);
-        await setTeacher(filterData);
+        console.log(filterData[0]);
+        setTeacher(filterData);
+        return filterData;
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-    const fetchStation = async () => {
+
+    const fetchStation = async (teacher) => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
         );
+        setAllStation(response.data);
         const filterData = await response.data.filter(
           (item) => item.station_teacher === teacher[0].id
         );
-        console.log(teacher);
-        console.log(filterData);
-        console.log(response.data);
 
-        await setStation(filterData);
+        setStation(filterData);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
+
+    Promise.all([fetchTeacher(), setTeacher()]).then(([teacher]) => {
+      fetchStation(teacher);
+    });
+  }, []);
+  // const fetchStudent = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://my-project-ppdr.vercel.app/student/`,
+  //       config
+  //     );
+
+  //     setStudentData(response.data);
+  //     console.log(studentData);
+  //   } catch (error) {
+  //     setErrMsg("Error searching for student data");
+  //   }
+  // };
+
+  const searchStudent = async (e) => {
+    e.preventDefault();
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/student/`,
+          {
+            params : {
+              id : studentCode
+            }
+          },
           config
         );
-
-        setStudentData(response.data);
-        console.log(studentData);
+        console.log(response.data);
+        // setStudentData(response.data);
+        setData(response.data);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-
-    fetchTeacher();
-    fetchStation();
     fetchStudent();
-  }, []);
-
-  const searchStudent = async (e) => {
-    e.preventDefault();
-
-    const student = studentData.find((student) => student.id === studentCode);
-    setData(student);
+    // const student = studentData.find((student) => student.id === studentCode);
+    // setData(student);
   };
 
   const handleScan = (result) => {
@@ -216,12 +235,6 @@ function ScanBarcode() {
     setStudentCode(code);
   };
 
-  // if (shouldRedirect) {
-  //   return <Redirect to="/menu/gradding/gradding" />;
-  // }
-  // console.log(role)
-  // console.log(teacher)
-  // console.log(station);
   return (
     <div className="h-10 flex flex-col justify-center">
       <Scanner onDetected={handleScan} />
@@ -273,6 +286,7 @@ function ScanBarcode() {
               </tr>
             </thead>
             <tbody>
+              {/* allStation */}
               {station?.map((item) => (
                 <Gradding
                   key={item.id}

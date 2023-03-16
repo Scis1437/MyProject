@@ -22,43 +22,52 @@ const EditUser = ({ visible, data }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const data = {
-      query: {
-        id: dataInput.id,
-        username: dataInput.username,
-        name: dataInput.name,
-      },
-      // id : dataInput.id ,
-      // username : dataInput.username,
-      // name : dataInput.name,
-    };
-    console.log(data);
-    console.log(dataInput);
+    // const data = {
+    //     username: dataInput.username,
+    //     name : dataInput.name
+    //            pwd: dataInput.password,
+    //   // id : dataInput.id ,
+    //   // username : dataInput.username,
+    //   // name : dataInput.name,
+    // };
+    // console.log(data);
+    // console.log(dataInput);
+    // try {
+    //   const response = await axios.put(
+    //     "https://my-project-ppdr.vercel.app/teacher",
+    //   {  data},
+    //     config
+    //   );
+    //   console.log(response.data);
+
     try {
       const response = await axios.put(
-        "https://my-project-ppdr.vercel.app/teacher",
-        data,
+        `https://my-project-ppdr.vercel.app/register/`,
+        {
+          user: dataInput.username,
+          name: dataInput.name,
+          pwd: dataInput.password,
+        },
         config
       );
-      console.log(response.data);
-      // reset input fields after successful update
-      // setDataInput({ id: "", name: "", password: "" });
       console.log(data);
-      if (dataInput.password !== "" || dataInput.password !== null) {
-        const data = {
-          username: dataInput.username,
-          pwd: dataInput.password,
-        };
-        try {
-          const response = await axios.put(
-            `https://my-project-ppdr.vercel.app/register/`,
-            data,
-            config
-          );
-        } catch (error) {
-          setErrMsg(error.status);
-        }
-      }
+      alert("update user");
+      // console.log(dataInput.password !== "" || dataInput.password !== null);
+      // if (dataInput.password !== "" || dataInput.password !== null) {
+      //   const data = {
+      //     user: dataInput.username,
+      //     pwd: dataInput.password,
+      //   };
+      //   try {
+      //     const response = await axios.put(
+      //       `https://my-project-ppdr.vercel.app/register/`,
+      //       data,
+      //       config
+      //     );
+      //   } catch (error) {
+      //     setErrMsg(error.status);
+      //   }
+      // }
     } catch (err) {
       console.error(err);
       setErrMsg("Error updating teacher.");
@@ -71,7 +80,7 @@ const EditUser = ({ visible, data }) => {
     <div>
       <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
         <div className="flex flex-col space-y-4">
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <label htmlFor="id-input" className="text-gray-600 font-medium ">
               username:
             </label>
@@ -83,7 +92,7 @@ const EditUser = ({ visible, data }) => {
                 setDataInput({ ...dataInput, username: e.target.value })
               }
             />
-          </div>
+          </div> */}
           <div className="mb-2 space-y-4">
             <label htmlFor="name-input" className="text-gray-600 font-medium">
               name:

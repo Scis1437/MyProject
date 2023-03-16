@@ -22,24 +22,25 @@ function TeacherLog() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  async function fetchLogs() {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/teacher-log`,
-        config
-      );
-      setLogs(response.data);
-      console.log(response.data)
-    } catch (error) {
-      setErrMsg("Error searching for student data");
-    }
-  }
 
   useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher-log` , config
+          // `http://localhost:9000/teacher-log` , config
+        );
+        setLogs(response.data);
+        console.log(response.data);
+      } catch (error) {
+        setErrMsg("Error searching for student data");
+      }
+    };
+
     fetchLogs();
   }, []);
-  if(shouldRedirect){
-    return <Redirect to="/menu"/>
+  if (shouldRedirect) {
+    return <Redirect to="/menu" />;
   }
   return (
     <div className="background">
@@ -66,9 +67,10 @@ function TeacherLog() {
           <ul>
             {logs ? (
               <ul>
-                {logs.map((log) => (
+                {logs?.map((log) => (
                   <li key={log.id}>
-                    <strong>{log.timestamp}</strong> {log.message}
+                    <p className="bg-main-green">{log.timestamp}</p> 
+                    <p>{log.message}</p>
                   </li>
                 ))}
               </ul>

@@ -17,7 +17,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
   if (shouldRedirect) {
     return <Redirect to="/" />;
   }
-  let token;
+  let token; 
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
   }
@@ -25,12 +25,12 @@ const ConfrimLogout = ({ visible, onCancel }) => {
     headers: { Authorization: `Bearer ${token}` },
   };
   const handleLogout = async () => {
-    console.log("log out ");
+
     try {
       const response = await axios.post(`https://my-project-ppdr.vercel.app/logout`,config);
-      alert("You have been logged out.");
-      
+      localStorage.removeItem("access")
       setShouldRedirect(true)
+
     } catch (error) {
       setErrMsg("Error searching for student data");
     }

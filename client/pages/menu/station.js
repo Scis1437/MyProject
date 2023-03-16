@@ -224,7 +224,7 @@ const Edit = () => {
               ? allStation?.map((list) => <List key={list.id} {...list} />)
               : data?.map((list) => <List key={list.id} {...list} />)} */}
 
-            {data?.map((list) => {
+            {allStation?.map((list) => {
               return <List key={list.id} {...list} />;
             })}
           </tbody>
