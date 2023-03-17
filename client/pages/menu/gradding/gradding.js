@@ -27,15 +27,13 @@ function Gradding() {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-   const parseJwt = (bearerToken) => {
+  const parseJwt = (bearerToken) => {
     const token = bearerToken.split(" ")[1];
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
-  };  
-  const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+  };
 
-  useEffect(() => {  
-
+  useEffect(() => {
     const fetchSubtest = async () => {
       try {
         const response = await axios.get(
@@ -43,10 +41,9 @@ function Gradding() {
           {
             // params: { stationId },
             headers: { Authorization: `Bearer ${token}` },
-
           }
-        ); 
-               console.log(response.data);
+        );
+        console.log(response.data);
         const filterData = response.data.filter(
           (item) => item.station_Id === station_Id
         );
@@ -64,8 +61,8 @@ function Gradding() {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/station/${station_Id}`,
           config
-        );        
-        console.log(response.data)
+        );
+        console.log(response.data);
         const filterData = response.data.filter(
           (item) => item.id === station_Id
         );
@@ -83,9 +80,7 @@ function Gradding() {
           config
         );
 
-   
-
-         console.log(response.data);
+        console.log(response.data);
 
         setName(response.data);
       } catch (error) {
@@ -152,16 +147,17 @@ function Gradding() {
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/test`,
         data,
-        config,
+        config
       );
-      console.log(`add data complete`)
+      console.log(`add data complete`);
     } catch (error) {
       setErrMsg(error);
     }
   };
 
-  const handleScoreSave = async() => {
-  subTest?.forEach((testData) =>
+  const handleScoreSave = async () => {
+    const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+    subTest?.forEach((testData) =>
       addScore({
         station_Id: testData.station_Id,
         student_id: studentCode,
@@ -173,11 +169,11 @@ function Gradding() {
         test_name: testData.test_name,
         name: name?.name,
       })
-    );   
-     alert("Test data saved successfully");
-      // router.push({
-      //   pathname: "/menu/gradding/",
-      // });
+    );
+    alert("Test data saved successfully");
+    router.push({
+      pathname: "/menu/gradding/",
+    });
   };
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;

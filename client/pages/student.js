@@ -103,24 +103,24 @@ function Studentpage() {
       });   
       console.log(checkStationResponse.data)
       const rowsData = checkStationResponse.data.map(item => item.station_name);
-      setRows(rowsData);
     
       const showStationResponse = await axios.get(`https://my-project-ppdr.vercel.app/show-station`);
       console.log(showStationResponse.data)
       const stationData = showStationResponse.data.map(station => {
-        const status = rowsData.every(item => station.station_name.includes(item)) ? "Complete" : "Incomplete";
+        const isIncomplete = rowsData.some(item => station.station_name === item);
+        const status = isIncomplete ? "Incomplete" : "Complete";
         return {
           ...station,
           status
         };
       });
       setStation(stationData);
-    
+      setRows(rowsData);
     } catch (error) {
       setError("Error searching for student data");
     }
     
-      console.log(station)
+    console.log(station)
   
   };
 
