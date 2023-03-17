@@ -4,12 +4,9 @@ import { useRouter } from "next/router";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Logout from "../../item/logout";
-
+import ImportExcelPage from "../../item/importExcel";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const station = [
-  { "History talking patient ": [1, 2, 3] },
-  { "Peptic ulcer": [4, 5, 6] },
-];
+
 
 function Redirect({ to }) {
   const router = useRouter();
@@ -293,10 +290,11 @@ function StudentList() {
     // if (!Array.isArray(dataSet)) {
     //   return <div>Data set is not an array</div>;
     // }
+    // https://my-project-scis1437.vercel.app/export
 
     const [dropdown, setDropdown] = useState(false);
     const [student, setStudent] = useState(dataSet);
-    console.log(data.length);
+
     return (
       <div className="py-2 " key={student.id}>
         <div
@@ -322,13 +320,29 @@ function StudentList() {
       </div>
     );
   };
+  const exportScore = async () => {
+    try {
+      const response = await axios.get(
+        `https://my-project-scis1437.vercel.app/export`,
+        config
+      );
+
+      // useEffect(() => {
+      //   fetchSubtest (filterStation.station_Id) ;
+      // }, []);
+      console.log(response.data);
+    } catch (error) {
+      setError("Error export ");
+    }
+  };
 
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
-  console.log(data);
-  console.log(search);
-  console.log(studentCode);
+  // console.log(data);
+  // console.log(search);
+  // console.log(studentCode);
+
   return (
     <div className="background">
       <div className="header-page">
@@ -369,11 +383,17 @@ function StudentList() {
           >
             SUBMIT
           </button>
+          <button
+            className="btn"
+            onClick={exportScore}
+          >
+            export
+          </button>
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}
         <div>
-          <div className="overflow-y-scroll max-h-full w-full mb-64">
+          <div className="overflow-y-scroll ">
             {search && search.length > 0
               ? search.map((list) => {
                   return <List key={list.id} {...list} />;
