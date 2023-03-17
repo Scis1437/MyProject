@@ -6,11 +6,20 @@ import { useRouter } from "next/router";
 import axios, { all } from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 function ScanBarcode() {
-  const saveStudentname = useRef();
-  const [results, setResults] = useState([]);
   const [studentCode, setStudentCode] = useState("");
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState();
+  const [studentData, setStudentData] = useState([]);
+  const [data, setData] = useState();
+  const [station, setStation] = useState();
+  const [teacher, setTeacher] = useState();
+  const [allStation, setAllStation] = useState();
+  const [subTest, setSubtest] = useState();
+  const [studentStatus, setStudentStatus] = useState("Complete");
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
+  };
 
   let token;
   if (typeof localStorage !== "undefined") {
@@ -23,85 +32,29 @@ function ScanBarcode() {
   function Gradding({ station_Id, station, studentCode }) {
     const router = useRouter();
     const [redirecting, setRedirecting] = useState(false);
-    const [subTest, setSubtest] = useState();
-    const [studentStatus, setStudentStatus] = useState("Incomplete");
-    const [stationId, setStationId] = useState(station_Id);
-    const [data, setData] = useState({});
-    const [redirectData, setRedirectData] = useState();
 
     const station_name = station;
+    // useEffect(() => {
+    //   const fetchTest = async () => {
+    //     try {
+    //       const response = await axios.get(
+    //         `https://my-project-ppdr.vercel.app/test/`,
+    //         {
+    //           params: { student_id: studentCode },
+    //           headers: { Authorization: `Bearer ${token}` },
+    //         }
+    //       );
+    //       const filterData =await subTest.filter((item) => item.station_Id === station_Id)
+    //       setSubtest(filterData)
+    //     } catch (error) {
+    //       setErrMsg("Error searching for student data");
+    //     }
+    //   };
 
-    const fetchSubtest = async () => {
-      const station_Id = stationId;
+    //   fetchTest();
+    // }, []);
 
-      try {
-        const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/subtest`,
-          {
-            params: { station_Id },
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        console.log(response.data);
-        setSubtest(response.data);
-        // setStudentStatus(data?.map(test => test.test_number))
-        // console.log(studentStatus)
-        {
-        }
-      } catch (error) {
-        setErrMsg(error);
-      }
-    };
- 
-    useEffect(() => {
-      const fetchTest = async () => {
-        try {
-          //   const response = await axios.get(
-          //     `http://localhost:9000/Test/620719000`,
-          // config
-  
-          //   );
-          // const response = await axios.get(
-          //   `https://my-project-ppdr.vercel.app/student/`,
-          //   {
-          //     params: {
-          //       id: studentCode,
-          //     },
-          //     config,
-          //   }
-          // );
-  
-          // const filterData = await response.data.filter(
-          //   (item) => item.id === studentCode
-          // );
-          // // const filterData2 =  await filterData[0].test.filter(
-          // //   (item) =>  item.station_Id === studentId
-          // //    );
-          // console.log(filterData[0].tests);
-          // const statusCheck = filterData[0].tests.filter(
-          //   (item) => item.station_Id === station_Id
-          // );
-          // console.log(statusCheck);
-  
-          // console.log(statusCheck.length === 0);
-          // if (statusCheck.length === 0) {
-          //   setRedirectData(statusCheck);
-          //   setStudentStatus("Incomplete");
-          // }
-          // && item.station_Id === studentId
-          // useEffect(() => {
-          //   fetchSubtest(filterData.id)
-          // }, []);
-  
-          // await fetchSubtest();
-  
-          setData(filterData[0].tests);
-        } catch (error) {
-          setErrMsg("Error fetch test");
-        }
-      };
-      fetchTest();
-    }, []);
+    console.log(data);
 
     const handleOnClick = () => {
       if (studentStatus === "Complete") {
@@ -116,7 +69,7 @@ function ScanBarcode() {
 
       router.push({
         pathname: "/menu/gradding/gradding",
-        query: { studentCode, stationId, station_name },
+        query: { studentCode, station_Id, station_name },
       });
 
       return null;
@@ -137,17 +90,6 @@ function ScanBarcode() {
     );
   }
 
-  const [studentData, setStudentData] = useState([]);
-  const [data, setData] = useState();
-  const [station, setStation] = useState();
-  const [teacher, setTeacher] = useState();
-  const [allStation, setAllStation] = useState();
-  const parseJwt = (bearerToken) => {
-    const token = bearerToken.split(" ")[1];
-    const decoded = JSON.parse(atob(token.split(".")[1]));
-    return decoded;
-  };
-
   useEffect(() => {
     const fetchTeacher = async () => {
       const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
@@ -160,7 +102,6 @@ function ScanBarcode() {
           (item) => item.username === user.UserInfo.username
         );
 
-        console.log(filterData[0]);
         setTeacher(filterData);
         return filterData;
       } catch (error) {
@@ -179,15 +120,12 @@ function ScanBarcode() {
           (item) => item.station_teacher === teacher[0].id
         );
 
-        console.log(filterData);
-        console.log(response.data);
-
         setStation(filterData);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-
+    // fetchSubtest()
     Promise.all([fetchTeacher(), setTeacher()]).then(([teacher]) => {
       fetchStation(teacher);
     });
@@ -206,38 +144,35 @@ function ScanBarcode() {
   //   }
   // };
 
-  const searchStudent = async () => {
-
-    console.log(config)
-    console.log(studentCode)
-
-    const fetchStudent = async () => {
-      const id = studentCode ;
-      console.log(id)
-      try {
-        const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/${studentCode}`,config
-        );
-
-      
-        console.log(response);
-        // setStudentData(response.data);
-        setData(response.data);
-
-        // const response = await axios.get(
-        //   `https://my-project-ppdr.vercel.app/student/`,
-     
-        //   config
-        
-        // );
-
-      } catch (error) {
-        setErrMsg("Error searching for student data");
+  const searchStudent = async (e) => {
+    e.preventDefault();
+    try {
+      const [studentResponse, testResponse] = await Promise.all([
+        axios.get(`https://my-project-ppdr.vercel.app/student/${studentCode}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+        axios.get(`https://my-project-ppdr.vercel.app/test/`, {
+          params: { student_id: studentCode },
+          headers: { Authorization: `Bearer ${token}` },
+        }),
+      ]);
+      console.log(studentResponse.data);
+      console.log(testResponse.data);
+      setData(studentResponse.data);
+      setSubtest(testResponse.data);
+      const filterData = testResponse.data.filter(
+        (item) => item.station_Id === station[0].id
+      );
+  
+      if (filterData.length === 0) {
+        setStudentStatus("Incomplete");
       }
-    };
-    fetchStudent();
-    // const student = studentData.find((student) => student.id === studentCode);
-    // setData(student);
+      console.log(filterData);
+    } catch (error) {
+      setErrMsg("Error searching for student data");
+    }
+
+
   };
 
   const handleScan = (result) => {
@@ -278,7 +213,7 @@ function ScanBarcode() {
                 onChange={(e) => setStudentCode(e.target.value)}
               />
 
-              <button className="btn" onClick={() => searchStudent()}>
+              <button className="btn" onClick={(e) => searchStudent(e)}>
                 confirm
               </button>
             </div>
@@ -304,7 +239,6 @@ function ScanBarcode() {
                   station={item.station_name}
                   studentCode={studentCode}
                   station_Id={item.id}
-                  // method={item.method}
                 />
               ))}
             </tbody>

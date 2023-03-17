@@ -14,7 +14,7 @@ const getStudenttest = async (req, res) => {
             student_id:  req.query.student_id,
             
             
-        },
+        }, 
         select:{
             student_id:true,
             station_Id:true,

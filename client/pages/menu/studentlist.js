@@ -30,8 +30,7 @@ function StudentList() {
   const [subTest, setSubtest] = useState();
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
-  const [role, setRole] = useState(0)
-
+  const [role, setRole] = useState(0);
 
   let token;
   if (typeof localStorage !== "undefined") {
@@ -46,15 +45,10 @@ function StudentList() {
     return decoded;
   };
   useEffect(() => {
-    const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);;
+    const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
     // dataRef.current = data;
-    setRole(data.UserInfo.role)
- 
+    setRole(data.UserInfo.role);
   }, [role]);
-
-
-
-
 
   useEffect(() => {
     const fetchStudent = async () => {
@@ -112,7 +106,6 @@ function StudentList() {
   };
   const List = (dataSet) => {
     const handleSaveTest = async (studentId, stationId, testNumber, score) => {
-      
       console.log(`studentId : ${studentId}`);
       console.log(`stationId : ${stationId}`);
       console.log(` testNumber : ${testNumber}`);
@@ -206,10 +199,10 @@ function StudentList() {
           setError("Error fetch test ");
         }
       };
-      useEffect(() => {   
-        fetchTest()
+      useEffect(() => {
+        fetchTest();
       }, []);
-   
+
       // console.log(test);
       const [dropdownTitle, setDropdownTitle] = useState(false);
 
@@ -285,7 +278,10 @@ function StudentList() {
                   );
                 })}
               </form>
-              <button className="btn" onClick={(event) => handleScoreSave(event)}>
+              <button
+                className="btn"
+                onClick={(event) => handleScoreSave(event)}
+              >
                 Save
               </button>
             </div>
@@ -352,7 +348,7 @@ function StudentList() {
           </div>
         </div>
       </div>
-      <div className="container ">
+      <div className="container  ">
         <div className="flex w-full items-center justify-start">
           <p className="text-subheader ">search for student : </p>
           <input
@@ -373,33 +369,27 @@ function StudentList() {
           >
             SUBMIT
           </button>
-          {/* {role === 1 &&(
-            <div className="ml-auto">
-                <ImportExcelPage/>
-            </div>
-          
-          )
-                
-          } */}
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}
-        <div className="overflow-y-scroll">
-          {search && search.length > 0
-            ? search.map((list) => {
-                return <List key={list.id} {...list} />;
-              })
-            : data.map((list) => {
-                return (
-                  <div key={list.id}>
-                    <List {...list} />
-                  </div>
-                );
-              })}
-          {/* {data.map((list) => {
+        <div>
+          <div className="overflow-y-scroll max-h-full w-full mb-64">
+            {search && search.length > 0
+              ? search.map((list) => {
+                  return <List key={list.id} {...list} />;
+                })
+              : data.map((list) => {
+                  return (
+                    <div key={list.id}>
+                      <List {...list} />
+                    </div>
+                  );
+                })}
+            {/* {data.map((list) => {
             console.log(studentCode);
             return <List key={list.id} {...list} student={studentCode} />;
           })} */}
+          </div>
         </div>
       </div>
       <div className="logout-position">

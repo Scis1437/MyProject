@@ -12,7 +12,7 @@
   @apply  rounded-md md:w-60 bg-input-green pl-3 ;
 }
 .container {
-       @apply w-11/12 md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative overflow-x-hidden
+       @apply w-11/12  md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative 
 }
 .select-button {
         @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;

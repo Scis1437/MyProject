@@ -7,12 +7,11 @@ import axios from "axios";
 import Logout from "../../../item/logout";
 function Gradding() {
   const router = useRouter();
-  const { stationId, studentCode, method, data, station_name } = router.query;
+  const { station_Id, studentCode, method, station_name } = router.query;
   const [points, setPoints] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState();
   const [subTest, setSubtest] = useState();
-  // const [stationId, setStationId] = useState();
   const [selectedTestId, setSelectedTestId] = useState(null);
   const [test, setTest] = useState();
   const [station, setStation] = useState();
@@ -27,29 +26,26 @@ function Gradding() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  // station_Id:true,
-  // student_id:true,
-
+  console.log(station_Id)
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/subtest`,
+          `https://my-project-ppdr.vercel.app/subtest/`,
           {
-            params: { stationId },
+            // params: { stationId },
             headers: { Authorization: `Bearer ${token}` },
+
           }
-        );
-        const filterData = await response.data.filter(
-          (item) => item.station_Id === stationId
+        ); 
+               console.log(response.data);
+        const filterData = response.data.filter(
+          (item) => item.station_Id === station_Id
         );
 
         console.log(filterData);
-        console.log(response.data);
-        setSubtest(filterData);
 
-        {
-        }
+        setSubtest(filterData);
       } catch (error) {
         setErrMsg(error);
       }
@@ -58,19 +54,15 @@ function Gradding() {
     const fetchStation = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/station/${stationId}`,
+          `https://my-project-ppdr.vercel.app/station/${station_Id}`,
           config
-        );
-        const filterData = await response.data.filter(
+        );        
+        console.log(response.data)
+        const filterData = response.data.filter(
           (item) => item.id === stationId
         );
 
-        console.log(response.data);
-        // console.log(filterData);
         setStation(filterData[0]);
-
-        {
-        }
       } catch (error) {
         setErrMsg(error);
       }
@@ -79,32 +71,26 @@ function Gradding() {
     const fetchStudent = async () => {
       try {
         const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/student?id=${studentCode}`,
+          `https://my-project-ppdr.vercel.app/student/${studentCode}`,
           config
         );
 
-        const filterData = await response.data.filter(
-          (item) => item.id === studentCode
-        );
+   
 
-        // console.log(response.data);
+         console.log(response.data);
 
-        setName(filterData[0]);
-
-        {
-        }
+        setName(response.data);
       } catch (error) {
         setErrMsg(error);
       }
     };
-    // fetchStudent();
+
+    // Trigger API requests whenever stationId or studentCode changes
     fetchSubtest();
     fetchStation();
     fetchStudent();
-    // fetchStation();
-    // fetchSubtest();
-  }, []);
-  console.log(name);
+  }, [station_Id, studentCode]);
+
   function MethodCheck(data) {
     // const {method} = query.method;
     // console.log(method)
@@ -152,18 +138,16 @@ function Gradding() {
   }
 
   const addScore = async (data) => {
-    console.log(data)
+    console.log(data);
     try {
       // const response = await axios.post(
       //   `https://my-project-ppdr.vercel.app/test`,
       //   data,
       //   config,
-
       // );
       // alert("Test data saved successfully");
       // router.push({
       //   pathname: "/menu/gradding/",
-        
       // });
     } catch (error) {
       setErrMsg(error);
@@ -177,28 +161,12 @@ function Gradding() {
         test_number: testData.test_number,
         score: parseInt(testData.score),
         station_name: station_name,
-         station_teacher: station[0]?.station_teacher,
+        station_teacher: station[0]?.station_teacher,
         station_teacher: "Michel Jackson",
         test_name: testData.test_name,
         name: name?.name,
       })
     );
-    // if (selectedTestId) {
-
-    // const testData = test.find((item) => item.station_Id === selectedTestId);
-    // console.log(testData);
-    // addScore({
-    //   station_Id: testData.station_Id,
-    //   student_id: studentCode,
-    //   test_number: testData.test_number,
-    //   score: testData.score,
-    //   station_name : station[0].station_name ,
-    //   station_teacher : station[0].station_teacher ,
-    //   test_name : testData.test_name,
-    //   name : name[0].name
-    // });
-
-    // }
   };
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;
@@ -215,8 +183,7 @@ function Gradding() {
     setSubtest(updatedSubTests);
     // console.log(subTest)
   };
-  
-  console.log(station)
+
   return (
     <div className="background">
       <div className="header-page">
@@ -255,7 +222,7 @@ function Gradding() {
               <tr
                 key={testData.test_number}
                 // className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
-                className = "bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
+                className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
               >
                 <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {testData.test_name}
@@ -269,7 +236,7 @@ function Gradding() {
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
-                      <option value={null}>Score</option>
+                    <option value={null}>Score</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
