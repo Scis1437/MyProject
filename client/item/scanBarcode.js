@@ -148,7 +148,7 @@ function ScanBarcode() {
     e.preventDefault();
     try {
       const [studentResponse, testResponse] = await Promise.all([
-        axios.get(`https://my-project-ppdr.vercel.app/student?student_id=${studentCode}`, {
+        axios.get(`https://my-project-ppdr.vercel.app/student/${studentCode}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
         axios.get(`https://my-project-ppdr.vercel.app/test/${studentCode}?student_id=${studentCode}`, {
