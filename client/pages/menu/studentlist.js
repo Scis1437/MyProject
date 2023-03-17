@@ -322,7 +322,7 @@ function StudentList() {
   };
   async function exportScore() {
     try {
-      setLoading(true);
+    
 
       // Send a request to your API route to download the data
       const response = await axios.get(
