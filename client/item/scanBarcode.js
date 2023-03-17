@@ -54,7 +54,7 @@ function ScanBarcode() {
     //   fetchTest();
     // }, []);
 
-    console.log(data);
+
 
     const handleOnClick = () => {
       if (studentStatus === "Complete") {
@@ -158,22 +158,26 @@ function ScanBarcode() {
       ]);
       console.log(studentResponse.data);
       console.log(testResponse.data);
-      setData(studentResponse.data);
-      setSubtest(testResponse.data);
+
+
       const filterStudent = testResponse.data.filter(
         (item) => item.student_id === studentCode
       );
       const filterData =  filterStudent.filter(
         (item) => item.station_Id === station[0].id
-      );
+      );      
+      setData(filterStudent[0]);
+      setSubtest(testResponse.data);
       console.log(filterStudent )
-      console.log(filterData)``
+      console.log(filterData)
       console.log(filterData.length === 0)
 
       if (filterData.length === 0) {
         setStudentStatus("Incomplete");
-      }else
-      setStudentStatus("Complete");
+      }else{
+             setStudentStatus("Complete");
+      }
+ 
       console.log(filterData);
     } catch (error) {
       setErrMsg("Error searching for student data");
