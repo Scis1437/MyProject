@@ -10,6 +10,8 @@ class Scanner extends Component {
           constraints: {
             width: 640,
             height: 320,
+            // width: 320,
+            // height: 160,
             facingMode: 'environment',
           },
         //   area: { // defines rectangle of the detection/localization area

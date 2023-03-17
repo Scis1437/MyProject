@@ -20,8 +20,8 @@ function Studentpage() {
   }
   
   const Table = (props) => {
-    const { data } = props;
-
+    const { data }= props;
+    console.log(data)
     //  let results = data?.filter(function async(el) {
 
     return (
@@ -93,43 +93,35 @@ function Studentpage() {
   const handleSearch = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
-   
     try {
-      const response = await axios.get(`https://my-project-ppdr.vercel.app/check-station`, {
+      const checkStationResponse = await axios.get(`https://my-project-ppdr.vercel.app/check-station`, {
         params : {
           student_id : studentId
         }
       });   
-      console.log(response.data)
-      setRows(response.data.map(item => item.station_name));
-      // setRows(response.data);
-   
-      // const filterData = await response.data.filter(
-      //   (item) => item.station_Id === stationId
-      // );
-  
+      console.log(checkStationResponse.data)
+      const rowsData = checkStationResponse.data.map(item => item.station_name);
+      setRows(rowsData);
+    
+      const showStationResponse = await axios.get(`https://my-project-ppdr.vercel.app/show-station`);
+      console.log(showStationResponse.data)
+      const stationData = showStationResponse.data.map(station => {
+        const status = rowsData.every(item => station.station_name.includes(item)) ? "Complete" : "Incomplete";
+        return {
+          ...station,
+          status
+        };
+      });
+      setStation(stationData);
+    
     } catch (error) {
       setError("Error searching for student data");
     }
-
-    try {
-      const response = await axios.get(`https://my-project-ppdr.vercel.app/show-station`, {
-      
-      });    
+    
+      console.log(station)
   
-      console.log(response.data)
-      setStation(response.data)
-      //setRows(response.data[0].tests);
-   
-      // const filterData = await response.data.filter(
-      //   (item) => item.station_Id === stationId
-      // );
-  
-    } catch (error) {
-      setError("Error searching for student data");
-    }
   };
- 
+
   return (
     <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
@@ -179,7 +171,7 @@ function Studentpage() {
                   </div>
                 </div>
 
-                <Table data={rows} student={studentCode} />
+                <Table data={station}  />
               </div>
             </div>
           </div>

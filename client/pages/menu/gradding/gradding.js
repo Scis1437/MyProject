@@ -59,7 +59,7 @@ function Gradding() {
         );        
         console.log(response.data)
         const filterData = response.data.filter(
-          (item) => item.id === stationId
+          (item) => item.id === station_Id
         );
 
         setStation(filterData[0]);
@@ -140,33 +140,34 @@ function Gradding() {
   const addScore = async (data) => {
     console.log(data);
     try {
-      // const response = await axios.post(
-      //   `https://my-project-ppdr.vercel.app/test`,
-      //   data,
-      //   config,
-      // );
-      // alert("Test data saved successfully");
-      // router.push({
-      //   pathname: "/menu/gradding/",
-      // });
+      const response = await axios.post(
+        `https://my-project-ppdr.vercel.app/test`,
+        data,
+        config,
+      );
+      console.log(`add data complete`)
     } catch (error) {
       setErrMsg(error);
     }
   };
-  const handleScoreSave = () => {
-    subTest?.forEach((testData) =>
+  const handleScoreSave = async() => {
+    await subTest?.forEach((testData) =>
       addScore({
         station_Id: testData.station_Id,
         student_id: studentCode,
         test_number: testData.test_number,
         score: parseInt(testData.score),
         station_name: station_name,
-        station_teacher: station[0]?.station_teacher,
-        station_teacher: "Michel Jackson",
+        station_teacher: station?.station_teacher,
+        // station_teacher: "Michel Jackson",
         test_name: testData.test_name,
         name: name?.name,
       })
-    );
+    );   
+     alert("Test data saved successfully");
+      // router.push({
+      //   pathname: "/menu/gradding/",
+      // });
   };
   if (shouldRedirect) {
     return <Redirect to="/menu/gradding" />;
