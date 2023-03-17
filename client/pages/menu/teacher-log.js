@@ -63,48 +63,40 @@ function TeacherLog() {
         </div>
       </div>
       {/* sticky top-0 */}
-      <div className="container h-20  ">
-
-          <table className="w-full  ">
-            <thead className="rounded-xl bg-gray border-radius-table sticky top-0 z-10">
-              <tr>
-                <th
-                  scope="col"
-                  className="rounded-tl-lg text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                >
-                  <p>Data</p>
+      <div className="container   ">
+        <table className="sticky">
+          <thead className="rounded-xl bg-gray border-radius-table sticky top-0 z-10">
+            <tr>
+              <th
+                scope="col"
+                className="rounded-tl-lg text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
+                <p>Data</p>
+              </th>
+              <th
+                scope="col"
+                className="rounded-tr-lg text-sm font-medium text-gray-900 px-6 py-4 text-center"
+              >
+                <p>Action</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody className="w-full overflow-y-auto max-h-full">
+            {/* flex  justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50 w-full */}
+            {logs?.map((log) => (
+              <tr key={log.id} className="odd:bg-table-odd even:bg-slate-50 ">
+                <th className="text-sm ">
+                  <p>{log.timestamp}</p>
                 </th>
-                <th
-                  scope="col"
-                  className="rounded-tr-lg text-sm font-medium text-gray-900 px-6 py-4 text-center"
-                >
-                  <p>Action</p>
-                </th>
+                <td className="flex gap-1  w-full">
+                  <p> {log.message}</p>
+                </td>
               </tr>
-            </thead>
-            <div className="h-48">
-                <tbody className="w-full overflow-y-auto max-h-full">
-                {/* flex  justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50 w-full */}
-                {logs?.map((log) => (
-                  <tr
-                    key={log.id}
-                    className="odd:bg-table-odd even:bg-slate-50 "
-                  >
-                    <th className="text-sm ">
-                      <p>{log.timestamp}</p>
-                    </th>
-                    <td className="flex gap-1  w-full">
-                      <p> {log.message}</p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </div>
-            
-           
-          </table>
-        </div>
-      </div>    
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
