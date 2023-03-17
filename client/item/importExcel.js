@@ -1,9 +1,9 @@
 // import * as XLSX from "xlsx";
 import XLSX from "xlsx";
-
 import React, { useState, useEffect } from "react";
+
 function ImportExcelPage() {
-  return <div></div>;
+ 
   const [excelData, setExcelData] = useState(null);
   function handleFileUpload(e) {
       const file = e.target.files[0];
@@ -44,7 +44,7 @@ function ImportExcelPage() {
     return (
       <div className="flex flex-col ">
         <h1 className="text-right">Import Excel Page</h1>
-        <input className=" ml-auto" type="file" onChange={handleFileUpload} />
+        <input className=" mr-auto" type="file" onChange={handleFileUpload} />
       </div>
     );
 }
