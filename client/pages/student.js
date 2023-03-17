@@ -41,7 +41,9 @@ function Studentpage() {
         </thead>
 
         <tbody>
-          {data?.map((items) => (
+          {data?.map((items) => 
+          
+          (
             // console.log(items)
             // console.log(`${items.title}` +"  " + `${items.status}` );
 

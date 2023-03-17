@@ -26,7 +26,14 @@ function Gradding() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  console.log(station_Id)
+
+  const parseJwt = (bearerToken) => {
+    const token = bearerToken.split(" ")[1];
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded;
+  };
+  const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
@@ -139,26 +146,28 @@ function Gradding() {
 
   const addScore = async (data) => {
     console.log(data);
-    try {
-      const response = await axios.post(
-        `https://my-project-ppdr.vercel.app/test`,
-        data,
-        config,
-      );
-      console.log(`add data complete`)
-    } catch (error) {
-      setErrMsg(error);
-    }
+    console.log(user)
+    // try {
+    //   const response = await axios.post(
+    //     `https://my-project-ppdr.vercel.app/test`,
+    //     data,
+    //     config,
+    //   );
+    //   console.log(`add data complete`)
+    // } catch (error) {
+    //   setErrMsg(error);
+    // }
   };
+  req.user.name
   const handleScoreSave = async() => {
-    await subTest?.forEach((testData) =>
+  subTest?.forEach((testData) =>
       addScore({
         station_Id: testData.station_Id,
         student_id: studentCode,
         test_number: testData.test_number,
         score: parseInt(testData.score),
         station_name: station_name,
-        station_teacher: station?.station_teacher,
+        station_teacher:  user.username,
         // station_teacher: "Michel Jackson",
         test_name: testData.test_name,
         name: name?.name,

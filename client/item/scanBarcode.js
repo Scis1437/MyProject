@@ -160,13 +160,19 @@ function ScanBarcode() {
       console.log(testResponse.data);
       setData(studentResponse.data);
       setSubtest(testResponse.data);
-      const filterData = testResponse.data.filter(
+      const filterStudent = testResponse.data.filter(
+        (item) => item.student_id === studentCode
+      );
+      const filterData =  filterStudent.filter(
         (item) => item.station_Id === station[0].id
       );
-  
+      console.log(filterStudent )
+      console.log(filterData )
+      console.log(filterData.length === 0)
       if (filterData.length === 0) {
         setStudentStatus("Incomplete");
-      }
+      }elseP
+      setStudentStatus("Complete");
       console.log(filterData);
     } catch (error) {
       setErrMsg("Error searching for student data");
