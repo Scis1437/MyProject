@@ -320,21 +320,44 @@ function StudentList() {
       </div>
     );
   };
-  const exportScore = async () => {
+  async function exportScore() {
     try {
+      setLoading(true);
+
+      // Send a request to your API route to download the data
       const response = await axios.get(
         `https://my-project-scis1437.vercel.app/export`,
         config
       );
 
-      // useEffect(() => {
-      //   fetchSubtest (filterStation.station_Id) ;
-      // }, []);
-      console.log(response.data);
-    } catch (error) {
-      setError("Error export ");
+      // Create a blob from the response data and create a URL for it
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element and click it to trigger the download
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "data.xlsx";
+      link.click();
+    } finally {
+      setLoading(false);
     }
-  };
+  }
+  // const exportScore = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://my-project-scis1437.vercel.app/export`,
+  //       config
+  //     );
+
+  //     // useEffect(() => {
+  //     //   fetchSubtest (filterStation.station_Id) ;
+  //     // }, []);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     setError("Error export ");
+  //   }
+  // };
 
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
@@ -386,6 +409,7 @@ function StudentList() {
           <button
             className="btn"
             onClick={exportScore}
+           
           >
             export
           </button>
