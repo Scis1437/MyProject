@@ -151,7 +151,7 @@ function ScanBarcode() {
         axios.get(`https://my-project-ppdr.vercel.app/student?student_id=${studentCode}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`https://my-project-ppdr.vercel.app/test?student_id=${studentCode}`, {
+        axios.get(`https://my-project-ppdr.vercel.app/test/${studentCode}?student_id=${studentCode}`, {
           
           headers: { Authorization: `Bearer ${token}` },
         }),
