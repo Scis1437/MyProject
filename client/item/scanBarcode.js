@@ -167,11 +167,12 @@ function ScanBarcode() {
         (item) => item.station_Id === station[0].id
       );
       console.log(filterStudent )
-      console.log(filterData )
+      console.log(filterData)``
       console.log(filterData.length === 0)
+
       if (filterData.length === 0) {
         setStudentStatus("Incomplete");
-      }elseP
+      }else
       setStudentStatus("Complete");
       console.log(filterData);
     } catch (error) {

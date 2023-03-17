@@ -158,7 +158,7 @@ function Gradding() {
     //   setErrMsg(error);
     // }
   };
-  req.user.name
+
   const handleScoreSave = async() => {
   subTest?.forEach((testData) =>
       addScore({
