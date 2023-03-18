@@ -91,7 +91,7 @@ function StudentList() {
   const searchStudent = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
-    if (!studentId) {
+ if (!studentId) {
       setError("Student code is required.");
       return;
     }
@@ -319,44 +319,21 @@ function StudentList() {
       </div>
     );
   };
-  async function exportScore() {
+  const exportScore = async () => {
     try {
-    
-
-      // Send a request to your API route to download the data
       const response = await axios.get(
         `https://my-project-scis1437.vercel.app/export`,
         config
       );
 
-      // Create a blob from the response data and create a URL for it
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      // Create a link element and click it to trigger the download
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "data.xlsx";
-      link.click();
-    } finally {
-      setLoading(false);
+      // useEffect(() => {
+      //   fetchSubtest (filterStation.station_Id) ;
+      // }, []);
+      console.log(response.data);
+    } catch (error) {
+      setError("Error export ");
     }
-  }
-  // const exportScore = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://my-project-scis1437.vercel.app/export`,
-  //       config
-  //     );
-
-  //     // useEffect(() => {
-  //     //   fetchSubtest (filterStation.station_Id) ;
-  //     // }, []);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     setError("Error export ");
-  //   }
-  // };
+  };
 
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
@@ -405,15 +382,7 @@ function StudentList() {
           >
             SUBMIT
           </button>
-<<<<<<< HEAD
           <button className="btn" onClick={exportScore}>
-=======
-          <button
-            className="btn"
-            onClick={exportScore}
-           
-          >
->>>>>>> c2edf2bc54576fdc107369d438324c8c2950920e
             export
           </button>
           <div className="flex justify-end ">
