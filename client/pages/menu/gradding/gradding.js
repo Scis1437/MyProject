@@ -32,7 +32,7 @@ function Gradding() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
-
+  console.log(station_Id)
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
@@ -44,6 +44,7 @@ function Gradding() {
           }
         );
         console.log(response.data);
+
         const filterData = response.data.filter(
           (item) => item.station_Id === station_Id
         );

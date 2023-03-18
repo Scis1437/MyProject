@@ -63,8 +63,9 @@ function TeacherLog() {
         </div>
       </div>
       {/* sticky top-0 */}
-      <div className="container   ">
-        <table className="sticky">
+      <div className="w-11/12  md:w-5/6 px-2 py-2  h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative overflow-hidden   overflow-y-scroll  ">
+        {/* <div className="h-1/6 bg-main-green">asd</div> */}
+        <table className="w-full  px-10">
           <thead className="rounded-xl bg-gray border-radius-table sticky top-0 z-10">
             <tr>
               <th
@@ -81,7 +82,8 @@ function TeacherLog() {
               </th>
             </tr>
           </thead>
-          <tbody className="w-full overflow-y-auto max-h-full">
+
+          <tbody className="w-full box-inside-container max-h-full ">
             {/* flex  justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50 w-full */}
             {logs?.map((log) => (
               <tr key={log.id} className="odd:bg-table-odd even:bg-slate-50 ">
@@ -89,7 +91,7 @@ function TeacherLog() {
                   <p>{log.timestamp}</p>
                 </th>
                 <td className="flex gap-1  w-full">
-                  <p> {log.message}</p>
+                  <p className="pl-3"> {log.message}</p>
                 </td>
               </tr>
             ))}

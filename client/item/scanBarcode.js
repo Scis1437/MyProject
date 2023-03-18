@@ -160,17 +160,20 @@ function ScanBarcode() {
       console.log(testResponse.data);
 
 
+
       const filterStudent = testResponse.data.filter(
         (item) => item.student_id === studentCode
       );
       const filterData =  filterStudent.filter(
         (item) => item.station_Id === station[0].id
       );      
-      setData(filterStudent[0]);
-      setSubtest(testResponse.data);
-      console.log(filterStudent )
+
+     console.log(filterStudent )
       console.log(filterData)
       console.log(filterData.length === 0)
+      setData(studentResponse.data);
+      setSubtest(testResponse.data);
+
 
       if (filterData.length === 0) {
         setStudentStatus("Incomplete");

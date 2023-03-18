@@ -150,10 +150,10 @@ function UserEdit() {
         </div>
       </div>
       {/* sticky top-0 */}
-      <div className="container ">
+      <div className="w-11/12  md:w-5/6 px-2 py-2  h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative overflow-hidden   overflow-y-scroll  ">
         {/* <div><p>Search for user</p></div> */}
-        <table className="table-auto w-full ">
-          <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7">
+        <table className="table-auto w-full  ">
+          <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7 ">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
                 <p>Username</p>
@@ -166,7 +166,7 @@ function UserEdit() {
             </tr>
           </thead>
 
-          <tbody className="w-full  h-auto overflow-y-auto">
+          <tbody className="w-full overflow-y-scroll ">
             {teacher?.map((item) => (
               <tr
                 key={item.teacher_name}
@@ -196,14 +196,15 @@ function UserEdit() {
               </tr>
             ))}
           </tbody>
-        </table>
-
+   
         <button
           className="btn bg-main-green"
           onClick={() => onNewOrderClick("open", null)}
         >
           Add new
         </button>
+        </table>
+
         <div
           className={`${
             newOrderPostOpen === "open" || editUserPopup === "open"

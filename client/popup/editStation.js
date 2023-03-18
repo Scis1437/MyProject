@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const EditExam = ({ visible, data }) => {
   const [dataInput, setDataInput] = useState(data);
@@ -95,20 +96,7 @@ const EditExam = ({ visible, data }) => {
     console.log(subTest);
     console.log(list);
 
-    // console.log(data.station_name)
-    // console.log(dataSet)
-    // console.log(station_Id )
-    // useEffect(() => {
-    //   setList(
-    //     subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
-    //   );
-    // }, []);
 
-    const test2 = {
-      id: dataInput.id,
-      station_name: dataInput.station_name,
-      station_teacher: dataInput.station_teacher,
-    };
     console.log(dataInput);
     const updateStation = async (e) => {
       e.preventDefault();
@@ -121,15 +109,7 @@ const EditExam = ({ visible, data }) => {
         console.log(data);
         const response = await axios.put(
           `https://my-project-ppdr.vercel.app/station`,
-          // {
-          //   // data,
-          //   data: {
-          //     id: dataInput.id,
-          //     station_name: dataInput.station_name,
 
-          //   },
-          //   config,
-          // }
           data,
           config
         );
@@ -140,27 +120,6 @@ const EditExam = ({ visible, data }) => {
       }
     };
 
-    const addTodo = (todo) => {
-      const newTodo = {
-        id: Math.random(),
-        todo: todo,
-        // id: 1 ,
-        // todo:"csadsda"
-      };
-
-      // add the todo to the list
-      setList([...list, newTodo]);
-      console.log(list);
-      // clear input box
-      setInput("");
-    };
-    // const datatest = {
-    //   station_Id: station_Id,
-    //   test_name: input,
-    //   test_number: maxId,
-    //   station_name: data.station_name,
-    // };
-    // console.log(datatest)
 
     const addSubTest = async (e) => {
       e.preventDefault();
@@ -177,16 +136,15 @@ const EditExam = ({ visible, data }) => {
           dataSet,
           config
         );
-        // const newSubtest = {
-        //   id: maxId,
-        //   todo: input,
-        // };
-        // setList([...list, newSubtest]);
-        // setSubtest(response);
-        // console.log(response.data);
-        // setList(
-        //   subTest?.map((item) => ({ id: item.id, todo: item.test_name })) || []
-        // );
+        const newTodo = {
+          id: maxId,
+          todo: input,
+          // id: 1 ,
+          // todo:"csadsda"
+        };
+        // setDataInput("")
+        // add the todo to the list
+        setDataInput([...list, newTodo]);
         console.log(dataSet);
       } catch (error) {
         setErrMsg(error);
@@ -285,15 +243,15 @@ const EditExam = ({ visible, data }) => {
             }
           ></input>
         </div>
-        <div className="flex mb-4">
+        <div className="flex">
           {/* <label className="mr-4">Grading method :</label>
       <select className="h-5 mx-2 rounded-md">
         <option value="1">pass/fail</option>
         <option value="2">score</option>
       </select> */}
         </div>
-        <div className="flex mb-4">
-          <label className="mr-4">Assign to :</label>
+        <div className="flex ">
+          {/* <label className="mr-4">Assign to :</label>
           <select
         className="h-5"
         value={selectedTeacher}
@@ -308,7 +266,7 @@ const EditExam = ({ visible, data }) => {
             {teacher.username}
           </option>
         ))}
-      </select>
+      </select> */}
         </div>
         <TodoList data={data} test={subTest} />
       </form>

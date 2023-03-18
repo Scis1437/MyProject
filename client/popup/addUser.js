@@ -5,11 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const AddUser = ({ visible }) => {
-  const station = [
-    "History talking patient ",
-    "Peptic ulcer ",
-    "Palpation of the thyroid",
-  ];
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");

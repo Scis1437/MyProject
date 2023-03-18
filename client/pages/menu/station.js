@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import todoList from "../../item/todoList";
@@ -8,8 +8,12 @@ import TodoList from "../../item/todoList";
 import { useRouter } from "next/router";
 import Logout from "../../item/logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faChevronCircleLeft, faSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import MyApp from "../_app";
+import AppContext from "../../context/AppContext";
+import ConfrimDeleteStation from "../../popup/confirmDeleteStation";
+import ConfirmDeletePopup from "../../popup/confirmDeletePopup";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function Redirect({ to }) {
@@ -23,8 +27,14 @@ function Redirect({ to }) {
 }
 
 const Edit = () => {
-  const [newOrderPostOpen, setNewOrderPostOpen] = useState("");
-  const [createPostOpen, setCreatePostOpen] = useState("close");
+  const [
+    newOrderPostOpen, 
+    setNewOrderPostOpen, 
+    createPostOpen, 
+    setCreatePostOpen
+    ,prop
+  ] = useContext(AppContext);
+
   const [order, setOrder] = useState([]);
   const [data, setData] = useState();
   const [popupData, setPopupData] = useState();
@@ -32,32 +42,40 @@ const Edit = () => {
   const [errMsg, setErrMsg] = useState(null);
   const [teacher, setTeacher] = useState();
   const [allStation, setAllStation] = useState();
-  function onNewOrderClick(x, data) {
+  function onNewOrderClick(data) {
     setPopupData(data);
-    setNewOrderPostOpen(x);
+    setNewOrderPostOpen(true);
+    console.log(data)
   }
-  function createExamClick(status) {
-    setCreatePostOpen(status);
+function createExamClick() {
+    setCreatePostOpen(true);
+
   }
+  console.log(createPostOpen)
   // console.log(newOrderPostOpen);
   let newOrderPost = null;
+  let newEditPost = null;
   switch (newOrderPostOpen) {
-    case "open":
-      newOrderPost = <EditExam data={popupData} visible={true} />;
+    case true:
+      newEditPost = <EditExam data={popupData} visible={true} />;
       break;
-    case "closed":
-      newOrderPost = null;
-      break;
-  }
-  switch (createPostOpen) {
-    case "open":
-      newOrderPost = <AddExam visible={true} />;
-      break;
-    case "closed":
-      newOrderPost = null;
+    case false:
+      newEditPost = null;
       break;
   }
 
+  switch (createPostOpen) {
+    case true:
+      newOrderPost = <AddExam visible={true} />;
+      break;
+    case false:
+      newOrderPost = null;
+      break;
+  }
+  // {
+  //   createPostOpen? <AddExam visible={true} />:null
+  // }
+  console.log(prop)
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -72,6 +90,7 @@ const Edit = () => {
   };
 
   useEffect(() => {
+
     const fetchTeacher = async () => {
       const user = await parseJwt(`Bearer ${localStorage.getItem("access")}`);
       try {
@@ -120,8 +139,18 @@ const Edit = () => {
     fetchTeacher();
     fetchStation();
   }, []);
-  console.log(data);
-  console.log(allStation);
+  let confirmDelete = null ;
+  const handleDeleteStation = (data) => {
+    switch (newOrderPostOpen) {
+      case true:
+        newEditPost = <EditExam data={popupData} visible={true} />;
+        break;
+      case false:
+        newEditPost = null;
+        break;
+    }
+  
+  }
   const deleteStation = async (data) => {
     const idStation = data.id;
     console.log(data);
@@ -136,7 +165,8 @@ const Edit = () => {
       setErrMsg("");
       console.log(error);
     }
-  };
+  };  
+
 
   const List = (dataSet) => {
     const [dropdown, setDropdown] = useState(false);
@@ -149,14 +179,14 @@ const Edit = () => {
           <button
             className="btn"
             onClick={() => {
-              onNewOrderClick("open", { ...dataSet });
+              onNewOrderClick({ ...dataSet });
             }}
           >
             Edit
           </button>
           <button
             className=" delete-btn"
-            onClick={() => deleteStation({ ...dataSet })}
+            onClick={(e) =>  deleteStation({ ...dataSet } , e)}
           >
             Delete
           </button>
@@ -227,18 +257,19 @@ const Edit = () => {
           </tbody>
         </table>
 
-        <button className="btn mt-2" onClick={() => createExamClick("open")}>
+        <button className="btn mt-2" onClick={() => createExamClick()}>
           Add new
         </button>
 
         <div
           className={`${
-            newOrderPostOpen === "open" || createPostOpen === "open"
+            newOrderPostOpen ===true || createPostOpen === true
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
               : ""
           }`}
         >
           {newOrderPost}
+          {newEditPost}
         </div>
 
         {/* <div className="fixed w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm flex justify-center items-center"><EditExam data={data} visible={true}/></div> */}
