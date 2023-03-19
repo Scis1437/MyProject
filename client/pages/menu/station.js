@@ -8,7 +8,10 @@ import TodoList from "../../item/todoList";
 import { useRouter } from "next/router";
 import Logout from "../../item/logout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronCircleLeft, faSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleLeft,
+  faSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import MyApp from "../_app";
 import AppContext from "../../context/AppContext";
@@ -28,11 +31,11 @@ function Redirect({ to }) {
 
 const Edit = () => {
   const [
-    newOrderPostOpen, 
-    setNewOrderPostOpen, 
-    createPostOpen, 
-    setCreatePostOpen
-    ,prop
+    newOrderPostOpen,
+    setNewOrderPostOpen,
+    createPostOpen,
+    setCreatePostOpen,
+    prop,
   ] = useContext(AppContext);
 
   const [order, setOrder] = useState([]);
@@ -45,37 +48,43 @@ const Edit = () => {
   function onNewOrderClick(data) {
     setPopupData(data);
     setNewOrderPostOpen(true);
-    console.log(data)
+    console.log(data);
   }
-function createExamClick() {
+  function createExamClick() {
     setCreatePostOpen(true);
-
   }
-  console.log(createPostOpen)
-  // console.log(newOrderPostOpen);
+  const closeOrderPost = () => {
+    setNewOrderPostOpen("close");
+    setCreatePostOpen("close");
+  };
+
   let newOrderPost = null;
   let newEditPost = null;
   switch (newOrderPostOpen) {
     case true:
-      newEditPost = <EditExam data={popupData} visible={true} />;
+      newEditPost = (
+        <EditExam
+          data={popupData}
+          visible={true}
+          handleClose={closeOrderPost}
+        />
+      );
       break;
-    case false:
+    case "close":
       newEditPost = null;
       break;
   }
 
   switch (createPostOpen) {
     case true:
-      newOrderPost = <AddExam visible={true} />;
+      newOrderPost = <AddExam visible={true} handleClose={closeOrderPost} />;
       break;
     case false:
       newOrderPost = null;
       break;
   }
-  // {
-  //   createPostOpen? <AddExam visible={true} />:null
-  // }
-  console.log(prop)
+
+  console.log(prop);
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -88,9 +97,7 @@ function createExamClick() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
-
   useEffect(() => {
-
     const fetchTeacher = async () => {
       const user = await parseJwt(`Bearer ${localStorage.getItem("access")}`);
       try {
@@ -103,70 +110,55 @@ function createExamClick() {
         );
         console.log(filterData[0]);
         await setTeacher(filterData[0]);
+  
+        // Call fetchStation after setting the teacher state
+        fetchStation(filterData[0]);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-
-    console.log(teacher);
-    const fetchStation = async () => {
+  
+    const fetchStation = async (teacher) => {
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
         );
-        setAllStation(response.data);
-        console.log(teacher?.roles === "ADMIN");
+     
         if (teacher?.roles === "ADMIN") {
           setData(response.data);
         } else {
           const filterData = response.data.filter(
-            (item) => item.station_teacher === teacher?.id
+            (item) => item.station_teacher === teacher.id
           );
-          await setData(filterData);
+          setData(filterData);
         }
-        // console.log(response.data)
-        // console.log( teacher.id)
-        // const filterData = await response.data.filter(
-        //   (item) => item.station_teacher === teacher.id
-        // );
-        // setData(filterData)
-        // setAllStation(response.data);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-    fetchTeacher();
-    fetchStation();
-  }, []);
-  let confirmDelete = null ;
-  const handleDeleteStation = (data) => {
-    switch (newOrderPostOpen) {
-      case true:
-        newEditPost = <EditExam data={popupData} visible={true} />;
-        break;
-      case false:
-        newEditPost = null;
-        break;
-    }
   
-  }
+    fetchTeacher();
+  }, []);
+  
+
+  console.log(data);
   const deleteStation = async (data) => {
     const idStation = data.id;
     console.log(data);
     try {
       const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/station?id=${idStation}`,config
-        );  
-      
-      setData(response)
+        `https://my-project-ppdr.vercel.app/station?id=${idStation}`,
+        config
+      );
+
+      setData(response);
       console.log(data);
-    }  catch (error) {
+    } catch (error) {
       setErrMsg("");
       console.log(error);
     }
-  };  
-
+  };
 
   const List = (dataSet) => {
     const [dropdown, setDropdown] = useState(false);
@@ -186,7 +178,7 @@ function createExamClick() {
           </button>
           <button
             className=" delete-btn"
-            onClick={(e) =>  deleteStation({ ...dataSet } , e)}
+            onClick={(e) => deleteStation({ ...dataSet }, e)}
           >
             Delete
           </button>
@@ -239,21 +231,12 @@ function createExamClick() {
             </tr>
           </thead>
           <tbody className="">
-            {/* {teacher[0]?.role === "admin" && (
-              <div>
-                {allStation?.map((list) => {
-                  return <List key={list.id} {...list} />;
-                })}
-              </div>
-            )} */}
-
+            {data?.map((list) => {
+              return <List key={list.id} {...list} />;
+            })}
             {/* {teacher?.roles === "ADMIN"
               ? allStation?.map((list) => <List key={list.id} {...list} />)
               : data?.map((list) => <List key={list.id} {...list} />)} */}
-
-            {allStation?.map((list) => {
-              return <List key={list.id} {...list} />;
-            })}
           </tbody>
         </table>
 
@@ -263,7 +246,7 @@ function createExamClick() {
 
         <div
           className={`${
-            newOrderPostOpen ===true || createPostOpen === true
+            newOrderPostOpen === true || createPostOpen === true
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
               : ""
           }`}

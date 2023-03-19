@@ -64,6 +64,7 @@ function UserEdit() {
 
   const closeOrderPost = () => {
     setNewOrderPostOpen("close");
+    setEditUserPopup("close")
   };
 
   console.log(newOrderPostOpen);
@@ -81,7 +82,7 @@ function UserEdit() {
 
   switch (editUserPopup) {
     case "open":
-      newEditpost = <EditUser visible={true} data={data} />;
+      newEditpost = <EditUser visible={true} data={data} handleClose={closeOrderPost} />;
       break;
 
     case "close":

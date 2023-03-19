@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const EditExam = ({ visible, data }) => {
+const EditExam = ({ visible, data ,handleClose}) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
@@ -215,7 +215,10 @@ const EditExam = ({ visible, data }) => {
           </button> */}
         </div>
         <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full " onClick={(e) => updateStation(e)}>
+          <button className="btn w-full "  onClick={(e) => {
+              updateStation(e),
+              handleClose()
+              }}>
             submit
           </button>
         </div>

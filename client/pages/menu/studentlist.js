@@ -126,15 +126,7 @@ function StudentList() {
           `https://my-project-ppdr.vercel.app/test/`,
           data,
           config
-          //  {
-          //   data: {
-          //     tudent_id: studentId,
-          //     station_Id: stationId,
-          //     test_number: testNumber,
-          //     score: score,
-          //   },
-          //   headers: { Authorization: `Bearer ${token}` },
-          // }
+
         );
         // console.log(response.data);
         alert("Test data saved successfully");

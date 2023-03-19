@@ -3,7 +3,7 @@ import TodoList from "../item/todoList";
 import Homemodule from "../styles/Home.module.css";
 import { useState } from "react";
 import axios from "axios";
-const EditUser = ({ visible, data }) => {
+const EditUser = ({ visible, data , handleClose }) => {
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
@@ -123,8 +123,11 @@ const EditUser = ({ visible, data }) => {
               }
             />
           </div>
-        </div>
-        <button className="btn" onClick={handleUpdate}>
+        </div>          
+        <button className="btn" onClick={(e) => {
+              handleUpdate(e),
+              handleClose()
+              }}>
           Update Teacher
         </button>
         {errMsg && <div className="text-red-500 text-center">{errMsg}</div>}
