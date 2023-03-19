@@ -55,7 +55,7 @@ const AddUser = ({ visible, handleClose }) => {
 
   return (
     <div className="">
-      <form className="bg-gray flex flex-col justify-between  p-2 rounded-md shadow-lg shadow-gray m-4 ">
+      <form className="bg-gray-light flex flex-col justify-between  p-2 rounded-md shadow-lg shadow-gray m-4 ">
         <div className="flex flex-col  justify-between space-y-4">
           <div className="space-y-4 flex justify-between mb-4">
             <label
@@ -66,7 +66,7 @@ const AddUser = ({ visible, handleClose }) => {
             </label>
             <input
               id="firstname-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 "
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -82,13 +82,13 @@ const AddUser = ({ visible, handleClose }) => {
           <div className="space-y-4  flex justify-between mb-4">
             <label
               htmlFor="password-input"
-              className="text-gray-600 font-medium"
+              className="text-gray-600 font-medium "
             >
               PASSWORD:
             </label>
             <input
               id="password-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 border-none"
               type="password"
               placeholder=""
               onChange={(e) => setPassword(e.target.value)}
@@ -106,7 +106,7 @@ const AddUser = ({ visible, handleClose }) => {
             </button>
             <button
               className="delete-btn w-full  mr-1 ml-1"
-              onClick={() => (visible = false)}
+              onClick={() => { handleClose()}}
             >
               cancel
             </button>

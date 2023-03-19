@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleLeft,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
+import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
 import axios from "axios";
 import Logout from "../../item/logout";
 import ImportExcelPage from "../../item/importExcel";
@@ -44,7 +48,7 @@ function StudentList() {
   useEffect(() => {
     const fetchData = async () => {
       const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-  
+
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/teacher/`,
@@ -53,45 +57,44 @@ function StudentList() {
         const filterData = response.data.filter(
           (item) => item.username === data.UserInfo.username
         );
-  
+
         setUser(filterData[0]);
-        console.log(filterData)
+        console.log(filterData);
         setRole(data.UserInfo.role);
-  
+
         const studentResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/student/`,
           config
         );
         setData(studentResponse.data);
-  
+
         const stationResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
-        );       
-        console.log(stationResponse.data)
-        //  setStation(stationResponse.data);
-        if(data.UserInfo.role === 1){
-        setStation(stationResponse.data);
-        }else{
-            const filterStation = stationResponse.data.filter(
-          (item) => item.station_teacher=== filterData[0].id
         );
-        setStation(filterStation)
+        console.log(stationResponse.data);
+        //  setStation(stationResponse.data);
+        if (data.UserInfo.role === 1) {
+          setStation(stationResponse.data);
+        } else {
+          const filterStation = stationResponse.data.filter(
+            (item) => item.station_teacher === filterData[0].id
+          );
+          setStation(filterStation);
         }
-      
 
         // setStation(filterStation);
       } catch (error) {
         setError("Error fetching data");
       }
     };
-  
+
     fetchData();
   }, []);
   const searchStudent = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
- if (!studentId) {
+    if (!studentId) {
       setError("Student code is required.");
       return;
     }
@@ -107,6 +110,14 @@ function StudentList() {
       setSearch(null);
       setStatus(true);
     }
+  };
+
+  const deleteAllStudent = async () => {
+    await axios.delete(
+      `https://my-project-scis1437.vercel.app/student`,
+      config
+    );
+    alert("delete all sudent!");
   };
   const List = (dataSet) => {
     const handleSaveTest = async (studentId, stationId, testNumber, score) => {
@@ -126,7 +137,6 @@ function StudentList() {
           `https://my-project-ppdr.vercel.app/test/`,
           data,
           config
-
         );
         // console.log(response.data);
         alert("Test data saved successfully");
@@ -217,7 +227,7 @@ function StudentList() {
       return (
         <div>
           <div onClick={() => setDropdownTitle(!dropdownTitle)}>
-            {props.station_name}
+            <div className="mx-4 text-lg">{props.station_name}</div>
           </div>
 
           {dropdownTitle ? (
@@ -225,16 +235,16 @@ function StudentList() {
               <form className="">
                 {test?.map((list, index) => {
                   return (
-                    <div className="flex justify-between w-full" key={index}>
-                      <label
-                        className="text-xs mx-3 w-full "
-                        htmlFor="subStation"
-                      >
+                    <div
+                      className="flex justify-between w-full px-6"
+                      key={index}
+                    >
+                      <label className="text-base  w-full " htmlFor="subStation">
                         {list.test_name}
                       </label>
 
                       <select
-                        className="h-5"
+                        className="rounded-md  border-none  p-0"
                         defaultValue={list.score}
                         onChange={(e) => {
                           const newData = test.map((item) => {
@@ -266,12 +276,15 @@ function StudentList() {
                   );
                 })}
               </form>
-              <button
-                className="btn"
+              <div className="flex w-full justify-end mt-2">
+                  <button
+                className="semi-btn mx-4"
                 onClick={(event) => handleScoreSave(event)}
               >
                 Save
               </button>
+              </div>
+            
             </div>
           ) : null}
         </div>
@@ -285,6 +298,12 @@ function StudentList() {
 
     const [dropdown, setDropdown] = useState(false);
     const [student, setStudent] = useState(dataSet);
+    const [isRotated, setIsRotated] = useState(false);
+
+    const handleRotate = () => {
+      console.log("Rotate");
+      setIsRotated(!isRotated);
+    };
 
     return (
       <div className="py-2 " key={student.id}>
@@ -292,11 +311,20 @@ function StudentList() {
           className="rounded-md bg-table-odd h-7 py-5 flex items-center"
           onClick={() => setDropdown(!dropdown)}
         >
-          <p className="text-sm mx-1 flex ">{student.id}</p>
+          <div className="flex items-cen" onClick={handleRotate}>
+            <FontAwesomeIcon
+              icon={faCaretDown}
+              className={`flex mt-4 items-center pl-4 ${
+                isRotated ? "fa-rotate-0 ml-1 mt-0 pl-1" : "fa-rotate-270"
+              }`}
+            />
+          </div>
+
+          <p className="text-sm md:text-lg mx-1 flex ">{student.id}</p>
         </div>
 
         {dropdown ? (
-          <div>
+          <div className="bg-gray-table">
             {station?.map((list) => {
               return (
                 <DropdownTitle key={list.id} {...list} student={student} />
@@ -318,9 +346,6 @@ function StudentList() {
         config
       );
 
-      // useEffect(() => {
-      //   fetchSubtest (filterStation.station_Id) ;
-      // }, []);
       console.log(response.data);
     } catch (error) {
       setError("Error export ");
@@ -346,7 +371,7 @@ function StudentList() {
         </div>
         <div className="flex flex-row justify-between w-full">
           <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-            Student list
+            STUDENT LIST
           </p>
           <div className="logout-position">
             <Logout />
@@ -354,32 +379,45 @@ function StudentList() {
         </div>
       </div>
       <div className="container  ">
-        <div className="flex w-full items-center justify-start">
-          <p className="text-subheader ">search for student : </p>
-          <input
-            type="text"
-            id="studentCode"
-            name="studentCode"
-            placeholder="62061xxxx"
-            value={studentCode.value}
-            onChange={(e) => setStudentCode({ studentCode: e.target.value })}
-            className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
-          />
+        <div className="flex w-full items-center justify-between">
+          <div className="flex gap-1">
+            <p className="text-subheader ">search for student : </p>
+            <input
+              type="text"
+              id="studentCode"
+              name="studentCode"
+              placeholder="62061xxxx"
+              value={studentCode.value}
+              onChange={(e) => setStudentCode({ studentCode: e.target.value })}
+              className="input_box h-7"
+            />
 
-          <button
-            className="btn"
-            onClick={(e) => {
-              searchStudent(e);
-            }}
-          >
-            SUBMIT
-          </button>
-          <button className="btn" onClick={exportScore}>
-            export
-          </button>
-          <div className="flex justify-end ">
-            {role === 1 && <ImportExcelPage />}
+            <button
+              className="semi-btn"
+              onClick={(e) => {
+                searchStudent(e);
+              }}
+            >
+              SUBMIT
+            </button>
+            <div className="flex cursor-pointer " onClick={exportScore}>
+              <FileDownloadRoundedIcon className="flex items-center mt-1 text-gray-dark" />
+              <p className="">export</p>
+            </div>
           </div>
+          {role === 1 && (
+            <div className="">
+              <button
+                className="bg-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-28"
+                onClick={deleteAllStudent}
+              >
+                DELETE ALL
+              </button>
+            </div>
+          )}
+        </div>
+        <div className=" mt-4">
+          <div className=" ">{role === 1 && <ImportExcelPage />}</div>
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}

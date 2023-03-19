@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+faCircleMinus
+} from "@fortawesome/free-solid-svg-icons";
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const EditExam = ({ visible, data ,handleClose}) => {
   const [dataInput, setDataInput] = useState(data);
@@ -177,7 +181,7 @@ const EditExam = ({ visible, data ,handleClose}) => {
     console.log(list);
     return (
       <div className="">
-        <h1>title</h1>{" "}
+        <h1 className="text-lg">Title</h1>{" "}
         <ul className="mx-3 ">
           {list?.map((todo) => (
             <li
@@ -186,12 +190,8 @@ const EditExam = ({ visible, data ,handleClose}) => {
               // onClick={() => deleteTodo(todo.id)}
             >
               {todo.test_name}
-              <button
-                className="delete-btn"
-                onClick={(e) => deleteSubTest(todo, e)}
-              >
-                x
-              </button>
+              {/* <FontAwesomeIcon icon="fa-solid fa-circle-minus" /> */}
+              <ClearRoundedIcon className="delete-btn-todo"  onClick={(e) => deleteSubTest(todo, e)} />
             </li>
           ))}
         </ul>
@@ -200,26 +200,29 @@ const EditExam = ({ visible, data ,handleClose}) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className=" input"
+            className="input_box h-7"
           />
 
           {/* <select className="h-5 mx-2">
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-          <button className="btn" onClick={(e) => addSubTest(e)}>
+          <button className="semi-btn" onClick={(e) => {addSubTest(e) }}>
             Add
           </button>
           {/* <button className="btn" onClick={() => addSubTest()}>
             Add
           </button> */}
         </div>
-        <div className="flex flex-col w-full items-center ">
+        <div className="flex gap-1 w-full items-center ">
           <button className="btn w-full "  onClick={(e) => {
               updateStation(e),
               handleClose()
               }}>
             submit
+          </button>
+          <button onClick={() => { handleClose()}} className="delete-btn w-full ">
+            cancle
           </button>
         </div>
       </div>
@@ -234,12 +237,12 @@ const EditExam = ({ visible, data ,handleClose}) => {
   };
   console.log(selectedTeacher)
   return (
-    <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center ">
-      <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray">
-        <div className="flex mb-4">
+    <div className="absolute inset-2/4 bg-opacity-30 ml-50  flex items-center  bg-gray-light justify-center p-5 rounded-md shadow-lg shadow-gray">
+      <form className=" flex flex-col ">
+        <div className="flex mb-4 text-lg">
           <label>Station : </label>
           <input
-            className=" rounded-md w-20 bg-input-green pl-3 mx-2 "
+            className="input_box "
             value={dataInput.station_name}
             onChange={(e) =>
               setDataInput({ ...dataInput, station_name: e.target.value })

@@ -122,7 +122,7 @@ const handleSubmit = async (e) => {
         <form className="gap-1 text-l uppercase text-bold py-4 flex flex-col "onSubmit={handleSubmit}>
           <label
             htmlFor="username"
-            className="text-left font-bold text-base md:font-extrabold text-main-green"
+            className="text-left font-bold text-lg md:text-xl md:font-extrabold text-main-green"
           >
             username
           </label>
@@ -137,11 +137,11 @@ const handleSubmit = async (e) => {
               setUsername({ username: e.target.value })
             }
             
-            className="rounded-md w-60 bg-input-green pl-3"
+            className="rounded-md w-60 bg-input-green pl-3 border-none"
           />
           <label
             htmlFor="upassword"
-            className="text-left font-bold text-base md:font-extrabold text-main-green"
+            className="text-left font-bold text-lg md:text-xl md:font-extrabold text-main-green"
           >
             password{" "}
           </label>
@@ -154,17 +154,17 @@ const handleSubmit = async (e) => {
             }
            
             placeholder="******************"
-            className=" rounded-md w-60 bg-input-green pl-3 "
+            className=" rounded-md w-60 bg-input-green pl-3 border-none "
           />{" "}
           {errMsg && (
             <div id="invalid_Login">
-              <p className="text-xs text-red-600"> Invalid username or password</p> 
+              <p className="text-base text-red-600"> Invalid username or password</p> 
               {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p> */}
             </div>
           )}
           <div className="text-center my-5">
             <button
-              className=" bg-hover-green hover:bg-light-green text-white font-bold py-2 px-5 rounded-full"
+              className=" btn "
               type="submit"
               // onClick={
               //   () => setShouldRedirect(true)

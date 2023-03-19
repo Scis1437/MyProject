@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Logout from "../../../item/logout";
+import CountdownTimer from "../../../item/countDownTimer";
 function Gradding() {
   const router = useRouter();
   const { station_Id, studentCode, method, station_name } = router.query;
@@ -32,7 +33,7 @@ function Gradding() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
-  console.log(station_Id)
+  console.log(station_Id);
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
@@ -101,7 +102,7 @@ function Gradding() {
     if (true) {
       return (
         <select
-          className="h-5"
+          className="h-5 "
           defaultValue={<option value="0">0</option>}
           onChange={(e) => {
             const newData = subTest.map((item) => {
@@ -191,7 +192,11 @@ function Gradding() {
     setSubtest(updatedSubTests);
     // console.log(subTest)
   };
-
+  const handleTimerComplete = () => {
+    console.log("Timer has completed!");
+    alert("time out!");
+    handleScoreSave();
+  };
   return (
     <div className="background">
       <div className="header-page">
@@ -213,10 +218,18 @@ function Gradding() {
       </div>
 
       <div className="container ">
-        <div>
-          <p>student code : {studentCode}</p>
-          <p>student name : {name?.name} </p>
+        <div className="flex justify-between">
+          <div>
+            <p>student code : {studentCode}</p>
+            <p>student name : {name?.name} </p>
+          </div>{" "}
+          <CountdownTimer
+            minutes={1}
+            seconds={0}
+            onComplete={handleTimerComplete}
+          />
         </div>
+
         <table className="table-auto w-full">
           <thead>
             <tr className="w-full">
@@ -238,13 +251,13 @@ function Gradding() {
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
                   {/* <MethodCheck data = {testData}/> */}
                   <select
-                    className="h-5"
+                    className="rounded-md  border-none p-1 "
                     value={testData.score || null}
                     onChange={(e) =>
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
-                    <option value={null}>Score</option>
+                    <option value="0">Score</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -264,11 +277,11 @@ function Gradding() {
         <div className="flex justify-between">
           <div className="flex">
             {/* {" "} */}
-            <p>comment : </p>
-            <input></input>
+          
+        
           </div>
 
-          <button className="btn" onClick={handleScoreSave}>
+          <button className="semi-btn mt-2" onClick={handleScoreSave}>
             SUBMIT
           </button>
         </div>

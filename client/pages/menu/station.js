@@ -152,7 +152,7 @@ const Edit = () => {
         config
       );
 
-      setData(response);
+      // setData(response);
       console.log(data);
     } catch (error) {
       setErrMsg("");
@@ -169,7 +169,7 @@ const Edit = () => {
 
         <td className="flex gap-1">
           <button
-            className="btn"
+            className="semi-btn"
             onClick={() => {
               onNewOrderClick({ ...dataSet });
             }}
@@ -177,7 +177,7 @@ const Edit = () => {
             Edit
           </button>
           <button
-            className=" delete-btn"
+            className="semi-delete-btn"
             onClick={(e) => deleteStation({ ...dataSet }, e)}
           >
             Delete
@@ -203,7 +203,7 @@ const Edit = () => {
         </div>
         <div className="flex flex-row justify-between w-full">
           <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-            Edit station
+            STATION
           </p>
           <div className="logout-position">
             <Logout />
@@ -221,7 +221,7 @@ const Edit = () => {
             <tr className="">
               <th
                 scope="col"
-                className="rounded-tl-lg  text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="rounded-tl-lg rounded-tr-lg bg-gray-table text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
                 <p>Title</p>
               </th>
