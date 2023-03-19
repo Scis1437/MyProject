@@ -3,7 +3,8 @@ const {prisma} = require('../db')
 
 
 const addAllStudent = async(req, res) => {
-    const data = req.body
+    const {data} = req.body
+    console.log(data)
     const addAllStudent = await prisma.student.createMany({
 
         data,

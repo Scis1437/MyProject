@@ -7,7 +7,6 @@ import Logout from "../../item/logout";
 import ImportExcelPage from "../../item/importExcel";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-
 function Redirect({ to }) {
   const router = useRouter();
   console.log("Redirect_work");
@@ -28,7 +27,8 @@ function StudentList() {
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
   const [role, setRole] = useState(0);
-
+  const [user, setUser] = useState(null);
+  const [teacher, setTeacher] = useState(null);
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -42,56 +42,63 @@ function StudentList() {
     return decoded;
   };
   useEffect(() => {
-    const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-    // dataRef.current = data;
-    setRole(data.UserInfo.role);
-  }, [role]);
-
-  useEffect(() => {
-    const fetchStudent = async () => {
+    const fetchData = async () => {
+      const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
+  
       try {
         const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        const filterData = response.data.filter(
+          (item) => item.username === data.UserInfo.username
+        );
+  
+        setUser(filterData[0]);
+        console.log(filterData)
+        setRole(data.UserInfo.role);
+  
+        const studentResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/student/`,
           config
         );
-
-        setData(response.data);
-      } catch (error) {
-        setError("Error searching for student data");
-      }
-    };
-
-    const fetchStation = async () => {
-      try {
-        const response = await axios.get(
+        setData(studentResponse.data);
+  
+        const stationResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
+        );       
+        console.log(stationResponse.data)
+        //  setStation(stationResponse.data);
+        if(data.UserInfo.role === 1){
+        setStation(stationResponse.data);
+        }else{
+            const filterStation = stationResponse.data.filter(
+          (item) => item.station_teacher=== filterData[0].id
         );
+        setStation(filterStation)
+        }
+      
 
-        setStation(response.data);
+        // setStation(filterStation);
       } catch (error) {
-        setError("Error searching for student data");
+        setError("Error fetching data");
       }
     };
-
-    //   setData(response.data);
-    // } catch (error) {
-    //   setError("Error searching for student data");
-    // }
-    fetchStation();
-    fetchStudent();
+  
+    fetchData();
   }, []);
-
-  // useEffect(() => {
-
-  // }, []);
-
-  // console.log(station);
-  // console.log(data);
   const searchStudent = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
-
+ if (!studentId) {
+      setError("Student code is required.");
+      return;
+    }
+    if (!/^\d{9}$/.test(studentId)) {
+      setError("Student code must be a 9-digit number.");
+      return;
+    }
     const student = data?.find((student) => student.id === studentId);
     if (student != null) {
       setSearch([student]);
@@ -108,14 +115,6 @@ function StudentList() {
       console.log(` testNumber : ${testNumber}`);
       console.log(` score : ${score}`);
 
-      //   where:{
-      //     station_Id:data.station_Id,
-      //     student_id:data.student_id,
-      //     test_number:data.test_number,
-      //     // score:data.score,
-      // },
-
-      // data: {score: data.score},
       const data = {
         student_id: studentId,
         station_Id: stationId,
@@ -320,44 +319,21 @@ function StudentList() {
       </div>
     );
   };
-  async function exportScore() {
+  const exportScore = async () => {
     try {
-    
-
-      // Send a request to your API route to download the data
       const response = await axios.get(
         `https://my-project-scis1437.vercel.app/export`,
         config
       );
 
-      // Create a blob from the response data and create a URL for it
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      // Create a link element and click it to trigger the download
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "data.xlsx";
-      link.click();
-    } finally {
-      setLoading(false);
+      // useEffect(() => {
+      //   fetchSubtest (filterStation.station_Id) ;
+      // }, []);
+      console.log(response.data);
+    } catch (error) {
+      setError("Error export ");
     }
-  }
-  // const exportScore = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://my-project-scis1437.vercel.app/export`,
-  //       config
-  //     );
-
-  //     // useEffect(() => {
-  //     //   fetchSubtest (filterStation.station_Id) ;
-  //     // }, []);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     setError("Error export ");
-  //   }
-  // };
+  };
 
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
@@ -406,19 +382,17 @@ function StudentList() {
           >
             SUBMIT
           </button>
-          <button
-            className="btn"
-            onClick={exportScore}
-           
-          >
+          <button className="btn" onClick={exportScore}>
             export
           </button>
-          < ImportExcelPage/>
+          <div className="flex justify-end ">
+            {role === 1 && <ImportExcelPage />}
+          </div>
         </div>
         <p>{error}</p>
         {status ? <p>No data found</p> : null}
-        <div>
-          <div className="overflow-y-scroll ">
+        <div className=" ">
+          <div className="overflow-y-scroll h-screen ">
             {search && search.length > 0
               ? search.map((list) => {
                   return <List key={list.id} {...list} />;
@@ -431,12 +405,13 @@ function StudentList() {
                   );
                 })}
             {/* {data.map((list) => {
-            console.log(studentCode);
-            return <List key={list.id} {...list} student={studentCode} />;
-          })} */}
+    console.log(studentCode);
+    return <List key={list.id} {...list} student={studentCode} />;
+  })} */}
           </div>
         </div>
       </div>
+
       <div className="logout-position">
         <Logout />
       </div>

@@ -4,7 +4,7 @@ import TodoList from "../item/todoList";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const AddUser = ({ visible, handleClose }) => {
+const AddUser = ({ visible }) => {
   const station = [
     "History talking patient ",
     "Peptic ulcer ",

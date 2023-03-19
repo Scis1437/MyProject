@@ -7,25 +7,25 @@ import Redirect from "../item/Redirect";
 import useQuery from "use-query";
 import axios from "axios";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 function Studentpage() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [rows, setRows] = useState();
   const [studentCode, setStudentCode] = useState("");
   const [error, setError] = useState("");
-  const [student,setStudent] = useState() ;
-  const [station , setStation] = useState() ;
+  const [student, setStudent] = useState();
+  const [station, setStation] = useState();
   if (shouldRedirect) {
     return <Redirect to="/" />;
   }
-  
+
   const Table = (props) => {
-    const { data }= props;
-    console.log(data)
+    const { data } = props;
+    console.log(data);
     //  let results = data?.filter(function async(el) {
 
     return (
-      <table className="w-full">
+      <table className="w-full mt-10">
         <thead className=" ">
           <tr className="rounded-lg bg-gray ">
             <th
@@ -39,19 +39,39 @@ function Studentpage() {
             </th>
           </tr>
         </thead>
-
+        {/* <tbody>
+        {data.map((items) => (
+          <tr key={items.station_Id} className="bg-gray-100 border-b">
+            <td className="status-table">
+              {`${items.title}`}
+            </td>
+            <td
+              className={`text-sm font-light px-6 py-4 whitespace-nowrap text-end ${
+                items.status === "Complete" ? "text-green" : "text-gray-900"
+              }`}
+            >
+             <p></p> {`${items.status}`}
+            </td>
+          </tr>
+        ))}
+      </tbody> */}
         <tbody>
-          {data?.map((items) => 
-          
-          (
+          {data?.map((items) => (
             // console.log(items)
             // console.log(`${items.title}` +"  " + `${items.status}` );
 
-            <tr key={items.station_Id} className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg">
+            <tr
+              key={items.station_Id}
+              className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg"
+            >
               <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
                 {`${items.station_name}`}
               </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+              <td
+                className={`text-sm text-gray-900 px-6 py-4 whitespace-nowrap text-end ${
+                  items.status === "Complete" ? "text-green" : "text-red-500"
+                }`}
+              >
                 {`${items.status}`}
               </td>
             </tr>
@@ -65,8 +85,7 @@ function Studentpage() {
       </table>
     );
   };
- 
-  
+
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -75,7 +94,7 @@ function Studentpage() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-   
+
   //   const fetchStation = async () => {
   //   try {
   //     const response = await axios.get(
@@ -90,42 +109,57 @@ function Studentpage() {
   // };
   //   fetchStation();
 
-
-
   const handleSearch = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
+    if (!studentId) {
+      setError("Student code is required.");
+      return;
+    }
+    if (!/^\d{9}$/.test(studentId)) {
+      setError("Student code must be a 9-digit number.");
+      return;
+    }
     try {
-      const checkStationResponse = await axios.get(`https://my-project-ppdr.vercel.app/check-station`, {
-        params : {
-          student_id : studentId
+      const checkStationResponse = await axios.get(
+        `https://my-project-ppdr.vercel.app/check-station`,
+        {
+          params: {
+            student_id: studentId,
+          },
         }
-      });   
-      console.log(checkStationResponse.data)
-      const rowsData = checkStationResponse.data.map(item => item.station_name);
-    
-      const showStationResponse = await axios.get(`https://my-project-ppdr.vercel.app/show-station`);
-      console.log(showStationResponse.data)
-      const stationData = showStationResponse.data.map(station => {
-        const isIncomplete = rowsData.some(item => station.station_name === item);
+      );
+      console.log(checkStationResponse.data);
+      const rowsData = checkStationResponse.data.map(
+        (item) => item.station_name
+      );
+
+      const showStationResponse = await axios.get(
+        `https://my-project-ppdr.vercel.app/show-station`
+      );
+      console.log(showStationResponse.data);
+      const stationData = showStationResponse.data.map((station) => {
+        const isIncomplete = rowsData.some(
+          (item) => station.station_name === item
+        );
         const status = isIncomplete ? "Incomplete" : "Complete";
         return {
           ...station,
-          status
+          status,
         };
       });
       setStation(stationData);
       setRows(rowsData);
+      setError("")
     } catch (error) {
       setError("Error searching for student data");
     }
-    
-    console.log(station)
-  
+
+    console.log(station);
   };
 
   return (
-    <div className="background">
+     <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
         <div className="flex items-center">
           <FontAwesomeIcon
@@ -136,11 +170,12 @@ function Studentpage() {
             }}
           ></FontAwesomeIcon>
         </div>
-
+      
         <p className="text-white font-extrabold text-xl  w-full md:text-2xl ">
           StudentCheck
         </p>
       </div>
+      
       <div className="container">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -170,10 +205,29 @@ function Studentpage() {
                       SUBMIT
                     </button>{" "}
                     <p>{error}</p>
+                  <div className=" flex flex-col  justify-center md:justify-end items-center place-items-center">
+                    <div className="flex">
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="62061xxxx"
+                        value={studentCode.value}
+                        onChange={(e) =>
+                          setStudentCode({ studentCode: e.target.value })
+                        }
+                        className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
+                      />
+                      <button className="btn" onClick={(e) => handleSearch(e)}>
+                        SUBMIT
+                      </button>{" "}
+                    </div>
+
+                    <p className="">{error}</p>
                   </div>
                 </div>
 
-                <Table data={station}  />
+                <Table data={station} />
               </div>
             </div>
           </div>
@@ -205,9 +259,7 @@ function Studentpage() {
         <div className="flex-row place-items-center overflow-y-scroll mt-10 mx-4 h-5/6 displayNone">
           {item}
         </div> */}
-      </div>
-
-      {/* <input
+              {/* <input
           type="text"
           id="username"
           name="username"
@@ -215,7 +267,10 @@ function Studentpage() {
           className="rounded-md w-60 bg-gray-light gap-y-10"
           value={searchID}
         /> */}
-    </div>
+      </div>
+      </div>
+      </div>
+    
   );
 }
 

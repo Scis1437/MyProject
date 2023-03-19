@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Homemodule from "../styles/Home.module.css";
 import axios from "axios";
+import { useRouter } from "next/router";
+import AppContext from "../context/AppContext";
+import Edit from "../pages/menu/station";
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL;
 const AddExam = ({ visible }) => {
@@ -10,14 +13,40 @@ const AddExam = ({ visible }) => {
   const [selectedTeacher, setSelectedTeacher] = useState();
   const [station, setStation] = useState();
   const [maxId, setMaxId] = useState();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    addStation();
+  const router = useRouter();
+  const [createPostOpen, setCreatePostOpen, prop, setProp] =
+    useContext(AppContext);
+  const validateInput = (input) => {
+    if (!input) {
+      return "Input value cannot be empty";
+    }
+    if (!/^[a-zA-Z\s]+$/.test(input)) {
+      return "Input value can only contain letters and spaces";
+    }
+    return null;
   };
-
-  const token = localStorage.getItem("access");
-
+  
+const validateTeacher = (teacher) => {
+  if (!teacher ) {
+    return "Please select a teacher";
+  }
+  return null;
+};
+  const handleSubmit =async (event) => {
+    event.preventDefault();
+    console.log(selectedTeacher)
+    const inputErr =await validateInput(dataInput.station_name);
+    const teacherErr = await validateTeacher(selectedTeacher);
+    console.log(inputErr , teacherErr)
+    if (!inputErr && !teacherErr) {
+      addStation();
+    }
+    setErrMsg(inputErr || teacherErr);
+  };
+  let token;
+  if (typeof localStorage !== "undefined") {
+    token = localStorage.getItem("access");
+  }
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -67,8 +96,9 @@ const AddExam = ({ visible }) => {
       station_name: dataInput?.station_name,
       station_teacher: parseInt(selectedTeacher),
     };
-    console.log(data);
+    console.log("data added");
     try {
+      setCreatePostOpen(false);
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/station/`,
         // {
@@ -76,86 +106,23 @@ const AddExam = ({ visible }) => {
         //   station_name: dataInput?.station_name,
         //   station_teacher: parseInt(selectedTeacher),
         // },
-        data ,
+        data,
         config
       );
 
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
       // data,
       // config);
-      //  console.log(response.data);
-      alert("add station complete");
+
+      // alert("add station complete");
       // setDataInput(response);
+
+      router.push({
+        pathname: "/menu/station",
+      });
     } catch (error) {
       setErrMsg("fetch error");
     }
-  };
-  const TodoList = () => {
-    const [list, setList] = useState([]);
-    const [input, setInput] = useState("");
-
-    const addTodo = (todo) => {
-      const newTodo = {
-        id: Math.random(),
-        todo: todo,
-        // id: 1 ,
-        // todo:"csadsda"
-      };
-
-      // add the todo to the list
-      setList([...list, newTodo]);
-
-      // clear input box
-      setInput("");
-    };
-
-    const deleteTodo = (id) => {
-      // Filter out todo with the id
-      const newList = list.filter((todo) => todo.id !== id);
-
-      setList(newList);
-    };
-
-    return (
-      <div className="">
-        <h1>title</h1>{" "}
-        <ul>
-          {list.map((todo) => (
-            <li key={todo.id}>
-              {todo.todo}
-              <button
-                className="bg-btn-red rounded-md"
-                onClick={() => deleteTodo(todo.id)}
-              >
-                &times;
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="flex gap-1 mb-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className=" input"
-          />
-
-          {/* <select className="h-5 mx-2">
-            <option value="1">pass/fail</option>
-            <option value="2">score</option>
-          </select> */}
-
-          <button className="btn" onClick={() => addTodo(input)}>
-            Add
-          </button>
-        </div>
-        <div className="flex flex-col w-full items-center ">
-          <button className="btn w-full " onClick={() => addStation()}>
-            submit
-          </button>
-        </div>
-      </div>
-    );
   };
 
   if (!visible) return null;
@@ -170,7 +137,7 @@ const AddExam = ({ visible }) => {
           <label>Station : </label>
           <input
             className=" rounded-md w-20 bg-input-green pl-3 mx-2 "
-            // value={dataInput.station_name}
+            defaultValue={null}
             onChange={(e) =>
               setDataInput({ ...dataInput, station_name: e.target.value })
             }
@@ -187,10 +154,11 @@ const AddExam = ({ visible }) => {
           <label className="mr-4">Assign to :</label>
           <select
             className="h-5"
+
             value={selectedTeacher}
             onChange={handleSelectChange}
           >
-            <option value="">Select a teacher</option>
+            <option value={null}>Select a teacher</option>
             {teacher?.map((teacher) => (
               <option key={teacher.id} value={teacher.id}>
                 {teacher.name}
@@ -198,14 +166,16 @@ const AddExam = ({ visible }) => {
             ))}
           </select>
         </div>
+        {errMsg && <span className="error-message">{errMsg}</span>}
         <div
           className="flex flex-col w-full items-center "
-          // onClick={() => addStation()}
+
         >
-          <button onClick={() => addStation()} className="btn w-full ">
+          <button onClick={() => {handleSubmit}} className="btn w-full ">
             submit
           </button>
         </div>
+
         {/* <TodoList /> */}
       </form>
     </div>
