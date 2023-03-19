@@ -159,7 +159,7 @@ function Studentpage() {
                       type="text"
                       id="username"
                       name="username"
-                      placeholder="62061xxxx"
+                      placeholder="62071xxxx"
                       value={studentCode.value}
                       onChange={(e) =>
                         setStudentCode({ studentCode: e.target.value })

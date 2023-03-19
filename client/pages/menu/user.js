@@ -21,6 +21,30 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 //   },
 // ]
 
+let token;
+
+if (typeof localStorage !== "undefined") {
+  token = localStorage.getItem("access");
+}
+const config = {
+  headers: { Authorization: `Bearer ${token}` },
+};
+
+const fetchTeacher = async () => {
+  try {
+    const response = await axios.get(
+      `https://my-project-ppdr.vercel.app/teacher/`,
+      config
+    );
+    console.log(response);
+
+    setTeacher(response.data);
+    // return(response.data)
+  } catch (error) {
+    // setErrMsg(error);
+  }
+};
+
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
@@ -29,14 +53,7 @@ function UserEdit() {
   const [data, setData] = useState(null);
   const [teacher, setTeacher] = useState(null);
   const [errorMsg, setErrMsg] = useState(null);
-  let token;
 
-  if (typeof localStorage !== "undefined") {
-    token = localStorage.getItem("access");
-  }
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
   function Redirect({ to }) {
     const router = useRouter();
     console.log("Redirect_work");
@@ -57,12 +74,17 @@ function UserEdit() {
     setData(data);
     setEditUserPopup(type);
   };
+
+  const closeOrderPost = () => {
+    setNewOrderPostOpen("close");
+  };
+
   console.log(newOrderPostOpen);
   let newOrderPost = null;
   let newEditpost = null;
   switch (newOrderPostOpen) {
     case "open":
-      newOrderPost = <AddUser visible={true} />;
+      newOrderPost = <AddUser visible={true} handleClose={closeOrderPost} />;
       break;
 
     case "close":
@@ -80,45 +102,27 @@ function UserEdit() {
       break;
   }
   useEffect(() => {
-    const fetchTeacher = async () => {
-      try {
-        const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/teacher/`,
-          config
-        );
-        console.log(response);
+    if (newOrderPostOpen === "open") return;
 
-        setTeacher(response.data);
-        // return(response.data)
-      } catch (error) {
-        // setErrMsg(error);
-      }
-    };
     fetchTeacher();
-  }, []);
+  }, [newOrderPostOpen]);
 
   const deleteUser = async (item) => {
-    const username = item.username
-
-    
-    
+    const username = item.username;
 
     try {
       const response = await axios.delete(
-        
-          `https://my-project-ppdr.vercel.app/teacher?id=${username}`,config
-          ); 
-        
-   
-       
-      
+        `https://my-project-ppdr.vercel.app/teacher?id=${username}`,
+        config
+      );
+
       // setTeacher((prevTeachers) =>
       //   prevTeachers.filter(
       //     (teacher) => teacher.teacher_name !== item.teacher_name
       //   )
       // );
       alert(`User for ${item.username} deleted`);
-      
+
       // console.log(response.data);
       // return response.data;
     } catch (error) {
