@@ -17,6 +17,14 @@ function Redirect({ to }) {
   return null;
 }
 
+async function fetchStudent(config) {
+  const studentResponse = await axios.get(
+    `https://my-project-ppdr.vercel.app/student/`,
+    config
+  );
+  return studentResponse.data;
+}
+
 function StudentList() {
   const [error, setError] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -27,6 +35,7 @@ function StudentList() {
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
   const [role, setRole] = useState(0);
+  const [newUser, setNewUser] = useState(false)
   const [user, setUser] = useState(null);
   const [teacher, setTeacher] = useState(null);
   let token;
@@ -44,7 +53,7 @@ function StudentList() {
   useEffect(() => {
     const fetchData = async () => {
       const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-  
+
       try {
         const response = await axios.get(
           `https://my-project-ppdr.vercel.app/teacher/`,
@@ -53,45 +62,57 @@ function StudentList() {
         const filterData = response.data.filter(
           (item) => item.username === data.UserInfo.username
         );
-  
+
         setUser(filterData[0]);
-        console.log(filterData)
+        console.log(filterData);
         setRole(data.UserInfo.role);
-  
-        const studentResponse = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/`,
-          config
-        );
-        setData(studentResponse.data);
-  
+
+        // const studentResponse = await axios.get(
+        //   `https://my-project-ppdr.vercel.app/student/`,
+        //   config
+        // );
+        const studentList = await fetchStudent(config)
+        setData(studentList);
+
         const stationResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
           config
-        );       
-        console.log(stationResponse.data)
-        //  setStation(stationResponse.data);
-        if(data.UserInfo.role === 1){
-        setStation(stationResponse.data);
-        }else{
-            const filterStation = stationResponse.data.filter(
-          (item) => item.station_teacher=== filterData[0].id
         );
-        setStation(filterStation)
+        console.log(stationResponse.data);
+        //  setStation(stationResponse.data);
+        if (data.UserInfo.role === 1) {
+          setStation(stationResponse.data);
+        } else {
+          const filterStation = stationResponse.data.filter(
+            (item) => item.station_teacher === filterData[0].id
+          );
+          setStation(filterStation);
         }
-      
 
         // setStation(filterStation);
       } catch (error) {
         setError("Error fetching data");
       }
     };
-  
+
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const studentList = await fetchStudent(config)
+      setData(studentList)
+      setNewUser(false)
+    }
+    
+    if(newUser)
+      fetchData();
+  }, [newUser])
+
   const searchStudent = async (e) => {
     e.preventDefault();
     const studentId = studentCode.studentCode;
- if (!studentId) {
+    if (!studentId) {
       setError("Student code is required.");
       return;
     }
@@ -126,7 +147,6 @@ function StudentList() {
           `https://my-project-ppdr.vercel.app/test/`,
           data,
           config
-
         );
         // console.log(response.data);
         alert("Test data saved successfully");
@@ -378,7 +398,7 @@ function StudentList() {
             export
           </button>
           <div className="flex justify-end ">
-            {role === 1 && <ImportExcelPage />}
+            {role === 1 && <ImportExcelPage setNewUser={setNewUser} />}
           </div>
         </div>
         <p>{error}</p>

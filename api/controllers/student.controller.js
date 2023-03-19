@@ -49,16 +49,12 @@ const addStudent = async(req, res) => {
 const deleteStudent = async(req, res) => {
     const data = req.body
     const deleteStudent = await prisma.student.deleteMany({
-        where: {
-            // OR :[{id:data.id},{name:data.name}]
-            id:data.query.id
-            
-        }, 
+
         
     })
     const createLog = await prisma.logEntry.create({
         data: {
-          message: `${req.user} delete a  student with id ${data.id} and name `,
+          message: `${req.user} reset all students`,
           level: "info",
           timestamp: new Date(),
         }
