@@ -4,7 +4,7 @@ import TodoList from "../item/todoList";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const AddUser = ({ visible }) => {
+const AddUser = ({ visible, handleClose }) => {
   const station = [
     "History talking patient ",
     "Peptic ulcer ",
@@ -99,7 +99,7 @@ const AddUser = ({ visible }) => {
         <div className="flex  w-full items-center gap-1 ">
         
             <button className="btn w-full mr-1 ml-1 " onClick={(e) => {
-              regUser(e)
+              regUser(e),
               handleClose()
               }}>
               submit

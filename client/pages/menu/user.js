@@ -30,20 +30,7 @@ const config = {
   headers: { Authorization: `Bearer ${token}` },
 };
 
-const fetchTeacher = async () => {
-  try {
-    const response = await axios.get(
-      `https://my-project-ppdr.vercel.app/teacher/`,
-      config
-    );
-    console.log(response);
 
-    setTeacher(response.data);
-    // return(response.data)
-  } catch (error) {
-    // setErrMsg(error);
-  }
-};
 
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -102,6 +89,20 @@ function UserEdit() {
       break;
   }
   useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        console.log(response);
+    
+        setTeacher(response.data);
+        // return(response.data)
+      } catch (error) {
+        // setErrMsg(error);
+      }
+    };
     if (newOrderPostOpen === "open") return;
 
     fetchTeacher();
@@ -199,16 +200,17 @@ function UserEdit() {
                 </td>
               </tr>
             ))}
+            
           </tbody>
-   
-        <button
-          className="btn bg-main-green"
-          onClick={() => onNewOrderClick("open", null)}
-        >
-          Add new
-        </button>
-        </table>
 
+        </table>
+               
+         <button
+           className="btn bg-main-green"
+           onClick={() => onNewOrderClick("open", null)}
+         >
+           Add new
+         </button> 
         <div
           className={`${
             newOrderPostOpen === "open" || editUserPopup === "open"
