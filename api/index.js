@@ -66,7 +66,7 @@ useJWTRouter.use('/cheated',cheatedRouter)
 useJWTRouter.use('/import-student',excelRouter)
 useJWTRouter.use('/register', registerRouter)
 useJWTRouter.use('/teacher-log', logRouter);
-useJWTRouter.use('/export',exportRouter)
+app.use('/export',exportRouter)
 useJWTRouter.use('/teacher', teacherRouter)
 useJWTRouter.use('/student', studentRouter)
 useJWTRouter.use('/station',stationRouter)
