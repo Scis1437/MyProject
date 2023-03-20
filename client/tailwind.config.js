@@ -48,21 +48,28 @@ module.exports = {
       orange: "#ff7849",
       green: "#13ce66",
       yellow: "#ffc82c",
+      "blue-import-btn" : "#35aee9" ,
+      "blue-import-btn-onclick" : "#1692ce" ,
+  
       "gray-dark": "#273444",
-      gray: "#8492a6",
+      "gray-table": "#8492a6",
       "gray-light": "#c0c0c0",
+      "gray-input" : "#ebebeb" ,
       "light-petite-pink": "#f0d8d8",
       "sefid-white": "#fff0f0",
       "uproar-red": "#f01800",
       "frozen-salmon": "#ffa890",
       "quartz-pink": "#f0a8a8",
-      "scrab-red": "#900000",
+      "scrab-red": "#cb0000",
+      "red-incomplete" : "#cb0000",
       "main-green": "#009B9B",
-      "hover-green": "#1c7f7f",
+      "hover-green": "#007c7c",
       "click-green": "#166666",
+      "correct-green" : "#209c11",
       "input-green": "#C9EAEA",
       "light-green": "#239fa0",
       "btn-red": "#dc605f",
+      "onclick-btn-red" : "#cf2f2d" ,
       "table-odd": "#D8EBEB",
     }),
     columns: {
@@ -1002,5 +1009,8 @@ module.exports = {
     "active",
     "disabled",
   ],
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+]
+
 };

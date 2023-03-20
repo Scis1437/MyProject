@@ -27,14 +27,14 @@ function Studentpage() {
     return (
       <table className="w-full mt-10">
         <thead className=" ">
-          <tr className="rounded-lg bg-gray ">
+          <tr className="rounded-lg bg-gray-table ">
             <th
               scope="col"
-              className="text-title-table text-left rounded-tl-lg "
+              className="text-header-table text-left rounded-tl-lg "
             >
               Title
             </th>
-            <th className="text-title-table text-right rounded-tr-lg ">
+            <th className="text-header-table text-right rounded-tr-lg ">
               <p>Status</p>
             </th>
           </tr>
@@ -64,12 +64,12 @@ function Studentpage() {
               key={items.station_Id}
               className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg"
             >
-              <td className=" py-4 whitespace-nowrap  px-6 text-sm font-medium text-gray-900">
+              <td className="text-title-table">
                 {`${items.station_name}`}
               </td>
               <td
-                className={`text-sm text-gray-900 px-6 py-4 whitespace-nowrap text-end ${
-                  items.status === "Complete" ? "text-green" : "text-red-500"
+                className={`text-title-table text-end ${
+                  items.status === "Complete" ? "text-correct-green" : "text-red-incomplete"
                 }`}
               >
                 {`${items.status}`}
@@ -95,19 +95,7 @@ function Studentpage() {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  //   const fetchStation = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:9000/station/`,
-  //       config
-  //     );
 
-  //     setStation(response.data);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-  //   fetchStation();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -159,7 +147,7 @@ function Studentpage() {
   };
 
   return (
-     <div className="background">
+    <div className="background">
       <div className="pl-10% flex flex-row w-full justify-start">
         <div className="flex items-center">
           <FontAwesomeIcon
@@ -170,12 +158,11 @@ function Studentpage() {
             }}
           ></FontAwesomeIcon>
         </div>
-      
+
         <p className="text-white font-extrabold text-xl  w-full md:text-2xl ">
-          StudentCheck
+          STUDENT CHECK
         </p>
       </div>
-      
       <div className="container">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -184,29 +171,13 @@ function Studentpage() {
                 <div className="grid grid-cols-1  w-full h-12 mb-5 md:grid-cols-2 px-5 ">
                   <div className="flex justify-center md:justify-start items-center mb-4 md:mb-0">
                     <Image
-                      className="w-32 md:w-44  flex justify-start items-center "
+                      className="w-40 md:w-48  flex justify-start items-center "
                       src={medImg}
                       alt="med"
                     />
                   </div>
-                  <div className=" flex  justify-center md:justify-end items-center place-items-center">
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      placeholder="62071xxxx"
-                      value={studentCode.value}
-                      onChange={(e) =>
-                        setStudentCode({ studentCode: e.target.value })
-                      }
-                      className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
-                    />
-                    <button className="btn" onClick={(e) => handleSearch(e)}>
-                      SUBMIT
-                    </button>{" "}
-                    <p>{error}</p>
-                  <div className=" flex flex-col  justify-center md:justify-end items-center place-items-center">
-                    <div className="flex">
+                  <div className=" flex flex-col justify-center md:justify-end items-center place-items-center">
+                    <div className="flex ">
                       <input
                         type="text"
                         id="username"
@@ -216,14 +187,14 @@ function Studentpage() {
                         onChange={(e) =>
                           setStudentCode({ studentCode: e.target.value })
                         }
-                        className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
+                        className="input_box mr-1"
                       />
-                      <button className="btn" onClick={(e) => handleSearch(e)}>
+                      <button className="btn  " onClick={(e) => handleSearch(e)}>
                         SUBMIT
                       </button>{" "}
                     </div>
 
-                    <p className="">{error}</p>
+                    <p className="error-msg">{error}</p>
                   </div>
                 </div>
 
@@ -259,7 +230,9 @@ function Studentpage() {
         <div className="flex-row place-items-center overflow-y-scroll mt-10 mx-4 h-5/6 displayNone">
           {item}
         </div> */}
-              {/* <input
+      </div>
+
+      {/* <input
           type="text"
           id="username"
           name="username"
@@ -267,10 +240,7 @@ function Studentpage() {
           className="rounded-md w-60 bg-gray-light gap-y-10"
           value={searchID}
         /> */}
-      </div>
-      </div>
-      </div>
-    
+    </div>
   );
 }
 

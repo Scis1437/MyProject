@@ -6,6 +6,7 @@
       font-family: Promt, system-ui, sans-serif;
     }
 
+    
   }
 /* Hide scrollbar for Firefox */
 .overflow-y-scroll {
@@ -19,34 +20,49 @@
   background: transparent; /* Optional: just make scrollbar invisible */
 }
 .input{
-  @apply  rounded-md md:w-60 bg-input-green pl-3 ;
+  @apply  rounded-md md:w-60 bg-gray-input pl-3  border-none;
 }
 .container {
-       @apply w-11/12  md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative  overflow-hidden  
+@apply w-11/12  md:w-5/6 p-2 md:p-5 h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative  overflow-hidden  
 }
 /* overflow-y-scroll */
 .box-inside-container {
   @apply overflow-y-scroll 
 }
 .select-button {
-        @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
+  @apply bg-sefid-white  hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
 }
 .btn {
-       @apply bg-main-green rounded-2xl px-2 md:px-3 font-semibold text-white text-xs md:text-sm
+@apply bg-main-green hover:bg-hover-green   rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
 }
-
 .delete-btn {
-  @apply bg-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm
+  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
 
 }
+.delete-btn-todo {
+  @apply text-gray-dark hover:text-red-400 rounded-xl  
+
+}
+
+.semi-btn {
+
+  @apply bg-main-green hover:bg-hover-green  rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20 
+}
+
+.semi-delete-btn {
+  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
+}
+
+.import-btn {
+  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-xl ml-2 px-2  md:px-3 font-semibold text-white text-xs md:text-sm w-20
+}
+
 
 .bg-css{
       @apply h-screen bg-main-green   flex flex-col justify-center items-center ;
 }
 
-.border-radius-table {
-      
-}
+
 
 .background {
     @apply h-screen bg-main-green   flex flex-col justify-center items-center  ;
@@ -76,20 +92,17 @@
   @apply m-5
 }
 
-.text-title-table {
-  @apply text-sm  md:text-xl font-medium  px-6 py-4
-}
 
 .backward-btn {
   @apply text-white mr-2 text-2xl hover:text-gray-light
 }
 
 .logout-position {
- @apply absolute top-1 right-10% z-10
+ @apply absolute top-1 md:top-3 right-10% z-40
 }
 
 .logout-btn {
-  @apply border-2 text-red-600 bg-white hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
+  @apply border-2 text-red-600 bg-slate-100 hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
 }
 
 .fit {
@@ -103,3 +116,42 @@
 .status-table {
   @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-red-500
 }
+
+.error-msg {
+  @apply text-base text-red-600
+}
+
+.text-title-table {
+  @apply py-4 whitespace-nowrap  px-6 text-sm md:text-lg font-medium 
+}
+
+.text-header-table {
+  @apply  text-sm  md:text-xl font-medium  px-6 py-4
+}
+
+.input_box{
+  @apply rounded-md md:w-56 bg-input-green pl-3 border-none
+}
+/* @layer utilities {
+  .file-bg-blue-50 {
+    background-color: #BFDBFE;
+  }
+}
+.file-input {
+  @apply text-sm rounded-lg bg-gray text-black
+    file:mr-5 file:py-2 file:px-6
+    file:rounded-full file:border-0
+    file:text-sm file:font-medium
+    file:text-blue-700
+    hover:file:cursor-pointer hover:file:bg-amber-50
+    hover:file:text-amber-700;
+}
+.file-input::-webkit-file-upload-button {
+  @apply file-bg-blue-50;
+}
+.file-input::-moz-file-upload-button {
+  @apply file-bg-blue-50;
+}
+ */
+/* Apply the custom background color to the file input */
+

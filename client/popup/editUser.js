@@ -3,7 +3,7 @@ import TodoList from "../item/todoList";
 import Homemodule from "../styles/Home.module.css";
 import { useState } from "react";
 import axios from "axios";
-const EditUser = ({ visible, data , handleClose }) => {
+const EditUser = ({ visible, data, handleClose }) => {
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
@@ -78,8 +78,8 @@ const EditUser = ({ visible, data , handleClose }) => {
   }
   return (
     <div>
-      <form className="bg-gray flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4">
-        <div className="flex flex-col space-y-4">
+      <form className="bg-gray-light flex flex-col justify-between  p-2 rounded-md shadow-xl shadow-gray m-4 ">
+        <div className="flex flex-col  justify-between space-y-4">
           {/* <div className="space-y-4">
             <label htmlFor="id-input" className="text-gray-600 font-medium ">
               username:
@@ -93,29 +93,29 @@ const EditUser = ({ visible, data , handleClose }) => {
               }
             />
           </div> */}
-          <div className="mb-2 space-y-4">
-            <label htmlFor="name-input" className="text-gray-600 font-medium">
+          <div className="space-y-4 flex justify-between mb-4">
+            <label htmlFor="name-input" className="text-gray-600 font-medium md:text-lg ">
               name:
             </label>
             <input
               id="name-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 "
               value={dataInput.name}
               onChange={(e) =>
                 setDataInput({ ...dataInput, name: e.target.value })
               }
             />
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 flex justify-between mb-4">
             <label
               htmlFor="password-input"
-              className="text-gray-600 font-medium"
+              className="text-gray-600 font-medium md:text-lg "
             >
               password:
             </label>
             <input
               id="password-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 border-none"
               type="password"
               placeholder=""
               onChange={(e) =>
@@ -123,13 +123,26 @@ const EditUser = ({ visible, data , handleClose }) => {
               }
             />
           </div>
-        </div>          
-        <button className="btn" onClick={(e) => {
-              handleUpdate(e),
-              handleClose()
-              }}>
-          Update Teacher
-        </button>
+        </div>
+        <div className="flex  w-full items-center gap-1">
+          <button
+            className="btn w-full mr-1 ml-1"
+            onClick={(e) => {
+              handleUpdate(e), handleClose();
+            }}
+          >
+            Update
+          </button>
+          <button
+          className="delete-btn w-full mr-1 ml-1"
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            Cancle
+          </button>
+        </div>
+
         {errMsg && <div className="text-red-500 text-center">{errMsg}</div>}
       </form>
     </div>

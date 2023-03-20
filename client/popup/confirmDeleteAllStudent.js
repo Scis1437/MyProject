@@ -6,7 +6,7 @@ import Redirect from "../item/Redirect";
 import Logout from "../item/logout";
 import axios from "axios";
 
-const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
+const ConfrimDeleteAllStudent = ({ visible, handleClose }) => {
   const [errMsg, setErrMsg] = useState();
   let token;
   if (typeof localStorage !== "undefined") {
@@ -15,37 +15,30 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const deleteStation = async (e) => {
+  const deleteAllStudent = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.delete(
-        `https://my-project-ppdr.vercel.app/station?id=${data.id}`,
-        config
-      );
-      handleClose()
-      console.log("delete data");
-      // alert(`Delete ${data.station_name} station`)
-    } catch (error) {
-      setErrMsg("Error delete station");
+    //   await axios.delete(
+    //     `https://my-project-scis1437.vercel.app/student`,
+    //     config
+    //   );
+    handleClose()
+      
+    } catch (err) {
+      setErrMsg("Error delete all student ");
     }
+
+   
   };
-
-  //   alert("delete all sudent!");
-  // };
-
   return (
     <div className="bg-gray-light flex flex-col justify-center p-5 rounded-md shadow-lg shadow-gray m-4 opacity-50 ">
-      <p className="text-center text-subheader">
-        DELETE STATION{" "}
-        <span className="text-red-incomplete">{data.station_name}</span>
-      </p>
-      <p>Are you sure you want to delete station?</p>
+      <p className="text-center text-subheader">DELETE ALL STUDENT</p>
+      <p>Are you sure you want to delete all student?</p>
       <div className="flex justify-center items-center w-full mt-2">
         <button
           className="logout-btn"
           onClick={(event) => {
-            deleteStation(event);
+            deleteAllStudent(event), handleClose;
           }}
         >
           Sure
@@ -58,4 +51,4 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
   );
 };
 
-export default ConfrimDeleteStation;
+export default ConfrimDeleteAllStudent;

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
-import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleLeft,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
+import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
 import axios from "axios";
 import Logout from "../../item/logout";
 import ImportExcelPage from "../../item/importExcel";
+import ConfrimDeleteAllStudent from "../../popup/confirmDeleteAllStudent";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function Redirect({ to }) {
@@ -35,9 +40,10 @@ function StudentList() {
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
   const [role, setRole] = useState(0);
-  const [newUser, setNewUser] = useState(false)
+  const [newUser, setNewUser] = useState(false);
   const [user, setUser] = useState(null);
   const [teacher, setTeacher] = useState(null);
+  const [comfirmDeleteAll, setConfirmDeleteAll] = useState(false);
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -50,6 +56,25 @@ function StudentList() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
+
+  const closeOrderPost = () => {
+    setConfirmDeleteAll(false);
+  };
+  const deleteAllStudent = async () => {
+    setConfirmDeleteAll(true);
+  };
+  let conponentConfirm = null;
+  switch (comfirmDeleteAll) {
+    case true:
+      conponentConfirm = (
+        <ConfrimDeleteAllStudent visible={false} handleClose={closeOrderPost} />
+      );
+      break;
+    case false:
+      conponentConfirm = null;
+      break;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
@@ -71,7 +96,7 @@ function StudentList() {
         //   `https://my-project-ppdr.vercel.app/student/`,
         //   config
         // );
-        const studentList = await fetchStudent(config)
+        const studentList = await fetchStudent(config);
         setData(studentList);
 
         const stationResponse = await axios.get(
@@ -100,14 +125,13 @@ function StudentList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const studentList = await fetchStudent(config)
-      setData(studentList)
-      setNewUser(false)
-    }
-    
-    if(newUser)
-      fetchData();
-  }, [newUser])
+      const studentList = await fetchStudent(config);
+      setData(studentList);
+      setNewUser(false);
+    };
+
+    if (newUser) fetchData();
+  }, [newUser]);
 
   const searchStudent = async (e) => {
     e.preventDefault();
@@ -129,6 +153,14 @@ function StudentList() {
       setStatus(true);
     }
   };
+
+  // const deleteAllStudent = async () => {
+  //   await axios.delete(
+  //     `https://my-project-scis1437.vercel.app/student`,
+  //     config
+  //   );
+  //   alert("delete all sudent!");
+  // };
   const List = (dataSet) => {
     const handleSaveTest = async (studentId, stationId, testNumber, score) => {
       console.log(`studentId : ${studentId}`);
@@ -237,7 +269,7 @@ function StudentList() {
       return (
         <div>
           <div onClick={() => setDropdownTitle(!dropdownTitle)}>
-            {props.station_name}
+            <div className="mx-4 text-lg">{props.station_name}</div>
           </div>
 
           {dropdownTitle ? (
@@ -245,16 +277,19 @@ function StudentList() {
               <form className="">
                 {test?.map((list, index) => {
                   return (
-                    <div className="flex justify-between w-full" key={index}>
+                    <div
+                      className="flex justify-between w-full px-6"
+                      key={index}
+                    >
                       <label
-                        className="text-xs mx-3 w-full "
+                        className="text-base  w-full "
                         htmlFor="subStation"
                       >
                         {list.test_name}
                       </label>
 
                       <select
-                        className="h-5"
+                        className="rounded-md  border-none  p-0"
                         defaultValue={list.score}
                         onChange={(e) => {
                           const newData = test.map((item) => {
@@ -286,12 +321,14 @@ function StudentList() {
                   );
                 })}
               </form>
-              <button
-                className="btn"
-                onClick={(event) => handleScoreSave(event)}
-              >
-                Save
-              </button>
+              <div className="flex w-full justify-end mt-2">
+                <button
+                  className="semi-btn mx-4"
+                  onClick={(event) => handleScoreSave(event)}
+                >
+                  Save
+                </button>
+              </div>
             </div>
           ) : null}
         </div>
@@ -305,6 +342,12 @@ function StudentList() {
 
     const [dropdown, setDropdown] = useState(false);
     const [student, setStudent] = useState(dataSet);
+    const [isRotated, setIsRotated] = useState(false);
+
+    const handleRotate = () => {
+      console.log("Rotate");
+      setIsRotated(!isRotated);
+    };
 
     return (
       <div className="py-2 " key={student.id}>
@@ -312,11 +355,20 @@ function StudentList() {
           className="rounded-md bg-table-odd h-7 py-5 flex items-center"
           onClick={() => setDropdown(!dropdown)}
         >
-          <p className="text-sm mx-1 flex ">{student.id}</p>
+          <div className="flex items-cen" onClick={handleRotate}>
+            <FontAwesomeIcon
+              icon={faCaretDown}
+              className={`flex mt-4 items-center pl-4 ${
+                isRotated ? "fa-rotate-0 ml-1 mt-0 pl-1" : "fa-rotate-270"
+              }`}
+            />
+          </div>
+
+          <p className="text-sm md:text-lg mx-1 flex ">{student.id}</p>
         </div>
 
         {dropdown ? (
-          <div>
+          <div className="  ">
             {station?.map((list) => {
               return (
                 <DropdownTitle key={list.id} {...list} student={student} />
@@ -338,9 +390,6 @@ function StudentList() {
         config
       );
 
-      // useEffect(() => {
-      //   fetchSubtest (filterStation.station_Id) ;
-      // }, []);
       console.log(response.data);
     } catch (error) {
       setError("Error export ");
@@ -366,7 +415,7 @@ function StudentList() {
         </div>
         <div className="flex flex-row justify-between w-full">
           <p className="text-white font-extrabold text-xl w-full md:text-2xl">
-            Student list
+            STUDENT LIST
           </p>
           <div className="logout-position">
             <Logout />
@@ -374,34 +423,49 @@ function StudentList() {
         </div>
       </div>
       <div className="container  ">
-        <div className="flex w-full items-center justify-start">
-          <p className="text-subheader ">search for student : </p>
-          <input
-            type="text"
-            id="studentCode"
-            name="studentCode"
-            placeholder="62061xxxx"
-            value={studentCode.value}
-            onChange={(e) => setStudentCode({ studentCode: e.target.value })}
-            className="rounded-md  w-40 md:w-auto h-6 bg-input-green p-2 mr-1"
-          />
+        <div className="flex w-full items-center justify-between">
+          <div className="flex gap-1">
+            <p className="text-subheader ">search for student : </p>
+            <input
+              type="text"
+              id="studentCode"
+              name="studentCode"
+              placeholder="62061xxxx"
+              value={studentCode.value}
+              onChange={(e) => setStudentCode({ studentCode: e.target.value })}
+              className="input_box h-7"
+            />
 
-          <button
-            className="btn"
-            onClick={(e) => {
-              searchStudent(e);
-            }}
-          >
-            SUBMIT
-          </button>
-          <button className="btn" onClick={exportScore}>
-            export
-          </button>
-          <div className="flex justify-end ">
+            <button
+              className="semi-btn "
+              onClick={(e) => {
+                searchStudent(e);
+              }}
+            >
+              SUBMIT
+            </button>
+            <div className="flex cursor-pointer " onClick={exportScore}>
+              <FileDownloadRoundedIcon className="flex items-center mt-1 text-gray-dark" />
+              <p className="">export</p>
+            </div>
+          </div>
+          {role === 1 && (
+            <div className="">
+              <button
+                className="bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-28"
+                onClick={deleteAllStudent}
+              >
+                DELETE ALL
+              </button>
+            </div>
+          )}
+        </div>
+        <div className=" mt-4">
+          <div className=" ">
             {role === 1 && <ImportExcelPage setNewUser={setNewUser} />}
           </div>
         </div>
-        <p>{error}</p>
+        <p className="error-msg">{error}</p>
         {status ? <p>No data found</p> : null}
         <div className=" ">
           <div className="overflow-y-scroll h-screen ">
@@ -423,7 +487,15 @@ function StudentList() {
           </div>
         </div>
       </div>
-
+      <div
+        className={`${
+          comfirmDeleteAll === true
+            ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
+            : ""
+        }`}
+      >
+        {conponentConfirm}
+      </div>
       <div className="logout-position">
         <Logout />
       </div>

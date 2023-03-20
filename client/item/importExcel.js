@@ -3,7 +3,7 @@ import xlsx from "xlsx";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-function ImportExcelPage({ setNewUser}) {
+function ImportExcelPage({ setNewUser }) {
   const [file, setFile] = useState(null);
   const [data, setData] = useState([]);
   const [errMsg, setErrMsg] = useState();
@@ -30,9 +30,9 @@ function ImportExcelPage({ setNewUser}) {
       );
       console.log(`response: ${JSON.stringify(response.data)}`);
 
-      setNewUser(true)
+      setNewUser(true);
     } catch (error) {
-      setErrMsg("Error Save Data ");
+      setErrMsg("ERROR IMPORT DATA");
     }
   };
 
@@ -55,7 +55,7 @@ function ImportExcelPage({ setNewUser}) {
           }, {})
         );
 
-        // saveStudentData(dataArray);
+        saveStudentData(dataArray);
         setData(dataArray);
       };
       reader.readAsBinaryString(files[0]);
@@ -64,31 +64,21 @@ function ImportExcelPage({ setNewUser}) {
 
   return (
     <div>
-      <input type="file" onChange={handleFile} />
-      <p>{errMsg}</p>
-      <div>
+      <div className="flex">
+        <input
+          id="file_input"
+          type="file"
+          class="block text-sm text-sefid-white bg-gray-light border border-gray-300 
+            rounded-lg cursor-pointer w-full focus:outline-none  file:bg-gray
+             "
+          onChange={(e) => handleFile(e)}
+        ></input>
         <button className="import-btn" onClick={saveStudentData}>
           {" "}
-          import excel
+          import
         </button>
-      </div>
-
-      {/* {data.length > 0 && (
-        <table>
-          <thead>
-            <tr>{data[0].map((cell, i) => <th key={i}>{cell}</th>)}</tr>
-          </thead>
-          <tbody>
-            {data.slice(1).map((row, i) => (
-              <tr key={i}>
-                {row.map((cell, j) => (
-                  <td key={j}>{cell}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )} */}
+      </div>{" "}
+      <p className="error-msg">{errMsg}</p>
     </div>
   );
 }

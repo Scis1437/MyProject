@@ -34,25 +34,6 @@ function ScanBarcode() {
     const [redirecting, setRedirecting] = useState(false);
 
     const station_name = station;
-    // useEffect(() => {
-    //   const fetchTest = async () => {
-    //     try {
-    //       const response = await axios.get(
-    //         `https://my-project-ppdr.vercel.app/test/`,
-    //         {
-    //           params: { student_id: studentCode },
-    //           headers: { Authorization: `Bearer ${token}` },
-    //         }
-    //       );
-    //       const filterData =await subTest.filter((item) => item.station_Id === station_Id)
-    //       setSubtest(filterData)
-    //     } catch (error) {
-    //       setErrMsg("Error searching for student data");
-    //     }
-    //   };
-
-    //   fetchTest();
-    // }, []);
 
 
 
@@ -80,10 +61,16 @@ function ScanBarcode() {
         className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
         onClick={handleOnClick}
       >
-        <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
           {station}
         </td>
-        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
+        {/* className={`text-title-table text-end ${
+                  items.status === "Complete" ? "text-correct-green" : "text-red-incomplete"
+                }`} */}
+
+        <td className={`text-sm font-light px-6 py-4 whitespace-nowrap text-center ${
+                    studentStatus === "Complete" ? "text-correct-green" : "text-red-incomplete"
+                }`}>
           {studentStatus}
         </td>
       </tr>
@@ -219,11 +206,11 @@ function ScanBarcode() {
         <div>
           <div>
             <div className="flex w-20">
-              <p className="whitespace-nowrap">student code :</p>
+              <p className="whitespace-nowrap text-lg">student code :</p>
               <input
                 id="student_code"
                 value={studentCode}
-                className="fit "
+                className="input"
                 onChange={(e) => setStudentCode(e.target.value)}
               />
 
@@ -232,11 +219,11 @@ function ScanBarcode() {
               </button>
             </div>
 
-            <p>student name : {data?.name}</p>
+            <p className="text-lg">student name : {data?.name}</p>
           </div>
           <table className="table-auto w-full">
             <thead>
-              <tr className="w-full rounded-lg bg-gray ">
+              <tr className="w-full rounded-lg bg-gray-table ">
                 <th className="rounded-tl-lg text-sm  md:text-lg font-medium text-gray-900 px-6 py-4 ">
                   Station
                 </th>
