@@ -71,6 +71,7 @@ const handleLogin = async (req, res) => {
       data: { refresh_token: refreshToken }
     })
 
+
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       sameSite: "None",
@@ -88,4 +89,12 @@ const handleLogin = async (req, res) => {
   }
 };
 
-module.exports = { handleLogin };
+const deleteUser = async (req, res) =>{
+  const deleteUser = await prisma.user.delete({
+    where: { username: req.query.username },
+    //data: { refresh_token: refreshToken }
+  })
+  res.json(deleteUser)
+}
+
+module.exports = { handleLogin,deleteUser };
