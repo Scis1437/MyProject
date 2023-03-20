@@ -7,14 +7,15 @@ const addAllStudent = async(req, res) => {
     console.log(data)
     const addAllStudent = await prisma.student.createMany({
 
-        data,
+       data:req.body,skipDuplicates: true,
+       
     })
     const createLog = await prisma.logEntry.create({
         data: {
           message: `${req.user} add all  student with  `,
           level: "info",
           timestamp: new Date(),
-        },skipDuplicates: true, // optional, skips adding duplicates
+        }, // optional, skips adding duplicates
       })
     
     res.json(addAllStudent)

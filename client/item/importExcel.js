@@ -1,9 +1,9 @@
 // import * as XLSX from "xlsx";
 import xlsx from "xlsx";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { config } from "@fortawesome/fontawesome-svg-core";
 
-function ImportExcelPage() {
+function ImportExcelPage({ setNewUser}) {
   const [file, setFile] = useState(null);
   const [data, setData] = useState([]);
   const [errMsg, setErrMsg] = useState();
@@ -16,15 +16,30 @@ function ImportExcelPage() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const saveStudentData = async (data) => {
-    console.log(data);
+  const saveStudentData = async () => {
+    // const studentData = data.map((student) => ({
+    //   id: student.id,
+    //   name: student.name,
+    // }));
+    console.log(`received: ${JSON.stringify(data)}`);
     try {
+<<<<<<< HEAD
       // const response = await axios.post(
       //   "https://my-project-ppdr.vercel.app/test",
       //   data, // Wrap the array in an object with a 'data' field
       //   config // Define the 'config' object with any necessary options
       // );
       // console.log(response.data);
+=======
+      const response = await axios.post(
+        "https://my-project-ppdr.vercel.app/import-student",
+        data, // Wrap the array in an object with a 'data' field
+        config // Define the 'config' object with any necessary options
+      );
+      console.log(`response: ${JSON.stringify(response.data)}`);
+
+      setNewUser(true)
+>>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
     } catch (error) {
       setErrMsg("Error Save Data ");
     }
@@ -49,7 +64,11 @@ function ImportExcelPage() {
           }, {})
         );
 
+<<<<<<< HEAD
         saveStudentData(dataArray);
+=======
+        // saveStudentData(dataArray);
+>>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
         setData(dataArray);
       };
       reader.readAsBinaryString(files[0]);
@@ -67,6 +86,32 @@ function ImportExcelPage() {
              onChange={(e) => handleFile(e)}
       ></input>
       <p>{errMsg}</p>
+<<<<<<< HEAD
+=======
+      <div>
+        <button className="import-btn" onClick={saveStudentData}>
+          {" "}
+          import excel
+        </button>
+      </div>
+
+      {/* {data.length > 0 && (
+        <table>
+          <thead>
+            <tr>{data[0].map((cell, i) => <th key={i}>{cell}</th>)}</tr>
+          </thead>
+          <tbody>
+            {data.slice(1).map((row, i) => (
+              <tr key={i}>
+                {row.map((cell, j) => (
+                  <td key={j}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )} */}
+>>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
     </div>
   );
 }
