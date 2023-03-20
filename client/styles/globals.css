@@ -73,7 +73,7 @@
 }
 
 .text-subheader {
-  @apply text-base  font-semibold;
+  @apply text-base md:text-lg font-semibold;
 }
 
 .invalid_Login {

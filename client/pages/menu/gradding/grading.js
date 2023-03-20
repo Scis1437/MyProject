@@ -18,7 +18,11 @@ function Gradding() {
   const [station, setStation] = useState();
   const [name, setName] = useState();
   const [time, setTime] = useState(10);
+  const [shouldStartCountdown, setShouldStartCountdown] = useState(false);
 
+  const handleStartCountdown = () => {
+    setShouldStartCountdown(true);
+  };
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
   };
@@ -169,12 +173,12 @@ function Gradding() {
     console.log(data);
 
     try {
-      const response = await axios.post(
-        `https://my-project-ppdr.vercel.app/test`,
-        data,
-        config
-      );
-      console.log(`add data complete`);
+      // const response = await axios.post(
+      //   `https://my-project-ppdr.vercel.app/test`,
+      //   data,
+      //   config
+      // );
+      // console.log(`add data complete`);
     } catch (error) {
       setErrMsg(error);
     }
@@ -182,23 +186,29 @@ function Gradding() {
 
   const handleScoreSave = async () => {
     const user = parseJwt(`Bearer ${localStorage.getItem("access")}`);
-    subTest?.forEach((testData) =>
-      addScore({
-        station_Id: testData.station_Id,
-        student_id: studentCode,
-        test_number: testData.test_number,
-        score: parseInt(testData.score),
-        station_name: station_name,
-        // station_teacher:  user.username,
-        station_teacher: user.UserInfo.username,
-        test_name: testData.test_name,
-        name: name?.name,
-      })
-    );
-    alert("Test data saved successfully");
-    router.push({
-      pathname: "/menu/grading/",
-    });
+    if (await subTest?.some((testData) => testData.score === "null")) {
+      setErrMsg("Please assign a score for all tests before submitting.");
+      console.log("err have null");
+      return;
+    } else {
+      subTest?.forEach((testData) =>
+        addScore({
+          station_Id: testData.station_Id,
+          student_id: studentCode,
+          test_number: testData.test_number,
+          score: parseInt(testData.score),
+          station_name: station_name,
+          // station_teacher:  user.username,
+          station_teacher: user.UserInfo.username,
+          test_name: testData.test_name,
+          name: name?.name,
+        })
+      );
+      alert("Test data saved successfully");
+      router.push({
+        pathname: "/menu/grading/",
+      });
+    }
   };
   if (shouldRedirect) {
     return <Redirect to="/menu/grading" />;
@@ -241,9 +251,13 @@ function Gradding() {
 
       <div className="container ">
         <div className="flex justify-between">
-          <div>
-            <p className="text-subheader ">student code : <span className="font-normal">{studentCode}</span></p>
-            <p className="text-subheader ">student name :  <span className="font-normal">{name?.name}</span> </p>
+          <div className="">
+            <p className="text-subheader ">
+              student code : <span className="font-normal">{studentCode}</span>
+            </p>
+            <p className="text-subheader mt-2">
+              student name : <span className="font-normal">{name?.name}</span>{" "}
+            </p>
             {/* <div className="flex">
               <p className="pr-4 ">set time out : </p>{" "}
               <input
@@ -251,12 +265,18 @@ function Gradding() {
                 onChange={(e) => setTime(e.target.value)}
               ></input>
             </div> */}
+            <div>
+              <input
+                className=" rounded-md  bg-input-green pl-3 border-none mt-2 mr-1 text-center"
+                placeholder="enter time limit (minute)"
+                onChange={(e) => setTime(e.target.value)}
+              ></input>
+              <button className="semi-btn" onClick={handleStartCountdown}>
+                START
+              </button>
+            </div>{" "}
           </div>{" "}
-          {/* <CountdownTimer
-            minutes={time}
-            seconds={0}
-            onComplete={handleTimerComplete}
-          /> */}
+          {shouldStartCountdown && <CountdownTimer minutes={time} />}
         </div>
 
         <table className="table-auto w-full mt-4">
@@ -286,7 +306,7 @@ function Gradding() {
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
-                    <option value={null}>select</option>
+                    <option value="null">select</option>
                     <option value="0">fail</option>
                     <option value="10">pass</option>
                     <option value="0">0</option>
@@ -312,9 +332,23 @@ function Gradding() {
             {/* <button className="semi-delete-btn mt-2" onClick={cheterHandle}>
               CHEAT
             </button> */}
-            <button className="semi-btn mt-2" onClick={handleScoreSave}>
-              SUBMIT
-            </button>
+            <div className="flex justify-between">
+              <div className="flex gap-1">{/* {" "} */}</div>
+              <div className="flex flex-col gap-2 justify-end">
+                {/* <button className="semi-delete-btn mt-2" onClick={cheterHandle}>
+                  CHEAT
+                </button> */}
+                <div className="w-full flex justify-end">
+                     <button className="semi-btn mt-2" onClick={handleScoreSave}>
+                  SUBMIT
+                </button>
+                </div>
+             
+                <p className="error-msg ">{errMsg}</p>
+              </div>
+              
+            </div>
+            
           </div>
         </div>
       </div>

@@ -135,6 +135,7 @@ function ScanBarcode() {
 
   const searchStudent = async (e) => {
     e.preventDefault();
+    setErrMsg(null);
     try {
       const [studentResponse, testResponse] = await Promise.all([
         axios.get(`https://my-project-ppdr.vercel.app/student/${studentCode}`, {
@@ -211,7 +212,7 @@ function ScanBarcode() {
           <div>
             <div className="flex flex-col w-20">
               <div className="flex ">
-                <p className="whitespace-nowrap text-lg">student code :</p>
+                <p className="whitespace-nowrap text-subheader ">student code :</p>
                 <input
                   id="student_code"
                   value={studentCode}
@@ -225,8 +226,8 @@ function ScanBarcode() {
               </div>
             </div>
 
-            <p className="text-lg">
-              student name : {data?.name} <span className="error-msg"> {errMsg}</span>
+            <p className="whitespace-nowrap text-subheader ">
+              student name : <span className="text-base font-normal">{data?.name}</span> <span className="error-msg"> {errMsg}</span>
             </p>
           </div>{" "}
           {/* <p className="error-msg  ">{errMsg}</p> */}

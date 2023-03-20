@@ -1,21 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-function CountdownTimer({ minutes, seconds, onComplete }) {
-  const [timeLeft, setTimeLeft] = useState({ minutes: minutes, seconds: seconds });
+function CountdownTimer({ minutes }) {
+  const [timeLeft, setTimeLeft] = useState({
+    minutes: minutes,
+    seconds: 0,
+  });
 
   useEffect(() => {
-    const timer =
-      timeLeft.minutes > 0 || timeLeft.seconds > 0
-        ? setInterval(() => {
-            setTimeLeft({
-              minutes: timeLeft.seconds > 0 ? timeLeft.minutes : timeLeft.minutes - 1,
-              seconds: timeLeft.seconds > 0 ? timeLeft.seconds - 1 : 59,
-            });
-          }, 1000)
-        : onComplete();
+    let interval = null;
 
-    return () => clearInterval(timer);
-  }, [timeLeft, onComplete]);
+    if (timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+      clearInterval(interval);
+      // Handle countdown completion here
+    } else {
+      interval = setInterval(() => {
+        if (timeLeft.seconds === 0) {
+          setTimeLeft({
+            minutes: timeLeft.minutes - 1,
+            seconds: 59,
+          });
+        } else {
+          setTimeLeft({
+            minutes: timeLeft.minutes,
+            seconds: timeLeft.seconds - 1,
+          });
+        }
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
 
   return (
     <div>
