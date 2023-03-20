@@ -17,6 +17,7 @@ function Gradding() {
   const [test, setTest] = useState();
   const [station, setStation] = useState();
   const [name, setName] = useState();
+  const [time, setTime] = useState(10);
 
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
@@ -124,6 +125,9 @@ function Gradding() {
             // setSelectedTestId(data.station_Id);
           }}
         >
+          <option value="0">fail</option>
+          <option value="10">pass</option>
+          <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -193,11 +197,11 @@ function Gradding() {
     );
     alert("Test data saved successfully");
     router.push({
-      pathname: "/menu/gradding/",
+      pathname: "/menu/grading/",
     });
   };
   if (shouldRedirect) {
-    return <Redirect to="/menu/gradding" />;
+    return <Redirect to="/menu/grading" />;
   }
 
   const handleScoreChange = (testNumber, score) => {
@@ -214,7 +218,7 @@ function Gradding() {
   const handleTimerComplete = () => {
     console.log("Timer has completed!");
     alert("time out!");
-    handleScoreSave();
+
   };
   return (
     <div className="background">
@@ -241,17 +245,24 @@ function Gradding() {
           <div>
             <p>student code : {studentCode}</p>
             <p>student name : {name?.name} </p>
+            {/* <div className="flex">
+              <p className="pr-4 ">set time out : </p>{" "}
+              <input
+                className=" rounded-md w-20 bg-gray-input pl-4  border-none"
+                onChange={(e) => setTime(e.target.value)}
+              ></input>
+            </div> */}
           </div>{" "}
-          <CountdownTimer
-            minutes={30}
+          {/* <CountdownTimer
+            minutes={time}
             seconds={0}
             onComplete={handleTimerComplete}
-          />
+          /> */}
         </div>
 
-        <table className="table-auto w-full">
-          <thead>
-            <tr className="w-full">
+        <table className="table-auto w-full mt-4">
+          <thead className="w-full bg-gray-table rounded-xl ">
+            <tr className="rounded-lg bg-gray-table">
               <th className="w-1/2 px-4 py-2">Title</th>
               <th className="w-1/2 px-4 py-2 text-right">Point</th>
             </tr>
@@ -262,7 +273,7 @@ function Gradding() {
               <tr
                 key={testData.test_number}
                 // className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
-                className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50cursor-pointer"
+                className="bg-gray-100 mx-4 color-table "
               >
                 <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {testData.test_name}
@@ -276,7 +287,9 @@ function Gradding() {
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
-                    <option value="0">Score</option>
+                    <option value="0">fail</option>
+                    <option value="10">pass</option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -296,9 +309,9 @@ function Gradding() {
         <div className="flex justify-between">
           <div className="flex gap-1">{/* {" "} */}</div>
           <div className="flex gap-2">
-            <button className="semi-delete-btn mt-2" onClick={cheterHandle}>
+            {/* <button className="semi-delete-btn mt-2" onClick={cheterHandle}>
               CHEAT
-            </button>
+            </button> */}
             <button className="semi-btn mt-2" onClick={handleScoreSave}>
               SUBMIT
             </button>

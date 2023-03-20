@@ -15,22 +15,18 @@ const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const deleteUser = async () => {
+  const deleteUser = async (e) => {
+    e.preventDefault();
     const username = data.username;
-
+    console.log(username)
     try {
     await axios.delete(
-        `https://my-project-ppdr.vercel.app/teacher?id=${username}`,
-        config
+        `https://my-project-ppdr.vercel.app/auth?username=${username}`,
       );
 
-      // setTeacher((prevTeachers) =>
-      //   prevTeachers.filter(
-      //     (teacher) => teacher.teacher_name !== item.teacher_name
-      //   )
-      // );
-    //   alert(`User for ${data.username} deleted`);
+      // alert(`User for ${data.username} deleted`);
       handleClose()
+      window.location.reload(false);
       console.log(`delete ${data.username}`)
       // console.log(response.data);
       // return response.data;
@@ -45,10 +41,10 @@ const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
   return (
     <div className="bg-gray-light flex flex-col justify-center p-5 rounded-md shadow-lg shadow-gray m-4 opacity-50 ">
       <p className="text-center text-subheader">
-        DELETE STATION{" "}
-        <span className="text-red-incomplete">{data.station_name}</span>
+        DELETE USER{" "}
+        <span className="text-red-incomplete">{data.username}</span>
       </p>
-      <p>Are you sure you want to delete station?</p>
+      <p>Are you sure you want to delete user?</p>
       <div className="flex justify-center items-center w-full mt-2">
         <button
           className="logout-btn"

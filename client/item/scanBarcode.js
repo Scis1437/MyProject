@@ -35,8 +35,6 @@ function ScanBarcode() {
 
     const station_name = station;
 
-
-
     const handleOnClick = () => {
       if (studentStatus === "Complete") {
         console.log("This station already graded");
@@ -49,7 +47,7 @@ function ScanBarcode() {
       // console.log(redirectData)
 
       router.push({
-        pathname: "/menu/gradding/gradding",
+        pathname: "/menu/gradding/grading",
         query: { studentCode, station_Id, station_name },
       });
 
@@ -68,9 +66,13 @@ function ScanBarcode() {
                   items.status === "Complete" ? "text-correct-green" : "text-red-incomplete"
                 }`} */}
 
-        <td className={`text-sm font-light px-6 py-4 whitespace-nowrap text-center ${
-                    studentStatus === "Complete" ? "text-correct-green" : "text-red-incomplete"
-                }`}>
+        <td
+          className={`text-sm font-light px-6 py-4 whitespace-nowrap text-center ${
+            studentStatus === "Complete"
+              ? "text-correct-green"
+              : "text-red-incomplete"
+          }`}
+        >
           {studentStatus}
         </td>
       </tr>
@@ -138,42 +140,43 @@ function ScanBarcode() {
         axios.get(`https://my-project-ppdr.vercel.app/student/${studentCode}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`https://my-project-ppdr.vercel.app/test?student_id=${studentCode}`, {
-          
-          headers: { Authorization: `Bearer ${token}` },
-        }),
+        axios.get(
+          `https://my-project-ppdr.vercel.app/test?student_id=${studentCode}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        ),
       ]);
       console.log(studentResponse.data);
       console.log(testResponse.data);
 
-
-
       const filterStudent = testResponse.data.filter(
         (item) => item.student_id === studentCode
       );
-      const filterData =  filterStudent.filter(
+      const filterData = filterStudent.filter(
         (item) => item.station_Id === station[0].id
-      );      
+      );
 
-     console.log(filterStudent )
-      console.log(filterData)
-      console.log(filterData.length === 0)
+      console.log(filterStudent);
+      console.log(filterData);
+      console.log(filterData.length === 0);
       setData(studentResponse.data);
       setSubtest(testResponse.data);
 
-
-      if (filterData.length === 0) {
+      if (filterData.length === 0 && studentResponse.data !== null) {
         setStudentStatus("Incomplete");
-      }else{
-             setStudentStatus("Complete");
+        setErrMsg("")
+      } else if (filterStudent.length === 0 && studentResponse.data !== null) {
+        setStudentStatus("Complete");
+        setErrMsg("student not found");
+      }else if (studentResponse.data === null){
+        setStudentStatus("Not found student");
       }
- 
+
       console.log(filterData);
     } catch (error) {
       setErrMsg("Error searching for student data");
     }
-
-
   };
 
   const handleScan = (result) => {
@@ -205,22 +208,26 @@ function ScanBarcode() {
         </div>
         <div>
           <div>
-            <div className="flex w-20">
-              <p className="whitespace-nowrap text-lg">student code :</p>
-              <input
-                id="student_code"
-                value={studentCode}
-                className="input"
-                onChange={(e) => setStudentCode(e.target.value)}
-              />
+            <div className="flex flex-col w-20">
+              <div className="flex ">
+                <p className="whitespace-nowrap text-lg">student code :</p>
+                <input
+                  id="student_code"
+                  value={studentCode}
+                  className="input"
+                  onChange={(e) => setStudentCode(e.target.value)}
+                />
 
-              <button className="btn" onClick={(e) => searchStudent(e)}>
-                confirm
-              </button>
+                <button className="btn" onClick={(e) => searchStudent(e)}>
+                  confirm
+                </button>
+              </div>
+
+              <p className="error-msg ">{errMsg}</p>
             </div>
 
             <p className="text-lg">student name : {data?.name}</p>
-          </div>
+          </div>{" "}
           <table className="table-auto w-full">
             <thead>
               <tr className="w-full rounded-lg bg-gray-table ">

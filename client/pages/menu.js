@@ -19,9 +19,9 @@ import {
 
 const menuName = [
   {
-    title: "GRADDING",
+    title: "GRADING",
     url: faUserPen,
-    link: "menu/gradding",
+    link: "menu/grading",
   },
   {
     title: "STUDENT",

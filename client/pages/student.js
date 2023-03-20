@@ -62,7 +62,7 @@ function Studentpage() {
 
             <tr
               key={items.station_Id}
-              className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-slate-50 rounded-lg"
+              className="bg-gray-100 mx-4  odd:bg-table-odd even:bg-table-even rounded-lg"
             >
               <td className="text-title-table">
                 {`${items.station_name}`}
@@ -142,6 +142,7 @@ function Studentpage() {
     } catch (error) {
       setError("Error searching for student data");
     }
+    
 
     console.log(station);
   };
@@ -182,7 +183,7 @@ function Studentpage() {
                         type="text"
                         id="username"
                         name="username"
-                        placeholder="62061xxxx"
+                        placeholder="62071xxxx"
                         value={studentCode.value}
                         onChange={(e) =>
                           setStudentCode({ studentCode: e.target.value })

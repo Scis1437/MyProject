@@ -98,7 +98,7 @@
 }
 
 .logout-position {
- @apply absolute top-1 md:top-3 right-10% z-40
+ @apply absolute top-1 md:top-1 right-10% z-10
 }
 
 .logout-btn {
@@ -110,7 +110,7 @@
 }
 
 .tr-table {
-  @apply flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50
+  @apply flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-light-petite-pink
 }
 
 .status-table {
@@ -132,6 +132,11 @@
 .input_box{
   @apply rounded-md md:w-56 bg-input-green pl-3 border-none
 }
+
+.color-table {
+  @apply odd:bg-table-even even:bg-table-odd
+}
+
 /* @layer utilities {
   .file-bg-blue-50 {
     background-color: #BFDBFE;

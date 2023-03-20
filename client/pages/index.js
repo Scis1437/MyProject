@@ -44,12 +44,12 @@ export default function Home() {
 
   const menuName = [
     {
-      title: "Examer",
+      title: "EXAMINER",
       url: faCircleCheck,
       link: "login",
     },
     {
-      title: "Student",
+      title: "STUDENT",
       url: faGraduationCap,
       link: "student",
     },

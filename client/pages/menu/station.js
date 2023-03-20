@@ -200,7 +200,7 @@ const[deleteData , setDeleteData ] = useState()
     const [dropdown, setDropdown] = useState(false);
 
     return (
-      <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-slate-50">
+      <tr className="flex w-full justify-between px-4 py-2 odd:bg-table-odd even:bg-table-even ">
         <td className="text-sm">{dataSet.station_name}</td>
 
         <td className="flex gap-1">
@@ -275,8 +275,8 @@ const[deleteData , setDeleteData ] = useState()
               : data?.map((list) => <List key={list.id} {...list} />)} */}
           </tbody>
         </table>
-       
-        <button className={`btn mt-2 ${ teacher?.roles !== 1 ? 'hidden' : ''}`}onClick={() => createExamClick()}>
+        {/* {`btn mt-2 ${ teacher?.roles !== 1 ? 'hidden' : ''}`} */}
+        <button className={`btn mt-2 ${ teacher?.roles !== "ADMIN" ? 'hidden' : ''}`}  onClick={() => createExamClick()}>
           Add new
         </button>
 

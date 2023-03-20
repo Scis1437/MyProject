@@ -7,7 +7,7 @@ import Edit from "../pages/menu/station";
 import { Student } from "../../api/config/roles_list";
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_PUBLIC_API_URL;
-const AddExam = ({ visible , handleClose }) => {
+const AddExam = ({ visible, handleClose }) => {
   const [dataInput, setDataInput] = useState();
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
@@ -54,23 +54,6 @@ const AddExam = ({ visible , handleClose }) => {
   // console.log(dataInput);
 
   useEffect(() => {
-    const fetchTeacher = async (data) => {
-      try {
-        const response = await axios.get(
-          `https://my-project-ppdr.vercel.app/teacher/`,
-          config
-        );
-        console.log(response.data);
-        const filteredData = await response.data.filter(
-          (item) => item.id !== data.station_teacher
-        );
-        console.log(filteredData);
-        setTeacher(filteredData);
-      } catch (error) {
-        setErrMsg(error);
-      }
-    };
-
     const fetchStation = async () => {
       try {
         const response = await axios.get(
@@ -86,6 +69,35 @@ const AddExam = ({ visible , handleClose }) => {
       }
     };
 
+    const fetchTeacher = async (data) => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        console.log(data);
+        console.log(response.data);
+        // const filteredData = await response.data.filter(
+        //   (item) => item.id !== data.station_teacher
+        // );
+        // const filteredData = await response.data.filter(
+        //   (item) => !data.station_id.includes(item.id)
+        // );
+        const filteredData = await response.data.filter((item) => {
+          for(let i=0; i<data.length; i++){
+            if(item.id === data[i].station_teacher){
+              return false; 
+            }
+          }
+          return true;
+        });
+        
+        console.log(filteredData);
+        setTeacher(filteredData);
+      } catch (error) {
+        setErrMsg(error);
+      }
+    };
     fetchStation();
   }, []);
   const handleSelectChange = (event) => {
@@ -120,12 +132,9 @@ const AddExam = ({ visible , handleClose }) => {
       // data,
       // config);
 
-       alert(`Add ${data.station_name} station complete`);
+      alert(`Add ${data.station_name} station complete`);
       // setDataInput(response);
-
-      router.push({
-        pathname: "/menu/station",
-      });
+      window.location.reload(false);
     } catch (error) {
       setErrMsg("fetch error");
     }
@@ -134,14 +143,13 @@ const AddExam = ({ visible , handleClose }) => {
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center 
-    p-2 md:p-5 rounded-md bg-gray-light shadow-lg shadow-gray">
-      <form
-        className=" flex flex-col justify-center "
-        onSubmit={handleSubmit}
-      >
+    <div
+      className="absolute inset-2/4 bg-opacity-30 ml-50 flex items-center justify-center 
+    p-2 md:p-5 rounded-md bg-gray-light shadow-lg shadow-gray"
+    >
+      <form className=" flex flex-col justify-center " onSubmit={handleSubmit}>
         <div className="flex mb-4 text-lg  ">
-          <label className="mr-2">Station : </label>
+          <label className="mr-2 font-bold">Station : </label>
           <input
             className=" rounded-md w-20 bg-input-green pl-3 mx-2 "
             defaultValue={null}
@@ -157,13 +165,12 @@ const AddExam = ({ visible , handleClose }) => {
             <option value="2">score</option>
           </select> */}
         </div>
-        <div className="flex mb-4 h-full items-center"  >
+        <div className="flex mb-4 h-full items-center">
           <label className=" text-lg mr-2">Assign to :</label>
           <select
             className="rounded-md  border-none p-1 "
             value={selectedTeacher}
-            onChange={handleSelectChange} 
-            
+            onChange={handleSelectChange}
           >
             <option value={null}>Select a teacher</option>
             {teacher?.map((teacher) => (
@@ -177,13 +184,18 @@ const AddExam = ({ visible , handleClose }) => {
         <div className="flex  w-full items-center gap-1  ">
           <button
             onClick={(e) => {
-              handleSubmit(e) , handleClose()
+              handleSubmit(e), handleClose();
             }}
             className="btn w-full "
           >
             submit
           </button>
-          <button onClick={() => { handleClose()}} className="delete-btn w-full ">
+          <button
+            onClick={() => {
+              handleClose();
+            }}
+            className="delete-btn w-full "
+          >
             cancle
           </button>
         </div>

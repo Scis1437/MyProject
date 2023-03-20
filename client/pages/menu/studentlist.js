@@ -306,16 +306,19 @@ function StudentList() {
                           setTest(newData);
                         }}
                       >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
+                     <option value="0">fail</option>
+                    <option value="10">pass</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                       </select>
                     </div>
                   );
@@ -348,18 +351,18 @@ function StudentList() {
       console.log("Rotate");
       setIsRotated(!isRotated);
     };
-
+//  onClick={handleRotate}
     return (
-      <div className="py-2 " key={student.id}>
+      <div className="py-2 " key={student.id} >
         <div
           className="rounded-md bg-table-odd h-7 py-5 flex items-center"
-          onClick={() => setDropdown(!dropdown)}
+          onClick={() =>{ setDropdown(!dropdown) , handleRotate()}}
         >
-          <div className="flex items-cen" onClick={handleRotate}>
+          <div className="flex items-cen">
             <FontAwesomeIcon
               icon={faCaretDown}
-              className={`flex mt-4 items-center pl-4 ${
-                isRotated ? "fa-rotate-0 ml-1 mt-0 pl-1" : "fa-rotate-270"
+              className={`flex items-center justify-center ${
+                isRotated ? "fa-rotate-0 ml-1 mt-0 pl-0" : "fa-rotate-270  pl-4 mt-4 "
               }`}
             />
           </div>

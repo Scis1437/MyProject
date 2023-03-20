@@ -71,6 +71,10 @@ module.exports = {
       "btn-red": "#dc605f",
       "onclick-btn-red" : "#cf2f2d" ,
       "table-odd": "#D8EBEB",
+      "table-even" : "#9ccccc",
+      // "table-odd": "#54BAB9",
+      // "table-even" : "#9ED2C6",
+      
     }),
     columns: {
       auto: "auto",

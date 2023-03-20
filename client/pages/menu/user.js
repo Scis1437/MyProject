@@ -150,7 +150,7 @@ function UserEdit() {
       <div className="header-page">
         <div className="flex items-center">
           <FontAwesomeIcon
-            className="text-white mr-2 text-2xl"
+            className="backward-btn"
             icon={faChevronCircleLeft}
             onClick={() => setShouldRedirect(true)}
           />
@@ -185,7 +185,7 @@ function UserEdit() {
             {teacher?.map((item) => (
               <tr
                 key={item.teacher_name}
-                className="bg-gray-100 text-xs  w-full  odd:bg-table-odd even:bg-slate-50 rounded-lg  "
+                className="bg-gray-100 text-xs  w-full  odd:bg-table-odd even:bg-table-even rounded-lg  "
               >
                 <td className="pl-5 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 ">
                   {item.username}
