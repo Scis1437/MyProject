@@ -30,7 +30,7 @@
   @apply overflow-y-scroll 
 }
 .select-button {
-  @apply bg-sefid-white hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
+  @apply bg-sefid-white  hover:bg-gray-light p-10 max-w-full w-60 md:w-60 xl:h-40 lg:h-32 h-auto gap-10 flex justify-center items-center rounded-2xl drop-shadow-xl  ;
 }
 .btn {
 @apply bg-main-green hover:bg-hover-green   rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
@@ -53,6 +53,9 @@
   @apply bg-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
 }
 
+.import-btn {
+  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
+}
 
 
 .bg-css{

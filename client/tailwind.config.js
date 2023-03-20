@@ -48,6 +48,9 @@ module.exports = {
       orange: "#ff7849",
       green: "#13ce66",
       yellow: "#ffc82c",
+      "blue-import-btn" : "#35aee9" ,
+      "blue-import-btn-onclick" : "#1692ce" ,
+  
       "gray-dark": "#273444",
       "gray-table": "#8492a6",
       "gray-light": "#c0c0c0",

@@ -10,46 +10,50 @@ import {
   faCoffee,
   faGraduationCap,
   faCircleCheck,
-  faBars,
+  faUserCheck,
+  faListCheck,
+  faUserPen,
+  faFile,
+  faUserDoctor
 } from "@fortawesome/free-solid-svg-icons";
 
 const menuName = [
   {
-    title: "Gradding",
-    url: faCircleCheck,
+    title: "GRADDING",
+    url: faUserPen,
     link: "menu/gradding",
   },
   {
-    title: "Student",
-    url: faGraduationCap,
+    title: "STUDENT",
+    url: faUserCheck,
     link: "menu/studentlist",
   },
 
   {
-    title: "Station",
-    url: faGraduationCap,
+    title: "STATION",
+    url: faListCheck,
     link: "menu/station",
   },
 ];
 const menuName_admin = [
   {
-    title: "Student",
-    url: faGraduationCap,
+    title: "STUDENT",
+    url: faUserCheck,
     link: "menu/studentlist",
   },
   {
-    title: "Station",
-    url: faGraduationCap,
+    title: "STATION",
+    url: faListCheck,
     link: "menu/station",
   },
   {
-    title: "Edit user",
-    url: faCircleCheck,
+    title: "USER",
+    url: faUserDoctor,
     link: "menu/user",
   },
   {
-    title : "show log" ,
-    url : faCircleCheck ,
+    title : "USER LOG" ,
+    url : faFile ,
     link : "menu/teacher-log"
   }
 ];
@@ -77,7 +81,7 @@ export default function Menu() {
   return (
     <div className="flex h-screen bg-main-green relative">
       <div className="p-5 m-auto items-center justify-center md:w-auto ">
-        <div className="grid grid-cols-1 gap-7  place-items-center w-full lg:grid-cols-4 ">
+        <div className={`grid grid-cols-1 gap-7 place-items-center w-full ${role === 1 ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
           {menu?.map((menus, index) => {
             console.log(menus);
             return (

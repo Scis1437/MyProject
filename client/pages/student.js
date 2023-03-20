@@ -95,19 +95,7 @@ function Studentpage() {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  //   const fetchStation = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:9000/station/`,
-  //       config
-  //     );
 
-  //     setStation(response.data);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-  //   fetchStation();
 
   const handleSearch = async (e) => {
     e.preventDefault();

@@ -3,7 +3,7 @@ import xlsx from "xlsx";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-function ImportExcelPage({ setNewUser}) {
+function ImportExcelPage({ setNewUser }) {
   const [file, setFile] = useState(null);
   const [data, setData] = useState([]);
   const [errMsg, setErrMsg] = useState();
@@ -30,7 +30,7 @@ function ImportExcelPage({ setNewUser}) {
       );
       console.log(`response: ${JSON.stringify(response.data)}`);
 
-      setNewUser(true)
+      setNewUser(true);
     } catch (error) {
       setErrMsg("Error Save Data ");
     }
@@ -63,15 +63,21 @@ function ImportExcelPage({ setNewUser}) {
   };
 
   return (
-    <div className="">
-      <input
-        id="file_input"
-        type="file"
-        class="block text-sm text-sefid-white bg-gray-light border border-gray-300 
+    <div>
+      <div className="flex">
+        <input
+          id="file_input"
+          type="file"
+          class="block text-sm text-sefid-white bg-gray-light border border-gray-300 
             rounded-lg cursor-pointer w-full focus:outline-none  file:bg-gray
              "
-             onChange={(e) => handleFile(e)}
-      ></input>
+          onChange={(e) => handleFile(e)}
+        ></input>
+        <button className="import-btn" onClick={saveStudentData}>
+          {" "}
+          import
+        </button>
+      </div>{" "}
       <p>{errMsg}</p>
     </div>
   );

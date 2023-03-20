@@ -11,12 +11,12 @@ function MenuItem(props) {
         <div className="select-button ">
           <div className="flex flex-col items-center justify-items-center">
             <FontAwesomeIcon  
-              className=" flex items-center justify-items-center mx-auto   text-8xl"
+              className=" flex items-center justify-items-center mx-auto   " size="2x md:3x"
               icon={url}
             
             ></FontAwesomeIcon>
             
-              <p className="text-xl focus:text-2xl font-bold">{title}</p>
+              <p className="text-xl focus:text-2xl font-bold mt-1">{title}</p>
          
           
           </div>
