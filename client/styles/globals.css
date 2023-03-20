@@ -46,7 +46,7 @@
 
 .semi-btn {
 
-  @apply bg-main-green rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20
+  @apply bg-main-green rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20 
 }
 
 .semi-delete-btn {
@@ -95,7 +95,7 @@
 }
 
 .logout-position {
- @apply absolute top-1 right-10% z-40
+ @apply absolute top-1 md:top-3 right-10% z-40
 }
 
 .logout-btn {
@@ -127,7 +127,7 @@
 }
 
 .input_box{
-  @apply rounded-md md:w-60 bg-input-green pl-3 border-none
+  @apply rounded-md md:w-56 bg-input-green pl-3 border-none
 }
 /* @layer utilities {
   .file-bg-blue-50 {

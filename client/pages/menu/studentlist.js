@@ -437,7 +437,7 @@ function StudentList() {
             />
 
             <button
-              className="semi-btn"
+              className="semi-btn "
               onClick={(e) => {
                 searchStudent(e);
               }}
