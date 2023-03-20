@@ -37,7 +37,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
   };
   return (
     <div className="bg-gray-light flex flex-col justify-center p-2 rounded-md shadow-lg shadow-gray m-4 opacity-">
-      <p className="text-center text-subheader">Log out</p>
+      <p className="text-center text-subheader"> LOG OUT</p>
       <p>Are you sure you want to log out?</p>
       <div className="flex justify-center items-center w-full">
         <button

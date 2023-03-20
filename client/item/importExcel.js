@@ -32,7 +32,7 @@ function ImportExcelPage({ setNewUser }) {
 
       setNewUser(true);
     } catch (error) {
-      setErrMsg("Error Save Data ");
+      setErrMsg("ERROR IMPORT DATA");
     }
   };
 
@@ -78,7 +78,7 @@ function ImportExcelPage({ setNewUser }) {
           import
         </button>
       </div>{" "}
-      <p>{errMsg}</p>
+      <p className="error-msg">{errMsg}</p>
     </div>
   );
 }

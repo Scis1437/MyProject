@@ -452,7 +452,7 @@ function StudentList() {
           {role === 1 && (
             <div className="">
               <button
-                className="bg-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-28"
+                className="bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-28"
                 onClick={deleteAllStudent}
               >
                 DELETE ALL
@@ -461,9 +461,11 @@ function StudentList() {
           )}
         </div>
         <div className=" mt-4">
-          <div className=" ">{role === 1 && <ImportExcelPage />}</div>
+          <div className=" ">
+            {role === 1 && <ImportExcelPage setNewUser={setNewUser} />}
+          </div>
         </div>
-        <p>{error}</p>
+        <p className="error-msg">{error}</p>
         {status ? <p>No data found</p> : null}
         <div className=" ">
           <div className="overflow-y-scroll h-screen ">
@@ -487,7 +489,7 @@ function StudentList() {
       </div>
       <div
         className={`${
-          comfirmDeleteAll=== true
+          comfirmDeleteAll === true
             ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
             : ""
         }`}
@@ -496,11 +498,8 @@ function StudentList() {
       </div>
       <div className="logout-position">
         <Logout />
-        
       </div>
-      
     </div>
-    
   );
 }
 

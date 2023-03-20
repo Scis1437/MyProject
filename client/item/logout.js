@@ -26,7 +26,7 @@ function Logout() {
     >
       <button className="logout-btn"  onClick={() => {
       setPopup("open")}}>
-             log out
+            LOG OUT
       </button>
       <div
           className={`${

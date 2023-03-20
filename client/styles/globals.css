@@ -36,7 +36,7 @@
 @apply bg-main-green hover:bg-hover-green   rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
 }
 .delete-btn {
-  @apply bg-btn-red rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
+  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-4 py-1 font-semibold text-white text-base md:text-lg
 
 }
 .delete-btn-todo {
@@ -46,15 +46,15 @@
 
 .semi-btn {
 
-  @apply bg-main-green rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20 
+  @apply bg-main-green hover:bg-hover-green  rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20 
 }
 
 .semi-delete-btn {
-  @apply bg-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
+  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
 }
 
 .import-btn {
-  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
+  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-xl ml-2 px-2  md:px-3 font-semibold text-white text-xs md:text-sm w-20
 }
 
 
@@ -102,7 +102,7 @@
 }
 
 .logout-btn {
-  @apply border-2 text-red-600 bg-white hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
+  @apply border-2 text-red-600 bg-slate-100 hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
 }
 
 .fit {

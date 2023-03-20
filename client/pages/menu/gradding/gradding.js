@@ -36,7 +36,7 @@ function Gradding() {
   };
   console.log(station_Id);
   const closeOrderPost = () => {
-   setConfirmDeleteAll(true)
+    setConfirmDeleteAll(true);
   };
 
   useEffect(() => {
@@ -146,7 +146,21 @@ function Gradding() {
       );
     }
   }
-
+  const cheterHandle = async () => {
+    const data = {
+      id: studentCode,
+    };
+    try {
+      const response = await axios.put(
+        `https://my-project-ppdr.vercel.app/cheated`,
+        data,
+        config
+      );
+      console.log(`err add cheted`);
+    } catch (error) {
+      setErrMsg(error);
+    }
+  };
   const addScore = async (data) => {
     console.log(data);
 
@@ -229,7 +243,7 @@ function Gradding() {
             <p>student name : {name?.name} </p>
           </div>{" "}
           <CountdownTimer
-            minutes={1}
+            minutes={30}
             seconds={0}
             onComplete={handleTimerComplete}
           />
@@ -280,15 +294,15 @@ function Gradding() {
           </tbody>
         </table>
         <div className="flex justify-between">
-          <div className="flex">
-            {/* {" "} */}
-          
-        
+          <div className="flex gap-1">{/* {" "} */}</div>
+          <div className="flex gap-2">
+            <button className="semi-delete-btn mt-2" onClick={cheterHandle}>
+              CHEAT
+            </button>
+            <button className="semi-btn mt-2" onClick={handleScoreSave}>
+              SUBMIT
+            </button>
           </div>
-
-          <button className="semi-btn mt-2" onClick={handleScoreSave}>
-            SUBMIT
-          </button>
         </div>
       </div>
     </div>

@@ -34,25 +34,6 @@ function ScanBarcode() {
     const [redirecting, setRedirecting] = useState(false);
 
     const station_name = station;
-    // useEffect(() => {
-    //   const fetchTest = async () => {
-    //     try {
-    //       const response = await axios.get(
-    //         `https://my-project-ppdr.vercel.app/test/`,
-    //         {
-    //           params: { student_id: studentCode },
-    //           headers: { Authorization: `Bearer ${token}` },
-    //         }
-    //       );
-    //       const filterData =await subTest.filter((item) => item.station_Id === station_Id)
-    //       setSubtest(filterData)
-    //     } catch (error) {
-    //       setErrMsg("Error searching for student data");
-    //     }
-    //   };
-
-    //   fetchTest();
-    // }, []);
 
 
 

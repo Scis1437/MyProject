@@ -275,8 +275,8 @@ const[deleteData , setDeleteData ] = useState()
               : data?.map((list) => <List key={list.id} {...list} />)} */}
           </tbody>
         </table>
-
-        <button className="btn mt-2" onClick={() => createExamClick()}>
+       
+        <button className={`btn mt-2 ${ teacher?.roles !== 1 ? 'hidden' : ''}`}onClick={() => createExamClick()}>
           Add new
         </button>
 
