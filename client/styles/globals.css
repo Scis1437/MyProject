@@ -46,15 +46,15 @@
 
 .semi-btn {
 
-  @apply bg-main-green hover:bg-hover-green  rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-20 
+  @apply bg-main-green hover:bg-hover-green  rounded-2xl px-2 py-1 md:px-3  font-semibold text-white text-xs md:text-sm w-16 md:w-20 
 }
 
 .semi-delete-btn {
-  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-20
+  @apply bg-btn-red hover:bg-onclick-btn-red rounded-2xl px-2 py-1 md:px-3 font-semibold text-white text-xs md:text-sm w-16 md:w-20 
 }
 
 .import-btn {
-  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-xl ml-2 px-2  md:px-3 font-semibold text-white text-xs md:text-sm w-20
+  @apply bg-blue-import-btn hover:bg-blue-import-btn-onclick rounded-xl ml-2 px-2  md:px-3 font-semibold text-white text-xs md:text-sm  w-16 md:w-20 
 }
 
 
@@ -98,11 +98,12 @@
 }
 
 .logout-position {
- @apply absolute top-1 md:top-1 right-10% z-10
+ @apply absolute top-3.5 md:top-2 right-10% z-10
 }
 
 .logout-btn {
-  @apply border-2 text-red-600 bg-slate-100 hover:text-white border-red-500 px-4 py-1 rounded-lg hover:bg-red-500
+  @apply border-2 text-red-600 bg-slate-100 hover:text-white text-xs md:text-base
+   border-red-500 px-2 py-1 rounded-lg hover:bg-red-500 font-medium
 }
 
 .fit {
@@ -118,7 +119,7 @@
 }
 
 .error-msg {
-  @apply text-base text-red-600
+  @apply  text-red-600
 }
 
 .text-title-table {
@@ -135,6 +136,10 @@
 
 .color-table {
   @apply odd:bg-table-even even:bg-table-odd
+}
+
+.confirm-popup {
+  @apply bg-gray-light flex flex-col justify-center p-2 md:p-5 rounded-md shadow-lg  m-4 
 }
 
 /* @layer utilities {

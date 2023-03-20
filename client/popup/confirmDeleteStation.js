@@ -42,8 +42,8 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
         DELETE STATION{" "}
         <span className="text-red-incomplete">{data.station_name}</span>
       </p>
-      <p>Are you sure you want to delete station?</p>
-      <div className="flex justify-center items-center w-full mt-2">
+      <p className="mt-2">Are you sure  to delete station?</p>
+      <div className="flex justify-center  items-center w-full mt-2">
         <button
           className="logout-btn"
           onClick={(event) => {

@@ -71,7 +71,7 @@ module.exports = {
       "btn-red": "#dc605f",
       "onclick-btn-red" : "#cf2f2d" ,
       "table-odd": "#D8EBEB",
-      "table-even" : "#9ccccc",
+      "table-even" : "#96d2d2",
       // "table-odd": "#54BAB9",
       // "table-even" : "#9ED2C6",
       

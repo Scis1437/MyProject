@@ -218,7 +218,6 @@ function Gradding() {
   const handleTimerComplete = () => {
     console.log("Timer has completed!");
     alert("time out!");
-
   };
   return (
     <div className="background">
@@ -243,8 +242,8 @@ function Gradding() {
       <div className="container ">
         <div className="flex justify-between">
           <div>
-            <p>student code : {studentCode}</p>
-            <p>student name : {name?.name} </p>
+            <p className="text-subheader ">student code : <span className="font-normal">{studentCode}</span></p>
+            <p className="text-subheader ">student name :  <span className="font-normal">{name?.name}</span> </p>
             {/* <div className="flex">
               <p className="pr-4 ">set time out : </p>{" "}
               <input
@@ -261,7 +260,7 @@ function Gradding() {
         </div>
 
         <table className="table-auto w-full mt-4">
-          <thead className="w-full bg-gray-table rounded-xl ">
+          <thead className="rounded-xl border-radius-table h-8  px-5 bg-gray-table">
             <tr className="rounded-lg bg-gray-table">
               <th className="w-1/2 px-4 py-2">Title</th>
               <th className="w-1/2 px-4 py-2 text-right">Point</th>
@@ -275,7 +274,7 @@ function Gradding() {
                 // className="bg-gray-100 border-b mx-4 odd:bg-white even:bg-slate-50 cursor-pointer"
                 className="bg-gray-100 mx-4 color-table "
               >
-                <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 ">
                   {testData.test_name}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-end">
@@ -287,6 +286,7 @@ function Gradding() {
                       handleScoreChange(testData.test_number, e.target.value)
                     }
                   >
+                    <option value={null}>select</option>
                     <option value="0">fail</option>
                     <option value="10">pass</option>
                     <option value="0">0</option>

@@ -7,7 +7,7 @@ import axios, { all } from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 function ScanBarcode() {
   const [studentCode, setStudentCode] = useState("");
-  const [errMsg, setErrMsg] = useState();
+  const [errMsg, setErrMsg] = useState(null);
   const [studentData, setStudentData] = useState([]);
   const [data, setData] = useState();
   const [station, setStation] = useState();
@@ -147,8 +147,6 @@ function ScanBarcode() {
           }
         ),
       ]);
-      console.log(studentResponse.data);
-      console.log(testResponse.data);
 
       const filterStudent = testResponse.data.filter(
         (item) => item.student_id === studentCode
@@ -157,6 +155,8 @@ function ScanBarcode() {
         (item) => item.station_Id === station[0].id
       );
 
+      console.log(studentResponse.data);
+      console.log(testResponse.data);
       console.log(filterStudent);
       console.log(filterData);
       console.log(filterData.length === 0);
@@ -165,14 +165,15 @@ function ScanBarcode() {
 
       if (filterData.length === 0 && studentResponse.data !== null) {
         setStudentStatus("Incomplete");
-        setErrMsg("")
-      } else if (filterStudent.length === 0 && studentResponse.data !== null) {
+        setErrMsg(null);
+      } else if (studentResponse.data === null) {
         setStudentStatus("Complete");
-        setErrMsg("student not found");
-      }else if (studentResponse.data === null){
-        setStudentStatus("Not found student");
+        setErrMsg("Not found student");
+        // setStudentStatus("Complete");
+      } else if (filterData.length > 1 && studentResponse.data !== null) {
+        setStudentStatus("Complete");
+         setErrMsg(null)
       }
-
       console.log(filterData);
     } catch (error) {
       setErrMsg("Error searching for student data");
@@ -222,12 +223,13 @@ function ScanBarcode() {
                   confirm
                 </button>
               </div>
-
-              <p className="error-msg ">{errMsg}</p>
             </div>
 
-            <p className="text-lg">student name : {data?.name}</p>
+            <p className="text-lg">
+              student name : {data?.name} <span className="error-msg"> {errMsg}</span>
+            </p>
           </div>{" "}
+          {/* <p className="error-msg  ">{errMsg}</p> */}
           <table className="table-auto w-full">
             <thead>
               <tr className="w-full rounded-lg bg-gray-table ">

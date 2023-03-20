@@ -5,11 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const AddUser = ({ visible, handleClose }) => {
-  const station = [
-    "History talking patient ",
-    "Peptic ulcer ",
-    "Palpation of the thyroid",
-  ];
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -18,33 +14,52 @@ const AddUser = ({ visible, handleClose }) => {
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
-
+  const validateInput = (input) => {
+    if (!input) {
+      return "Some input value empty";
+    }
+    // if (!/^[a-zA-Z\s]+$/.test(input)) {
+    //   return "Input value can only contain letters and spaces";
+    // }
+    return null;
+  };
   const regUser = async (e) => {
     e.preventDefault();
-    let token;
-    if (typeof localStorage !== "undefined") {
-      token = localStorage.getItem("access");
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
 
-    try {
-      const data = {
-        user: username,
-        teacher_name: name,
-        pwd: password,
+    const errUsername = validateInput(username);
+    const errname = validateInput(name);
+    const pwd = validateInput(password);
+    if (errUsername || errname || pwd) {
+      setError("Invalid input please fill all data.")
+      return null;
+    } else {
+      let token;
+      if (typeof localStorage !== "undefined") {
+        token = localStorage.getItem("access");
+      }
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
       };
-      console.log(data);
-      const response = await axios.post(
-        `https://my-project-ppdr.vercel.app/register`,
-        { user: username, teacher_name: name, pwd: password },
-        config
-      );
-      // visible = false;
-      console.log(response.data);
-    } catch (error) {
-      setError("reg error");
+
+      try {
+        const data = {
+          user: username,
+          teacher_name: name,
+          pwd: password,
+        };
+        console.log(data);
+        const response = await axios.post(
+          `https://my-project-ppdr.vercel.app/register`,
+          { user: username, teacher_name: name, pwd: password },
+          config
+        );
+        // visible = false;
+        console.log(response.data);
+        window.location.reload(false);
+      } catch (error) {
+        setError("reg error");
+      }
+      handleClose();
     }
   };
 
@@ -52,10 +67,9 @@ const AddUser = ({ visible, handleClose }) => {
 
   if (!visible) return null;
 
-
   return (
     <div className="">
-      <form className="bg-gray-light flex flex-col justify-between  p-2 rounded-md shadow-lg shadow-gray m-4 ">
+      <form className="confirm-popup  ">
         <div className="flex flex-col  justify-between space-y-4">
           <div className="space-y-4 flex justify-between mb-4">
             <label
@@ -95,23 +109,26 @@ const AddUser = ({ visible, handleClose }) => {
             />
           </div>
         </div>
-
+ <p className="error-msg text-center mb-4">{error}</p>
         <div className="flex  w-full items-center gap-1 ">
-        
-            <button className="btn w-full mr-1 ml-1 " onClick={(e) => {
-              regUser(e),
-              handleClose()
-              }}>
-              submit
-            </button>
-            <button
-              className="delete-btn w-full  mr-1 ml-1"
-              onClick={() => { handleClose()}}
-            >
-              cancel
-            </button>
-      
+          <button
+            className="btn w-full mr-1 ml-1 "
+            onClick={(e) => {
+              regUser(e);
+            }}
+          >
+            submit
+          </button>
+          <button
+            className="delete-btn w-full  mr-1 ml-1"
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            cancel
+          </button>
         </div>
+       
         {/* <TodoList_user /> */}
       </form>
     </div>

@@ -232,7 +232,7 @@ const[deleteData , setDeleteData ] = useState()
       <div className="header-page ">
         <div className="flex items-center">
           <FontAwesomeIcon
-            className="text-white mr-2 text-2xl"
+            className="backward-btn"
             icon={faChevronCircleLeft}
             onClick={() => setShouldRedirect(true)}
           />

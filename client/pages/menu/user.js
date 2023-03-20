@@ -168,7 +168,7 @@ function UserEdit() {
       <div className="w-11/12  md:w-5/6 px-2 py-2  h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative overflow-hidden   overflow-y-scroll  ">
         {/* <div><p>Search for user</p></div> */}
         <table className="table-auto w-full  ">
-          <thead className="sticky top-0 rounded-xl bg-gray border-radius-table h-7  px-5 bg-gray-table">
+          <thead className="sticky top-0 rounded-xl border-radius-table h-8  px-5 bg-gray-table">
             <tr>
               <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
                 <p>Username</p>
@@ -194,7 +194,7 @@ function UserEdit() {
                 <td className="py-4 text-xs whitespace-nowrap md:text-sm font-medium text-gray-900 text-left ">
                   {item.name}
                 </td>
-                <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-end ">
+                <td className="py-4 mr-1 md:mr-2 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-end ">
                   <button
                     className="semi-btn"
                     onClick={() => newPopup(true, item)}

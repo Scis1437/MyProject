@@ -66,7 +66,7 @@ function TeacherLog() {
       <div className="w-11/12  md:w-5/6 px-2 py-2  h-11/12 bg-slate-100 rounded-lg flex-row place-items-center relative overflow-hidden   overflow-y-scroll  ">
         {/* <div className="h-1/6 bg-main-green">asd</div> */}
         <table className="w-full  px-10">
-          <thead className="rounded-xl border-radius-table sticky top-0 z-10 bg-gray-table">
+          <thead className="rounded-xl border-radius-table sticky top-0  bg-gray-table">
             <tr>
               <th
                 scope="col"

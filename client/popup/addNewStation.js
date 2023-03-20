@@ -41,6 +41,7 @@ const AddExam = ({ visible, handleClose }) => {
     console.log(inputErr, teacherErr);
     if (!inputErr && !teacherErr) {
       addStation();
+      handleClose();
     }
     setErrMsg(inputErr || teacherErr);
   };
@@ -84,14 +85,14 @@ const AddExam = ({ visible, handleClose }) => {
         //   (item) => !data.station_id.includes(item.id)
         // );
         const filteredData = await response.data.filter((item) => {
-          for(let i=0; i<data.length; i++){
-            if(item.id === data[i].station_teacher){
-              return false; 
+          for (let i = 0; i < data.length; i++) {
+            if (item.id === data[i].station_teacher) {
+              return false;
             }
           }
           return true;
         });
-        
+
         console.log(filteredData);
         setTeacher(filteredData);
       } catch (error) {
@@ -109,6 +110,7 @@ const AddExam = ({ visible, handleClose }) => {
   }
 
   const addStation = async () => {
+    
     const data = {
       id: String(maxId),
       station_name: dataInput?.station_name,
@@ -117,6 +119,7 @@ const AddExam = ({ visible, handleClose }) => {
     console.log("data added");
     try {
       setCreatePostOpen(false);
+      setErrMsg(null)
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/station/`,
         // {
@@ -133,7 +136,6 @@ const AddExam = ({ visible, handleClose }) => {
       // config);
 
       alert(`Add ${data.station_name} station complete`);
-      // setDataInput(response);
       window.location.reload(false);
     } catch (error) {
       setErrMsg("fetch error");
@@ -149,9 +151,9 @@ const AddExam = ({ visible, handleClose }) => {
     >
       <form className=" flex flex-col justify-center " onSubmit={handleSubmit}>
         <div className="flex mb-4 text-lg  ">
-          <label className="mr-2 font-bold">Station : </label>
+          <label className="mr-2">Station : </label>
           <input
-            className=" rounded-md w-20 bg-input-green pl-3 mx-2 "
+            className=" input "
             defaultValue={null}
             onChange={(e) =>
               setDataInput({ ...dataInput, station_name: e.target.value })
@@ -180,11 +182,11 @@ const AddExam = ({ visible, handleClose }) => {
             ))}
           </select>
         </div>
-        {errMsg && <span className="error-message">{errMsg}</span>}
-        <div className="flex  w-full items-center gap-1  ">
+        <p className="error-msg text-center">{errMsg}</p>
+        <div className="flex  w-full items-center gap-1  mt-2  ">
           <button
             onClick={(e) => {
-              handleSubmit(e), handleClose();
+              handleSubmit(e);
             }}
             className="btn w-full "
           >

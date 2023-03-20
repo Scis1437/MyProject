@@ -108,6 +108,7 @@ function Studentpage() {
       setError("Student code must be a 9-digit number.");
       return;
     }
+    setStation(null)
     try {
       const checkStationResponse = await axios.get(
         `https://my-project-ppdr.vercel.app/check-station`,

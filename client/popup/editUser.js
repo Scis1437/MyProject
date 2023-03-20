@@ -19,58 +19,42 @@ const EditUser = ({ visible, data, handleClose }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-
+  const validateInput = (input) => {
+    if (!input) {
+      setErrMsg("Invalid input please  fill all data.");
+      return "Some input value empty";
+    }
+    // if (!/^[a-zA-Z\s]+$/.test(input)) {
+    //   return "Input value can only contain letters and spaces";
+    // }
+    return null;
+  };
   const handleUpdate = async (e) => {
     e.preventDefault();
-    // const data = {
-    //     username: dataInput.username,
-    //     name : dataInput.name
-    //            pwd: dataInput.password,
-    //   // id : dataInput.id ,
-    //   // username : dataInput.username,
-    //   // name : dataInput.name,
-    // };
-    // console.log(data);
-    // console.log(dataInput);
-    // try {
-    //   const response = await axios.put(
-    //     "https://my-project-ppdr.vercel.app/teacher",
-    //   {  data},
-    //     config
-    //   );
-    //   console.log(response.data);
 
-    try {
-      const response = await axios.put(
-        `https://my-project-ppdr.vercel.app/register/`,
-        {
-          user: dataInput.username,
-          name: dataInput.name,
-          pwd: dataInput.password,
-        },
-        config
-      );
-      console.log(data);
-      alert("update user");
-      // console.log(dataInput.password !== "" || dataInput.password !== null);
-      // if (dataInput.password !== "" || dataInput.password !== null) {
-      //   const data = {
-      //     user: dataInput.username,
-      //     pwd: dataInput.password,
-      //   };
-      //   try {
-      //     const response = await axios.put(
-      //       `https://my-project-ppdr.vercel.app/register/`,
-      //       data,
-      //       config
-      //     );
-      //   } catch (error) {
-      //     setErrMsg(error.status);
-      //   }
-      // }
-    } catch (err) {
-      console.error(err);
-      setErrMsg("Error updating teacher.");
+    const errname = validateInput(dataInput.name);
+    const pwd = validateInput(dataInput.password);
+    if (!errname || !pwd) {
+      setErrMsg("Invalid input plese fill all data.")
+      return null;
+    } else  {
+      try {
+        const response = await axios.put(
+          `https://my-project-ppdr.vercel.app/register/`,
+          {
+            user: dataInput.username,
+            name: dataInput.name,
+            pwd: dataInput.password,
+          },
+          config
+        );
+        console.log(data);
+        handleClose();
+        window.location.reload(false);
+      } catch (err) {
+        console.error(err);
+        setErrMsg("Error updating teacher.");
+      }
     }
   };
   if (!visible) {
@@ -78,23 +62,13 @@ const EditUser = ({ visible, data, handleClose }) => {
   }
   return (
     <div>
-      <form className="bg-gray-light flex flex-col justify-between  p-2 rounded-md shadow-xl shadow-gray m-4 ">
+      <form className="confirm-popup  ">
         <div className="flex flex-col  justify-between space-y-4">
-          {/* <div className="space-y-4">
-            <label htmlFor="id-input" className="text-gray-600 font-medium ">
-              username:
-            </label>
-            <input
-              id="id-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
-              value={dataInput.username}
-              onChange={(e) =>
-                setDataInput({ ...dataInput, username: e.target.value })
-              }
-            />
-          </div> */}
           <div className="space-y-4 flex justify-between mb-4">
-            <label htmlFor="name-input" className="text-gray-600 font-medium md:text-lg ">
+            <label
+              htmlFor="name-input"
+              className="text-gray-600 font-medium md:text-lg "
+            >
               name:
             </label>
             <input
@@ -124,17 +98,18 @@ const EditUser = ({ visible, data, handleClose }) => {
             />
           </div>
         </div>
-        <div className="flex  w-full items-center gap-1">
+        <p className="error-msg text-center">{errMsg}</p>
+        <div className="flex  w-full items-center gap-1 mt-2">
           <button
             className="btn w-full mr-1 ml-1"
             onClick={(e) => {
-              handleUpdate(e), handleClose();
+              handleUpdate(e);
             }}
           >
             Update
           </button>
           <button
-          className="delete-btn w-full mr-1 ml-1"
+            className="delete-btn w-full mr-1 ml-1"
             onClick={() => {
               handleClose();
             }}
@@ -142,8 +117,6 @@ const EditUser = ({ visible, data, handleClose }) => {
             Cancle
           </button>
         </div>
-
-        {errMsg && <div className="text-red-500 text-center">{errMsg}</div>}
       </form>
     </div>
   );

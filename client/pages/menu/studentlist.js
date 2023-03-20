@@ -269,7 +269,7 @@ function StudentList() {
       return (
         <div>
           <div onClick={() => setDropdownTitle(!dropdownTitle)}>
-            <div className="mx-4 text-lg">{props.station_name}</div>
+            <div className="mx-4 text-base md:text-lg">{props.station_name}</div>
           </div>
 
           {dropdownTitle ? (
@@ -282,7 +282,7 @@ function StudentList() {
                       key={index}
                     >
                       <label
-                        className="text-base  w-full "
+                        className="text-sm   w-full "
                         htmlFor="subStation"
                       >
                         {list.test_name}
@@ -362,7 +362,7 @@ function StudentList() {
             <FontAwesomeIcon
               icon={faCaretDown}
               className={`flex items-center justify-center ${
-                isRotated ? "fa-rotate-0 ml-1 mt-0 pl-0" : "fa-rotate-270  pl-4 mt-4 "
+                isRotated ? "fa-rotate-0 mr-2 mt-0 pl-4" : "fa-rotate-270  pl-4 mt-4 "
               }`}
             />
           </div>
@@ -427,7 +427,7 @@ function StudentList() {
       </div>
       <div className="container  ">
         <div className="flex w-full items-center justify-between">
-          <div className="flex gap-1">
+          <div className=" grid grid-cols-2 justify-start md:flex gap-1">
             <p className="text-subheader ">search for student : </p>
             <input
               type="text"

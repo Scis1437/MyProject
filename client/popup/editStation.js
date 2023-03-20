@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-faCircleMinus
-} from "@fortawesome/free-solid-svg-icons";
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const EditExam = ({ visible, data ,handleClose}) => {
+const EditExam = ({ visible, data, handleClose }) => {
   const [dataInput, setDataInput] = useState(data);
   const [errMsg, setErrMsg] = useState("");
   const [teacher, setTeacher] = useState();
@@ -37,54 +35,56 @@ const EditExam = ({ visible, data ,handleClose}) => {
 
     // }
   }
-  const fetchSubtest = async () => {
-    const station_Id = data.id;
 
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/subtest`,
-        {
-          params: { station_Id },
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      generateId(response.data);
-      console.log(response.data);
-      setSubtest(response.data);
-
-      {
-      }
-    } catch (error) {
-      setErrMsg(error);
-    }
-  };
-
-  const fetchTeacher = async () => {
-    try {
-      const response = await axios.get(
-        `https://my-project-ppdr.vercel.app/teacher/`,
-        config
-      );   
-      setTeacher(response.data);
-      const filterData = response.data.filter(
-        (item) => item.id === dataInput.station_teacher
-      );
-      setSelectedTeacher(filterData[0].username)
-   
-    } catch (error) {
-      setErrMsg(error);
-    }
-  };
   useEffect(() => {
+    const fetchTeacher = async () => {
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/teacher/`,
+          config
+        );
+        setTeacher(response.data);
+        const filterData = response.data.filter(
+          (item) => item.id === dataInput.station_teacher
+        );
+        setSelectedTeacher(filterData[0].username);
+      } catch (error) {
+        setErrMsg(error);
+      }
+    };
     fetchTeacher();
-    fetchSubtest();
   }, []);
 
   // console.log(teacher);
   // console.log(subTest);
   // console.log(errMsg);
 
-  const TodoList = ({ data, test }) => {
+  useEffect(() => {
+    const fetchSubtest = async () => {
+      const station_Id = data.id;
+
+      try {
+        const response = await axios.get(
+          `https://my-project-ppdr.vercel.app/subtest`,
+          {
+            params: { station_Id },
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        generateId(response.data);
+        console.log(response.data);
+        setSubtest(response.data);
+
+        {
+        }
+      } catch (error) {
+        setErrMsg(error);
+      }
+    };
+
+    fetchSubtest();
+  }, []);
+  const TodoList = ({ data }) => {
     const [list, setList] = useState(
       subTest?.map((item) => ({
         id: item.station_Id,
@@ -92,14 +92,14 @@ const EditExam = ({ visible, data ,handleClose}) => {
         test_number: item.test_number,
       })) || []
     );
+
     const [input, setInput] = useState("");
     const station_Id = data.id;
-    console.log(input);
-    console.log(station_Id);
-    console.log(maxId);
-    console.log(subTest);
-    console.log(list);
-
+    // console.log(input);
+    // console.log(station_Id);
+    // console.log(maxId);
+    // console.log(subTest);
+    // console.log(list);
 
     console.log(dataInput);
     const updateStation = async (e) => {
@@ -117,13 +117,12 @@ const EditExam = ({ visible, data ,handleClose}) => {
           data,
           config
         );
-        alert("Station data saved successfully");
+        // alert("Station data saved successfully");
         setDataInput(response.data);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
     };
-
 
     const addSubTest = async (e) => {
       e.preventDefault();
@@ -140,16 +139,19 @@ const EditExam = ({ visible, data ,handleClose}) => {
           dataSet,
           config
         );
-        const newTodo = {
-          id: maxId,
-          todo: input,
-          // id: 1 ,
-          // todo:"csadsda"
+        const newSubTest = {
+          id: station_Id,
+          test_name: input,
+          test_number: maxId,
         };
         // setDataInput("")
         // add the todo to the list
-        setDataInput([...list, newTodo]);
-        console.log(dataSet);
+
+        // setDataInput([...list, newTodo]);
+        const updatedList = [...list, newSubTest];
+        setList(updatedList);
+        console.log(list)
+        setInput(""); // clear the input field
       } catch (error) {
         setErrMsg(error);
       }
@@ -157,18 +159,18 @@ const EditExam = ({ visible, data ,handleClose}) => {
 
     const deleteSubTest = async (data, e) => {
       e.preventDefault();
-      const dataSet = data.test_name
-      
+      const dataSet = data.test_name;
+
       console.log(config);
       try {
         // console.log(data.test_name)
         const response = await axios.delete(
-          `https://my-project-ppdr.vercel.app/subtest?test_name=${dataSet}`,config
-          ); 
+          `https://my-project-ppdr.vercel.app/subtest?test_name=${dataSet}`,
+          config
+        );
 
-        
         // console.log(response.data)
-        alert("delete subtest success");
+        // alert("delete subtest success");
 
         // setSubtest(response.data);
       } catch (error) {
@@ -178,7 +180,7 @@ const EditExam = ({ visible, data ,handleClose}) => {
     // const test = { station_Id: 2 };
     // const test2 = test.data;
 
-    console.log(list);
+
     return (
       <div className="">
         <h1 className="text-lg">Title</h1>{" "}
@@ -191,7 +193,10 @@ const EditExam = ({ visible, data ,handleClose}) => {
             >
               {todo.test_name}
               {/* <FontAwesomeIcon icon="fa-solid fa-circle-minus" /> */}
-              <ClearRoundedIcon className="delete-btn-todo"  onClick={(e) => deleteSubTest(todo, e)} />
+              <ClearRoundedIcon
+                className="delete-btn-todo"
+                onClick={(e) => deleteSubTest(todo, e)}
+              />
             </li>
           ))}
         </ul>
@@ -207,7 +212,12 @@ const EditExam = ({ visible, data ,handleClose}) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-          <button className="semi-btn" onClick={(e) => {addSubTest(e) }}>
+          <button
+            className="semi-btn"
+            onClick={(e) => {
+              addSubTest(e);
+            }}
+          >
             Add
           </button>
           {/* <button className="btn" onClick={() => addSubTest()}>
@@ -215,13 +225,20 @@ const EditExam = ({ visible, data ,handleClose}) => {
           </button> */}
         </div>
         <div className="flex gap-1 w-full items-center ">
-          <button className="btn w-full "  onClick={(e) => {
-              updateStation(e),
-              handleClose()
-              }}>
+          <button
+            className="btn w-full "
+            onClick={(e) => {
+              updateStation(e), handleClose();
+            }}
+          >
             submit
           </button>
-          <button onClick={() => { handleClose()}} className="delete-btn w-full ">
+          <button
+            onClick={() => {
+              handleClose();
+            }}
+            className="delete-btn w-full "
+          >
             cancle
           </button>
         </div>
@@ -235,7 +252,7 @@ const EditExam = ({ visible, data ,handleClose}) => {
   const handleSelectChange = (event) => {
     setSelectedTeacher(event.target.value);
   };
-  console.log(selectedTeacher)
+  console.log(selectedTeacher);
   return (
     <div className="absolute inset-2/4 bg-opacity-30 ml-50  flex items-center  bg-gray-light justify-center p-5 rounded-md shadow-lg shadow-gray">
       <form className=" flex flex-col ">
