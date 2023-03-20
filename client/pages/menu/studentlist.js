@@ -71,20 +71,12 @@ function StudentList() {
         console.log(filterData);
         setRole(data.UserInfo.role);
 
-<<<<<<< HEAD
-        const studentResponse = await axios.get(
-          `https://my-project-ppdr.vercel.app/student/`,
-          config
-        );
-        setData(studentResponse.data);
-=======
         // const studentResponse = await axios.get(
         //   `https://my-project-ppdr.vercel.app/student/`,
         //   config
         // );
         const studentList = await fetchStudent(config)
         setData(studentList);
->>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
 
         const stationResponse = await axios.get(
           `https://my-project-ppdr.vercel.app/station/`,
@@ -422,7 +414,6 @@ function StudentList() {
               className="input_box h-7"
             />
 
-<<<<<<< HEAD
             <button
               className="semi-btn"
               onClick={(e) => {
@@ -435,21 +426,6 @@ function StudentList() {
               <FileDownloadRoundedIcon className="flex items-center mt-1 text-gray-dark" />
               <p className="">export</p>
             </div>
-=======
-          <button
-            className="btn"
-            onClick={(e) => {
-              searchStudent(e);
-            }}
-          >
-            SUBMIT
-          </button>
-          <button className="btn" onClick={exportScore}>
-            export
-          </button>
-          <div className="flex justify-end ">
-            {role === 1 && <ImportExcelPage setNewUser={setNewUser} />}
->>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
           </div>
           {role === 1 && (
             <div className="">
