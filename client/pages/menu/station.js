@@ -38,13 +38,15 @@ const Edit = () => {
     prop,
   ] = useContext(AppContext);
 
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState();
   const [data, setData] = useState();
   const [popupData, setPopupData] = useState();
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
   const [teacher, setTeacher] = useState();
   const [allStation, setAllStation] = useState();
+const[deleteData , setDeleteData ] = useState()
+  const [confirmDeleteStation , setConfirmDeleteStation] = useState(false) ;
   function onNewOrderClick(data) {
     setPopupData(data);
     setNewOrderPostOpen(true);
@@ -52,14 +54,34 @@ const Edit = () => {
   }
   function createExamClick() {
     setCreatePostOpen(true);
-  }
-  const closeOrderPost = () => {
-    setNewOrderPostOpen("close");
-    setCreatePostOpen("close");
+  }  
+  const deleteStation = async (data) => {
+    setConfirmDeleteStation(true);
+    setDeleteData(data)
   };
+  const closeOrderPost = () => {
+    setNewOrderPostOpen(false);
+    setCreatePostOpen(false); 
+    setConfirmDeleteStation(false);
+  };
+  
+
+  let conponentConfirm = null;
+  switch (confirmDeleteStation) {
+    case true:
+      conponentConfirm = (
+        <ConfrimDeleteStation visible={false} handleClose={closeOrderPost} data={deleteData}/>
+      );
+      break;
+    case false:
+      conponentConfirm = null;
+      break;
+  }
 
   let newOrderPost = null;
   let newEditPost = null;
+
+
   switch (newOrderPostOpen) {
     case true:
       newEditPost = (
@@ -70,7 +92,21 @@ const Edit = () => {
         />
       );
       break;
-    case "close":
+    case false:
+      newEditPost = null;
+      break;
+  }
+  switch (newOrderPostOpen) {
+    case true:
+      newEditPost = (
+        <EditExam
+          data={popupData}
+          visible={true}
+          handleClose={closeOrderPost}
+        />
+      );
+      break;
+    case false:
       newEditPost = null;
       break;
   }
@@ -143,22 +179,22 @@ const Edit = () => {
   
 
   console.log(data);
-  const deleteStation = async (data) => {
-    const idStation = data.id;
-    console.log(data);
-    try {
-      const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/station?id=${idStation}`,
-        config
-      );
+  // const deleteStation = async (data) => {
+  //   const idStation = data.id;
+  //   console.log(data);
+  //   try {
+  //     const response = await axios.delete(
+  //       `https://my-project-ppdr.vercel.app/station?id=${idStation}`,
+  //       config
+  //     );
 
-      // setData(response);
-      console.log(data);
-    } catch (error) {
-      setErrMsg("");
-      console.log(error);
-    }
-  };
+  //     // setData(response);
+  //     console.log(data);
+  //   } catch (error) {
+  //     setErrMsg("");
+  //     console.log(error);
+  //   }
+  // };
 
   const List = (dataSet) => {
     const [dropdown, setDropdown] = useState(false);
@@ -246,12 +282,13 @@ const Edit = () => {
 
         <div
           className={`${
-            newOrderPostOpen === true || createPostOpen === true
+            newOrderPostOpen === true || createPostOpen === true || confirmDeleteStation ===true
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
               : ""
           }`}
         >
           {newOrderPost}
+          {conponentConfirm}
           {newEditPost}
         </div>
 

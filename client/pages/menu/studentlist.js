@@ -9,6 +9,7 @@ import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
 import axios from "axios";
 import Logout from "../../item/logout";
 import ImportExcelPage from "../../item/importExcel";
+import ConfrimDeleteAllStudent from "../../popup/confirmDeleteAllStudent";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function Redirect({ to }) {
@@ -39,9 +40,10 @@ function StudentList() {
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
   const [role, setRole] = useState(0);
-  const [newUser, setNewUser] = useState(false)
+  const [newUser, setNewUser] = useState(false);
   const [user, setUser] = useState(null);
   const [teacher, setTeacher] = useState(null);
+  const [comfirmDeleteAll, setConfirmDeleteAll] = useState(false);
   let token;
   if (typeof localStorage !== "undefined") {
     token = localStorage.getItem("access");
@@ -54,6 +56,25 @@ function StudentList() {
     const decoded = JSON.parse(atob(token.split(".")[1]));
     return decoded;
   };
+
+  const closeOrderPost = () => {
+    setConfirmDeleteAll(false);
+  };
+  const deleteAllStudent = async () => {
+    setConfirmDeleteAll(true);
+  };
+  let conponentConfirm = null;
+  switch (comfirmDeleteAll) {
+    case true:
+      conponentConfirm = (
+        <ConfrimDeleteAllStudent visible={false} handleClose={closeOrderPost} />
+      );
+      break;
+    case false:
+      conponentConfirm = null;
+      break;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const data = parseJwt(`Bearer ${localStorage.getItem("access")}`);
@@ -75,7 +96,7 @@ function StudentList() {
         //   `https://my-project-ppdr.vercel.app/student/`,
         //   config
         // );
-        const studentList = await fetchStudent(config)
+        const studentList = await fetchStudent(config);
         setData(studentList);
 
         const stationResponse = await axios.get(
@@ -104,14 +125,13 @@ function StudentList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const studentList = await fetchStudent(config)
-      setData(studentList)
-      setNewUser(false)
-    }
-    
-    if(newUser)
-      fetchData();
-  }, [newUser])
+      const studentList = await fetchStudent(config);
+      setData(studentList);
+      setNewUser(false);
+    };
+
+    if (newUser) fetchData();
+  }, [newUser]);
 
   const searchStudent = async (e) => {
     e.preventDefault();
@@ -134,13 +154,13 @@ function StudentList() {
     }
   };
 
-  const deleteAllStudent = async () => {
-    await axios.delete(
-      `https://my-project-scis1437.vercel.app/student`,
-      config
-    );
-    alert("delete all sudent!");
-  };
+  // const deleteAllStudent = async () => {
+  //   await axios.delete(
+  //     `https://my-project-scis1437.vercel.app/student`,
+  //     config
+  //   );
+  //   alert("delete all sudent!");
+  // };
   const List = (dataSet) => {
     const handleSaveTest = async (studentId, stationId, testNumber, score) => {
       console.log(`studentId : ${studentId}`);
@@ -261,7 +281,10 @@ function StudentList() {
                       className="flex justify-between w-full px-6"
                       key={index}
                     >
-                      <label className="text-base  w-full " htmlFor="subStation">
+                      <label
+                        className="text-base  w-full "
+                        htmlFor="subStation"
+                      >
                         {list.test_name}
                       </label>
 
@@ -299,14 +322,13 @@ function StudentList() {
                 })}
               </form>
               <div className="flex w-full justify-end mt-2">
-                  <button
-                className="semi-btn mx-4"
-                onClick={(event) => handleScoreSave(event)}
-              >
-                Save
-              </button>
+                <button
+                  className="semi-btn mx-4"
+                  onClick={(event) => handleScoreSave(event)}
+                >
+                  Save
+                </button>
               </div>
-            
             </div>
           ) : null}
         </div>
@@ -346,7 +368,7 @@ function StudentList() {
         </div>
 
         {dropdown ? (
-          <div className="bg-gray-table">
+          <div className="  ">
             {station?.map((list) => {
               return (
                 <DropdownTitle key={list.id} {...list} student={student} />
@@ -463,11 +485,22 @@ function StudentList() {
           </div>
         </div>
       </div>
-
+      <div
+        className={`${
+          comfirmDeleteAll=== true
+            ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-20 "
+            : ""
+        }`}
+      >
+        {conponentConfirm}
+      </div>
       <div className="logout-position">
         <Logout />
+        
       </div>
+      
     </div>
+    
   );
 }
 

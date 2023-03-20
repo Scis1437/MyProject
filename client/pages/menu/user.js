@@ -8,6 +8,7 @@ import Logout from "../../item/logout";
 import { Teacher } from "../../../api/config/roles_list";
 import EditUser from "../../popup/editUser";
 import ConfirmDeletePopup from "../../popup/confirmDeletePopup";
+import ConfrimDeleteUser from "../../popup/confirmDeleteUser";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
@@ -24,9 +25,9 @@ const config = {
 
 function UserEdit() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [newOrderPostOpen, setNewOrderPostOpen] = useState("close");
-  const [editUserPopup, setEditUserPopup] = useState("close");
-  const [confirmDelete , setComfirmDelete]  = useState("close");
+  const [newOrderPostOpen, setNewOrderPostOpen] = useState(false);
+  const [editUserPopup, setEditUserPopup] = useState(false);
+  const [confirmDelete , setComfirmDelete]  = useState(false);
   // const [order, setOrder] = useState([]);
   const [data, setData] = useState(null);
   const [teacher, setTeacher] = useState(null);
@@ -53,10 +54,15 @@ function UserEdit() {
     setEditUserPopup(type);
   };
 
+  const deleteUser = (type, data) => {
+    setData(data);
+    setComfirmDelete(type);
+  }
+
   const closeOrderPost = () => {
-    setNewOrderPostOpen("close");
-    setEditUserPopup("close")
-    setComfirmDelete("close")
+    setNewOrderPostOpen(false);
+    setEditUserPopup(false)
+    setComfirmDelete(false)
   };
 
   console.log(newOrderPostOpen);
@@ -64,31 +70,31 @@ function UserEdit() {
   let newEditpost = null;
   let newDeletePopup = null ;
   switch (newOrderPostOpen) {
-    case "open":
+    case true:
       newOrderPost = <AddUser visible={true} handleClose={closeOrderPost} />;
       break;
 
-    case "close":
+    case false:
       newOrderPost = null;
       break;
   }
 
   switch (editUserPopup) {
-    case "open":
+    case true:
       newEditpost = <EditUser visible={true} data={data} handleClose={closeOrderPost} />;
       break;
 
-    case "close":
+    case false:
       newEditpost = null;
       break;
   }
 
   switch (confirmDelete) {
-    case "open":
-      newDeletePopup = <ConfirmDeletePopup visible={true} data={data}  handleClose={closeOrderPost}/>;
+    case true:
+      newDeletePopup = <ConfrimDeleteUser visible={true} data={data}  handleClose={closeOrderPost}/>;
       break;
 
-    case "close":
+    case false:
       newDeletePopup = null;
       break;
   }
@@ -107,33 +113,33 @@ function UserEdit() {
         // setErrMsg(error);
       }
     };
-    if (newOrderPostOpen === "open") return;
+    if (newOrderPostOpen === true) return;
 
     fetchTeacher();
   }, [newOrderPostOpen]);
 
-  const deleteUser = async (item) => {
-    const username = item.username;
+  // const deleteUser = async (item) => {
+  //   const username = item.username;
 
-    try {
-      const response = await axios.delete(
-        `https://my-project-ppdr.vercel.app/teacher?id=${username}`,
-        config
-      );
+  //   try {
+  //     const response = await axios.delete(
+  //       `https://my-project-ppdr.vercel.app/teacher?id=${username}`,
+  //       config
+  //     );
 
-      // setTeacher((prevTeachers) =>
-      //   prevTeachers.filter(
-      //     (teacher) => teacher.teacher_name !== item.teacher_name
-      //   )
-      // );
-      alert(`User for ${item.username} deleted`);
+  //     // setTeacher((prevTeachers) =>
+  //     //   prevTeachers.filter(
+  //     //     (teacher) => teacher.teacher_name !== item.teacher_name
+  //     //   )
+  //     // );
+  //     alert(`User for ${item.username} deleted`);
 
-      // console.log(response.data);
-      // return response.data;
-    } catch (error) {
-      setErrMsg(error.message);
-    }
-  };
+  //     // console.log(response.data);
+  //     // return response.data;
+  //   } catch (error) {
+  //     setErrMsg(error.message);
+  //   }
+  // };
   if (shouldRedirect) {
     return <Redirect to="/menu" />;
   }
@@ -191,13 +197,13 @@ function UserEdit() {
                 <td className="py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1 justify-end ">
                   <button
                     className="semi-btn"
-                    onClick={() => newPopup("open", item)}
+                    onClick={() => newPopup(true, item)}
                   >
                     Edit
                   </button>
                   <button
                     className=" semi-delete-btn"
-                    onClick={() => deleteUser(item)}
+                    onClick={() => deleteUser(true , item)}
                   >
                     Delete
                   </button>
@@ -211,13 +217,13 @@ function UserEdit() {
                
          <button
            className="btn bg-main-green mt-5"
-           onClick={() => onNewOrderClick("open", null)}
+           onClick={() => onNewOrderClick(true, null)}
          >
            Add new
          </button> 
         <div
           className={`${
-            newOrderPostOpen === "open" || editUserPopup === "open" || confirmDelete ==="open"
+            newOrderPostOpen === true || editUserPopup === true || confirmDelete ===true
               ? "fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-slate-500 bg-opacity-5 backdrop-blur-sm z-10 "
               : ""
           }`}

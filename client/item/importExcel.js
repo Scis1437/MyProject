@@ -23,14 +23,6 @@ function ImportExcelPage({ setNewUser}) {
     // }));
     console.log(`received: ${JSON.stringify(data)}`);
     try {
-<<<<<<< HEAD
-      // const response = await axios.post(
-      //   "https://my-project-ppdr.vercel.app/test",
-      //   data, // Wrap the array in an object with a 'data' field
-      //   config // Define the 'config' object with any necessary options
-      // );
-      // console.log(response.data);
-=======
       const response = await axios.post(
         "https://my-project-ppdr.vercel.app/import-student",
         data, // Wrap the array in an object with a 'data' field
@@ -39,7 +31,6 @@ function ImportExcelPage({ setNewUser}) {
       console.log(`response: ${JSON.stringify(response.data)}`);
 
       setNewUser(true)
->>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
     } catch (error) {
       setErrMsg("Error Save Data ");
     }
@@ -64,11 +55,7 @@ function ImportExcelPage({ setNewUser}) {
           }, {})
         );
 
-<<<<<<< HEAD
         saveStudentData(dataArray);
-=======
-        // saveStudentData(dataArray);
->>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
         setData(dataArray);
       };
       reader.readAsBinaryString(files[0]);
@@ -86,32 +73,6 @@ function ImportExcelPage({ setNewUser}) {
              onChange={(e) => handleFile(e)}
       ></input>
       <p>{errMsg}</p>
-<<<<<<< HEAD
-=======
-      <div>
-        <button className="import-btn" onClick={saveStudentData}>
-          {" "}
-          import excel
-        </button>
-      </div>
-
-      {/* {data.length > 0 && (
-        <table>
-          <thead>
-            <tr>{data[0].map((cell, i) => <th key={i}>{cell}</th>)}</tr>
-          </thead>
-          <tbody>
-            {data.slice(1).map((row, i) => (
-              <tr key={i}>
-                {row.map((cell, j) => (
-                  <td key={j}>{cell}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )} */}
->>>>>>> d1d0b23957eaba3ca1aa7cb2eb94efec1de2c0b5
     </div>
   );
 }

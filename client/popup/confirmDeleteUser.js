@@ -6,7 +6,7 @@ import Redirect from "../item/Redirect";
 import Logout from "../item/logout";
 import axios from "axios";
 
-const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
+const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
   const [errMsg, setErrMsg] = useState();
   let token;
   if (typeof localStorage !== "undefined") {
@@ -15,22 +15,30 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const deleteStation = async (e) => {
-    e.preventDefault();
+  const deleteUser = async () => {
+    const username = data.username;
 
     try {
-      await axios.delete(
-        `https://my-project-ppdr.vercel.app/station?id=${data.id}`,
+    await axios.delete(
+        `https://my-project-ppdr.vercel.app/teacher?id=${username}`,
         config
       );
+
+      // setTeacher((prevTeachers) =>
+      //   prevTeachers.filter(
+      //     (teacher) => teacher.teacher_name !== item.teacher_name
+      //   )
+      // );
+    //   alert(`User for ${data.username} deleted`);
       handleClose()
-      console.log("delete data");
-      // alert(`Delete ${data.station_name} station`)
+      console.log(`delete ${data.username}`)
+      // console.log(response.data);
+      // return response.data;
     } catch (error) {
-      setErrMsg("Error delete station");
+      setErrMsg(error.message);
     }
   };
-
+    console.log(data)
   //   alert("delete all sudent!");
   // };
 
@@ -45,7 +53,7 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
         <button
           className="logout-btn"
           onClick={(event) => {
-            deleteStation(event);
+            deleteUser(event);
           }}
         >
           Sure
@@ -58,4 +66,4 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
   );
 };
 
-export default ConfrimDeleteStation;
+export default ConfrimDeleteUser ;

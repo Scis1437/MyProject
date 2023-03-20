@@ -17,6 +17,7 @@ function Gradding() {
   const [test, setTest] = useState();
   const [station, setStation] = useState();
   const [name, setName] = useState();
+
   const handlePointChange = (titleId, pointValue) => {
     setPoints((prevPoints) => ({ ...prevPoints, [titleId]: pointValue }));
   };
@@ -34,6 +35,10 @@ function Gradding() {
     return decoded;
   };
   console.log(station_Id);
+  const closeOrderPost = () => {
+   setConfirmDeleteAll(true)
+  };
+
   useEffect(() => {
     const fetchSubtest = async () => {
       try {
