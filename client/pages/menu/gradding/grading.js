@@ -173,12 +173,12 @@ function Gradding() {
     console.log(data);
 
     try {
-      // const response = await axios.post(
-      //   `https://my-project-ppdr.vercel.app/test`,
-      //   data,
-      //   config
-      // );
-      // console.log(`add data complete`);
+      const response = await axios.post(
+        `https://my-project-ppdr.vercel.app/test`,
+        data,
+        config
+      );
+      console.log(`add data complete`);
     } catch (error) {
       setErrMsg(error);
     }
