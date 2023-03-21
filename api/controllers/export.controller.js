@@ -106,7 +106,7 @@ const getDataStationScore = async (req, res) => {
   const dataScore = await prisma.test.findMany({
           where: {
           
-          station_Id:  req.query.station_id,
+          station_teacher:  req.query.station_teacher,
           
           
       },
