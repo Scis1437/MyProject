@@ -11,6 +11,7 @@ function CountdownTimer({ minutes }) {
 
     if (timeLeft.minutes === 0 && timeLeft.seconds === 0) {
       clearInterval(interval);
+      alert("time out!");
       // Handle countdown completion here
     } else {
       interval = setInterval(() => {
@@ -27,7 +28,7 @@ function CountdownTimer({ minutes }) {
         }
       }, 1000);
     }
-
+    
     return () => clearInterval(interval);
   }, [timeLeft]);
 
