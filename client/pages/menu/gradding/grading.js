@@ -283,7 +283,7 @@ function Gradding() {
           <thead className="rounded-xl border-radius-table h-8  px-5 bg-gray-table">
             <tr className="rounded-lg bg-gray-table">
               <th className="w-1/2 px-4 py-2">Title</th>
-              <th className="w-1/2 px-4 py-2 text-right">Point</th>
+              <th className="w-1/2 px-10   py-2 text-right">Point</th>
             </tr>
           </thead>
           <tbody>

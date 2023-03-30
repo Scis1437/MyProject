@@ -257,9 +257,9 @@ const[deleteData , setDeleteData ] = useState()
             <tr className="">
               <th
                 scope="col"
-                className="rounded-tl-lg rounded-tr-lg bg-gray-table text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="rounded-tl-lg rounded-tr-lg bg-gray-table text-sm font-medium text-gray-900 px-6 py-4 text-left text-header-table"
               >
-                <p>Title</p>
+                <p>Station</p>
               </th>
               {/* <th className=" rounded-tr-lg  text-sm font-medium text-gray-900 px-6 py-4 text-right">
               <p></p>

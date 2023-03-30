@@ -170,11 +170,11 @@ function UserEdit() {
         <table className="table-auto w-full  ">
           <thead className="sticky top-0 rounded-xl border-radius-table h-8  px-5 bg-gray-table">
             <tr>
-              <td className="rounded-tl-lg text-xs md:text-sm font-medium text-gray-900 md:px-6 md:py-4 text-left">
+              <td className="rounded-tl-lg  font-medium text-gray-900 md:px-6 md:py-4 text-left text-header-table">
                 <p>Username</p>
               </td>
 
-              <td className="text-xs md:text-sm font-medium text-gray-900 md:px-6 text-left ">
+              <td className="font-medium text-gray-900 md:px-6 text-left text-header-table">
                 <p>Name</p>
               </td>
               <td className="rounded-tr-lg "></td>
