@@ -134,7 +134,7 @@ const EditExam = ({ visible, data, handleClose }) => {
       };
       console.log(dataSet);
       try {
-        const response = await axios.post(
+         await axios.post(
           `https://my-project-ppdr.vercel.app/subtest/`,
           dataSet,
           config
@@ -168,7 +168,8 @@ const EditExam = ({ visible, data, handleClose }) => {
           `https://my-project-ppdr.vercel.app/subtest?test_name=${dataSet}`,
           config
         );
-
+        const updatedList = list.filter((item) => item.test_name !== data.test_name);
+        setList(updatedList);
         // console.log(response.data)
         // alert("delete subtest success");
 
