@@ -31,10 +31,12 @@ const EditUser = ({ visible, data, handleClose }) => {
   };
   const handleUpdate = async (e) => {
     e.preventDefault();
-
+    console.log(dataInput.username)
+    console.log(dataInput.name)
+    console.log(dataInput.password)
     const errname = validateInput(dataInput.name);
     const pwd = validateInput(dataInput.password);
-    if (!errname || !pwd) {
+    if (errname || pwd) {
       setErrMsg("Invalid input plese fill all data.")
       return null;
     } else  {
