@@ -32,7 +32,7 @@ function Studentpage() {
               scope="col"
               className="text-header-table text-left rounded-tl-lg "
             >
-              Title
+              Station
             </th>
             <th className="text-header-table text-right rounded-tr-lg ">
               <p>Status</p>

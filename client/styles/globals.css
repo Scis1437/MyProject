@@ -131,7 +131,7 @@
 }
 
 .input_box{
-  @apply rounded-md md:w-56 bg-input-green pl-3 border-none
+  @apply rounded-md md:w-56 bg-gray-input pl-3 border-none
 }
 
 .color-table {

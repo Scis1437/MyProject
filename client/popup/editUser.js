@@ -73,7 +73,7 @@ const EditUser = ({ visible, data, handleClose }) => {
             </label>
             <input
               id="name-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 "
+              className="rounded-md w-48 py-1 px-3 bg-gray-input text-gray-700 "
               value={dataInput.name}
               onChange={(e) =>
                 setDataInput({ ...dataInput, name: e.target.value })
@@ -89,7 +89,7 @@ const EditUser = ({ visible, data, handleClose }) => {
             </label>
             <input
               id="password-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 border-none"
+              className="rounded-md w-48 py-1 px-3 bg-gray-input text-gray-700 border-none"
               type="password"
               placeholder=""
               onChange={(e) =>

@@ -80,14 +80,14 @@ const AddUser = ({ visible, handleClose }) => {
             </label>
             <input
               id="firstname-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 "
+              className="rounded-md w-48 py-1 px-3 bg-gray-input text-gray-700 "
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="space-y-4 flex justify-between mb-4">
             <label className="text-gray-600 font-medium">NAME :</label>
             <input
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700"
+              className="rounded-md w-48 py-1 px-3 bg-gray-input text-gray-700"
               type=""
               placeholder="Charnnarong chaoroensanongkun"
               onChange={(e) => setName(e.target.value)}
@@ -102,7 +102,7 @@ const AddUser = ({ visible, handleClose }) => {
             </label>
             <input
               id="password-input"
-              className="rounded-md w-48 py-1 px-3 bg-input-green text-gray-700 border-none"
+              className="rounded-md w-48 py-1 px-3 bg-gray-input text-gray-700 border-none"
               type="password"
               placeholder=""
               onChange={(e) => setPassword(e.target.value)}
