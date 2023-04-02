@@ -22,7 +22,7 @@ const AddUser = ({ visible, handleClose }) => {
     //   return "Input value can only contain letters and spaces";
     // }
     return null;
-  };
+  }; 
   const regUser = async (e) => {
     e.preventDefault();
 

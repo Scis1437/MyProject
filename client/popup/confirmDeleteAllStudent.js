@@ -14,7 +14,8 @@ const ConfrimDeleteAllStudent = ({ visible, handleClose }) => {
   }
   const config = {
     headers: { Authorization: `Bearer ${token}` },
-  };
+  }; 
+  
   const deleteAllStudent = async (e) => {
     e.preventDefault();
     try {

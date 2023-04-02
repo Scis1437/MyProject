@@ -213,6 +213,7 @@ const EditExam = ({ visible, data, handleClose }) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
+          
           <button
             className="semi-btn"
             onClick={(e) => {

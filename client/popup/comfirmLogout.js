@@ -10,6 +10,7 @@ const ConfrimLogout = ({ visible, onCancel }) => {
   const [popup, setPopup] = useState(false);
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
+  
   if (popup) {
     <Logout visible={false} />;
     return null;

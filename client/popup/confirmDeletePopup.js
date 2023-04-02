@@ -10,7 +10,8 @@ const ConfirmDeletePopup = ({ title, message, onCancel, onConfirm }) => {
           <button onClick={onCancel}>Cancel</button>
           <button onClick={onConfirm}>Confirm</button>
         </div>
-      </div>
+        
+      </div> 
     </div>
   );
 };
