@@ -1,6 +1,26 @@
 # MyProject
 *********************************************************
-get mrthod parse มาทาง req.query."data ที่ต้องการ " แทนนน
+```
+First Start 
+npm install for install all dependencies
+for backend run npm run dev 
+## Getting Started
+
+
+api backend 
+http://localhost:9000
+```
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+```
 **********************************************************
 change password ส่งไอดี กับ พาสเวิดใหม่มาได้เลย
 .put http://localhost:9000/register
