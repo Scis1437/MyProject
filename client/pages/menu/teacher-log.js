@@ -72,7 +72,7 @@ function TeacherLog() {
                 scope="col"
                 className="rounded-tl-lg text-header-table"
               >
-                <p>Data</p>
+                <p>Time</p>
               </th>
               <th
                 scope="col"

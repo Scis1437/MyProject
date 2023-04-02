@@ -96,20 +96,20 @@ const[deleteData , setDeleteData ] = useState()
       newEditPost = null;
       break;
   }
-  switch (newOrderPostOpen) {
-    case true:
-      newEditPost = (
-        <EditExam
-          data={popupData}
-          visible={true}
-          handleClose={closeOrderPost}
-        />
-      );
-      break;
-    case false:
-      newEditPost = null;
-      break;
-  }
+  // switch (newOrderPostOpen) {
+  //   case true:
+  //     newEditPost = (
+  //       <EditExam
+  //         data={popupData}
+  //         visible={true}
+  //         handleClose={closeOrderPost}
+  //       />
+  //     );
+  //     break;
+  //   case false:
+  //     newEditPost = null;
+  //     break;
+  // }
 
   switch (createPostOpen) {
     case true:
@@ -175,7 +175,7 @@ const[deleteData , setDeleteData ] = useState()
     };
   
     fetchTeacher();
-  }, [confirmDeleteStation , newOrderPostOpen ]);
+  }, [createPostOpen , confirmDeleteStation ]);
   
 
   console.log(data);

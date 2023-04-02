@@ -24,7 +24,7 @@ const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
         `https://my-project-ppdr.vercel.app/auth?username=${username}`
       );
 
-      // alert(`User for ${data.username} deleted`);
+      alert(`User  ${username} deleted`);
       handleClose();
       // window.location.reload(false);
       console.log(`delete ${data.username}`);

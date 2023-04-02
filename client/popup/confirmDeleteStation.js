@@ -27,7 +27,7 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
       // window.location.reload(false);
       
       console.log("delete data");
-      // alert(`Delete ${data.station_name} station`)
+       alert(`Delete ${data.station_name} station`)
     } catch (error) {
       setErrMsg("Error delete station");
     }
