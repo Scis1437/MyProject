@@ -1,9 +1,15 @@
 # MyProject
 *********************************************************
+
+##First Start 
+```npm install``` 
+for install all dependencies
+for backend
+```bash
+npm run dev
+# or
+yarn dev
 ```
-First Start 
-npm install for install all dependencies
-for backend run npm run dev 
 ## Getting Started
 
 
