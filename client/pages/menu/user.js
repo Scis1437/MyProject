@@ -116,7 +116,7 @@ function UserEdit() {
     if (newOrderPostOpen === true) return;
 
     fetchTeacher();
-  }, [newOrderPostOpen , confirmDelete]);
+  }, [newOrderPostOpen , confirmDelete , editUserPopup]);
 
   // const deleteUser = async (item) => {
   //   const username = item.username;

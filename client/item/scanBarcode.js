@@ -167,7 +167,11 @@ function ScanBarcode() {
       if (filterData.length === 0 && studentResponse.data !== null) {
         setStudentStatus("Incomplete");
         setErrMsg(null);
-      } else if (studentResponse.data === null) {
+      }
+      // else if (studentResponse.data !== null && filterData.length > 0){
+      //   setStudentStatus("Complete");
+      // }
+       else if (studentResponse.data === null) {
         setStudentStatus("Complete");
         setErrMsg("Not found student");
         // setStudentStatus("Complete");

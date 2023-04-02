@@ -167,7 +167,7 @@ const[deleteData , setDeleteData ] = useState()
           const filterData = response.data.filter(
             (item) => item.station_teacher === teacher.id
           );
-          
+
           setData(filterData);
         }
       } catch (error) {
@@ -176,7 +176,7 @@ const[deleteData , setDeleteData ] = useState()
     };
   
     fetchTeacher();
-  }, [createPostOpen , confirmDeleteStation ]);
+  }, [createPostOpen , confirmDeleteStation , newOrderPostOpen]);
   
 
   console.log(data);
