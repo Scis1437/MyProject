@@ -134,7 +134,7 @@ const AddExam = ({ visible, handleClose }) => {
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
       // data,
       // config);
-
+      handleClose()
       alert(`Add ${data.station_name} station complete`);
       // window.location.reload(false);
     } catch (error) {
