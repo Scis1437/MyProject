@@ -23,13 +23,13 @@ const ConfrimDeleteAllStudent = ({ visible, handleClose }) => {
     //     `https://my-project-scis1437.vercel.app/student`,
     //     config
     //   );
-    handleClose()
+
       
     } catch (err) {
       setErrMsg("Error delete all student ");
     }
 
-   
+       handleClose()
   };
   return (
     <div className="bg-gray-light flex flex-col justify-center p-5 rounded-md shadow-lg shadow-gray m-4 opacity-50 ">

@@ -117,11 +117,13 @@ const EditExam = ({ visible, data, handleClose }) => {
           data,
           config
         );
-        // alert("Station data saved successfully");
+        alert(`Station ${dataInput.station_name} saved successfully`);
+
         setDataInput(response.data);
       } catch (error) {
         setErrMsg("Error searching for student data");
       }
+      handleClose();
     };
 
     const addSubTest = async (e) => {
@@ -134,7 +136,7 @@ const EditExam = ({ visible, data, handleClose }) => {
       };
       console.log(dataSet);
       try {
-         await axios.post(
+        await axios.post(
           `https://my-project-ppdr.vercel.app/subtest/`,
           dataSet,
           config
@@ -150,7 +152,7 @@ const EditExam = ({ visible, data, handleClose }) => {
         // setDataInput([...list, newTodo]);
         const updatedList = [...list, newSubTest];
         setList(updatedList);
-        console.log(list)
+        console.log(list);
         setInput(""); // clear the input field
       } catch (error) {
         setErrMsg(error);
@@ -168,7 +170,9 @@ const EditExam = ({ visible, data, handleClose }) => {
           `https://my-project-ppdr.vercel.app/subtest?test_name=${dataSet}`,
           config
         );
-        const updatedList = list.filter((item) => item.test_name !== data.test_name);
+        const updatedList = list.filter(
+          (item) => item.test_name !== data.test_name
+        );
         setList(updatedList);
         // console.log(response.data)
         // alert("delete subtest success");
@@ -180,7 +184,6 @@ const EditExam = ({ visible, data, handleClose }) => {
     };
     // const test = { station_Id: 2 };
     // const test2 = test.data;
-
 
     return (
       <div className="">
@@ -213,7 +216,7 @@ const EditExam = ({ visible, data, handleClose }) => {
             <option value="1">pass/fail</option>
             <option value="2">score</option>
           </select> */}
-          
+
           <button
             className="semi-btn"
             onClick={(e) => {
@@ -230,7 +233,7 @@ const EditExam = ({ visible, data, handleClose }) => {
           <button
             className="btn w-full "
             onClick={(e) => {
-              updateStation(e), handleClose();
+              updateStation(e);
             }}
           >
             submit

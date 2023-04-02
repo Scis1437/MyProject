@@ -118,7 +118,7 @@ const AddExam = ({ visible, handleClose }) => {
     };
     console.log("data added");
     try {
-      setCreatePostOpen(false);
+
       setErrMsg(null)
       const response = await axios.post(
         `https://my-project-ppdr.vercel.app/station/`,
@@ -133,13 +133,15 @@ const AddExam = ({ visible, handleClose }) => {
 
       // const response = await axios.post(`https://my-project-ppdr.vercel.app/station/`,
       // data,
-      // config);
-      handleClose()
-      alert(`Add ${data.station_name} station complete`);
+      // config);  
+            alert(`Add ${data.station_name} station complete`);
+
+
       // window.location.reload(false);
     } catch (error) {
       setErrMsg("fetch error");
-    }
+    }       
+     handleClose()
   };
 
   if (!visible) return null;

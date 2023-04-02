@@ -51,12 +51,12 @@ const EditUser = ({ visible, data, handleClose }) => {
           config
         );
         console.log(data);
-        handleClose();
-        window.location.reload(false);
+       
+        // window.location.reload(false);
       } catch (err) {
         console.error(err);
         setErrMsg("Error updating teacher.");
-      }
+      } handleClose();
     }
   };
   if (!visible) {

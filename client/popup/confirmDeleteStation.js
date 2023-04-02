@@ -23,14 +23,15 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
         `https://my-project-ppdr.vercel.app/station?id=${data.id}`,
         config
       );
-      handleClose()
+
       // window.location.reload(false);
-      
+
       console.log("delete data");
-       alert(`Delete ${data.station_name} station`)
+      alert(`Delete ${data.station_name} station`);
     } catch (error) {
       setErrMsg("Error delete station");
     }
+    handleClose();
   };
 
   //   alert("delete all sudent!");
@@ -42,7 +43,7 @@ const ConfrimDeleteStation = ({ visible, handleClose, data }) => {
         DELETE STATION{" "}
         <span className="text-red-incomplete">{data.station_name}</span>
       </p>
-      <p className="mt-2">Are you sure  to delete station?</p>
+      <p className="mt-2">Are you sure to delete station?</p>
       <div className="flex justify-center  items-center w-full mt-2">
         <button
           className="logout-btn"

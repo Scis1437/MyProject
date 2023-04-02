@@ -25,14 +25,14 @@ const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
       );
 
       alert(`User  ${username} deleted`);
-      handleClose();
+      
       // window.location.reload(false);
       console.log(`delete ${data.username}`);
       // console.log(response.data);
       // return response.data;
     } catch (error) {
       setErrMsg(error.message);
-    }
+    }handleClose();
   };
   console.log(data);
   //   alert("delete all sudent!");
