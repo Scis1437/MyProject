@@ -21,8 +21,8 @@ const AddExam = ({ visible, handleClose }) => {
     if (!input) {
       return "Input value cannot be empty";
     }
-    if (!/^[a-zA-Z\s]+$/.test(input)) {
-      return "Input value can only contain letters and spaces";
+    if (!/^[a-zA-Z\s\d]+$/.test(input)) {
+      return "Input value can only contain letters, numbers, and spaces";
     }
     return null;
   };
