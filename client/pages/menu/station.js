@@ -175,7 +175,7 @@ const[deleteData , setDeleteData ] = useState()
     };
   
     fetchTeacher();
-  }, []);
+  }, [confirmDeleteStation , newOrderPostOpen ]);
   
 
   console.log(data);

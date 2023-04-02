@@ -136,7 +136,7 @@ const AddExam = ({ visible, handleClose }) => {
       // config);
 
       alert(`Add ${data.station_name} station complete`);
-      window.location.reload(false);
+      // window.location.reload(false);
     } catch (error) {
       setErrMsg("fetch error");
     }

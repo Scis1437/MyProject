@@ -26,7 +26,7 @@ const ConfrimDeleteUser = ({ visible, handleClose, data }) => {
 
       // alert(`User for ${data.username} deleted`);
       handleClose();
-      window.location.reload(false);
+      // window.location.reload(false);
       console.log(`delete ${data.username}`);
       // console.log(response.data);
       // return response.data;

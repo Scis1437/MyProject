@@ -55,7 +55,7 @@ const AddUser = ({ visible, handleClose }) => {
         );
         // visible = false;
         console.log(response.data);
-        window.location.reload(false);
+        // window.location.reload(false);
       } catch (error) {
         setError("reg error");
       }
