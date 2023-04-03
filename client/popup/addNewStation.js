@@ -120,7 +120,7 @@ const AddExam = ({ visible, handleClose }) => {
     try {
 
       setErrMsg(null)
-      const response = await axios.post(
+      await axios.post(
         `https://my-project-ppdr.vercel.app/station/`,
         // {
         //   id: maxId,
